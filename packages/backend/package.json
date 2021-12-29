@@ -1,0 +1,23 @@
+{
+  "name": "@social/backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "apollo-server": "^3.5.0",
+    "graphql": "^16.2.0",
+    "tslog": "^3.3.1"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "2.3.0",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.5.4",
+    "@graphql-codegen/typescript": "2.4.1",
+    "@graphql-codegen/typescript-resolvers": "2.4.2",
+    "@graphql-codegen/introspection": "2.1.0"
+  },
+  "scripts": {
+    "dev": "ts-node-dev src/index.ts",
+    "generate:types": "graphql-codegen --config codegen.yml"
+  }
+}
