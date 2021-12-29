@@ -5,6 +5,8 @@ generates:
   src/graphql/generated.ts:
     config:
       contextType: ../context#Context
+      mappers:
+        User: ../repositories/user-repository#UserModel
     plugins:
       - "typescript"
       - "typescript-resolvers"

@@ -1,11 +1,7 @@
-import { WithId } from "mongodb";
 import { Logger } from "tslog";
-import UserRepository from "../repositories/user-respository";
-import User from "../types/user";
+import UserRepository, { UserModel } from "../repositories/user-repository";
 
 const logger = new Logger({ name: 'UserService'})
-
-export type UserModel = WithId<User>
 
 export default class UserService {
 

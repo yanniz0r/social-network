@@ -1,6 +1,6 @@
 import { MongoClient } from "mongodb";
 import { Logger } from "tslog";
-import UserRepository from "./repositories/user-respository";
+import UserRepository from "./repositories/user-repository";
 import UserService from "./services/user-service";
 
 const logger = new Logger({ name: 'Context' })

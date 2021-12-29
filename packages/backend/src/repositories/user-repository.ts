@@ -1,8 +1,10 @@
-import { Collection, Db } from "mongodb";
+import { Collection, Db, WithId } from "mongodb";
 import { Logger } from "tslog";
 import User from "../types/user";
 
 const logger = new Logger({ name: 'UserRepository' })
+
+export type UserModel = WithId<User>
 
 export default class UserRepository {
 
@@ -17,7 +19,7 @@ export default class UserRepository {
   }
 
   async findFirst() {
-    return await this.collection.findOne()
+    return await this.collection.findOne()!
   }
 
 }
