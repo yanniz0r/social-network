@@ -1,5 +1,6 @@
 import { GraphQLResolveInfo } from 'graphql';
 import { UserModel } from '../repositories/user-repository';
+import { PostModel } from '../repositories/post-repository';
 import { Context } from '../context';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
@@ -15,9 +16,25 @@ export type Scalars = {
   Float: number;
 };
 
+export type Post = {
+  createdAt: Scalars['String'];
+  id: Scalars['ID'];
+  text?: Maybe<Scalars['String']>;
+  user: User;
+};
+
 export type Query = {
   __typename?: 'Query';
   me: User;
+  posts: Array<Post>;
+};
+
+export type TextPost = Post & {
+  __typename?: 'TextPost';
+  createdAt: Scalars['String'];
+  id: Scalars['ID'];
+  text: Scalars['String'];
+  user: User;
 };
 
 export type User = {
@@ -99,8 +116,10 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
+  Post: ResolverTypeWrapper<PostModel>;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']>;
+  TextPost: ResolverTypeWrapper<PostModel>;
   User: ResolverTypeWrapper<UserModel>;
 };
 
@@ -108,13 +127,32 @@ export type ResolversTypes = {
 export type ResolversParentTypes = {
   Boolean: Scalars['Boolean'];
   ID: Scalars['ID'];
+  Post: PostModel;
   Query: {};
   String: Scalars['String'];
+  TextPost: PostModel;
   User: UserModel;
+};
+
+export type PostResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Post'] = ResolversParentTypes['Post']> = {
+  __resolveType: TypeResolveFn<'TextPost', ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  text?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
 };
 
 export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   me?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  posts?: Resolver<Array<ResolversTypes['Post']>, ParentType, ContextType>;
+};
+
+export type TextPostResolvers<ContextType = Context, ParentType extends ResolversParentTypes['TextPost'] = ResolversParentTypes['TextPost']> = {
+  createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  text?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type UserResolvers<ContextType = Context, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
@@ -126,7 +164,9 @@ export type UserResolvers<ContextType = Context, ParentType extends ResolversPar
 };
 
 export type Resolvers<ContextType = Context> = {
+  Post?: PostResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  TextPost?: TextPostResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
 };
 

@@ -1,6 +1,8 @@
 import { MongoClient } from "mongodb";
 import { Logger } from "tslog";
+import PostRepository from "./repositories/post-repository";
 import UserRepository from "./repositories/user-repository";
+import PostService from "./services/post-service";
 import UserService from "./services/user-service";
 
 const logger = new Logger({ name: 'Context' })
@@ -11,6 +13,7 @@ export class Context {
 
   constructor(
     public userService: UserService,
+    public postService: PostService,
   ) {}
 
   static async init(): Promise<Context> {
@@ -20,10 +23,14 @@ export class Context {
     const db = mongoClient.db(MONGODB_NAME)
 
     const userRepository = new UserRepository(db)
-
     const userService = new UserService(userRepository)
+    
+    const postRepository = new PostRepository(db)
+    const postService = new PostService(postRepository)
+
     const context = new Context(
       userService,
+      postService,
     )
 
     // TODO add this back in once this is cached

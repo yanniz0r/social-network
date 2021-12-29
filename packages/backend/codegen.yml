@@ -7,6 +7,8 @@ generates:
       contextType: ../context#Context
       mappers:
         User: ../repositories/user-repository#UserModel
+        Post: ../repositories/post-repository#PostModel
+        TextPost: ../repositories/post-repository#PostModel
     plugins:
       - "typescript"
       - "typescript-resolvers"
