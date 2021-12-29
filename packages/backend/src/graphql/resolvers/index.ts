@@ -3,8 +3,9 @@ import { Resolvers } from "../generated";
 
 const resolvers: Resolvers = {
   Query: {
-    test() {
-      return 'Hello World 2!'
+    async me(_result, _parent, context) {
+      const user = await context.userService.getUser()
+      return user
     }
   }
 }
