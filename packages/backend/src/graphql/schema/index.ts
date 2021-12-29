@@ -13,6 +13,8 @@ const schema = gql`
     text: String
     createdAt: String!
     user: User!
+    liked: Boolean!
+    likedBy: [User!]!
   }
 
   type TextPost implements Post {
@@ -20,6 +22,8 @@ const schema = gql`
     text: String!
     createdAt: String!
     user: User!
+    liked: Boolean!
+    likedBy: [User!]!
   }
 
   type Query {

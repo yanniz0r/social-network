@@ -1,0 +1,30 @@
+{
+  "name": "@social/frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "generate:types": "graphql-codegen --config codegen.yml"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.5.6",
+    "graphql": "^16.2.0",
+    "next": "12.0.7",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-icons": "^4.3.1",
+    "tailwindcss": "^3.0.7"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "2.3.0",
+    "@graphql-codegen/introspection": "2.1.0",
+    "@graphql-codegen/typescript": "2.4.1",
+    "@graphql-codegen/typescript-operations": "2.2.1",
+    "@graphql-codegen/typescript-react-apollo": "3.2.2",
+    "@types/react": "^17.0.38",
+    "autoprefixer": "^10.4.0",
+    "postcss": "^8.4.5"
+  }
+}

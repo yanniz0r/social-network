@@ -9,6 +9,7 @@ type BasePost<T, D> = D & {
   createdAt: Date
   text?: string
   userID: ObjectID
+  likedBy: ObjectID[]
 }
 
 type TextPost = BasePost<'text', {

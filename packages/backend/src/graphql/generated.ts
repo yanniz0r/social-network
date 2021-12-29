@@ -19,6 +19,8 @@ export type Scalars = {
 export type Post = {
   createdAt: Scalars['String'];
   id: Scalars['ID'];
+  liked: Scalars['Boolean'];
+  likedBy: Array<User>;
   text?: Maybe<Scalars['String']>;
   user: User;
 };
@@ -33,6 +35,8 @@ export type TextPost = Post & {
   __typename?: 'TextPost';
   createdAt: Scalars['String'];
   id: Scalars['ID'];
+  liked: Scalars['Boolean'];
+  likedBy: Array<User>;
   text: Scalars['String'];
   user: User;
 };
@@ -138,6 +142,8 @@ export type PostResolvers<ContextType = Context, ParentType extends ResolversPar
   __resolveType: TypeResolveFn<'TextPost', ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  liked?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  likedBy?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>;
   text?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
 };
@@ -150,6 +156,8 @@ export type QueryResolvers<ContextType = Context, ParentType extends ResolversPa
 export type TextPostResolvers<ContextType = Context, ParentType extends ResolversParentTypes['TextPost'] = ResolversParentTypes['TextPost']> = {
   createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  liked?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  likedBy?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>;
   text?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;

@@ -15,7 +15,7 @@ export default class PostRepository {
   }
 
   async findAll() {
-    return this.collection.find().toArray()
+    return this.collection.find().sort('createdAt', 1).toArray()
   }
 
 }

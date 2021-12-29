@@ -1,3 +1,4 @@
+import { ObjectID } from "bson";
 import DataLoader from "dataloader";
 import { Collection, Db, ObjectId, WithId } from "mongodb";
 import { Logger } from "tslog";
@@ -38,4 +39,7 @@ export default class UserRepository {
     return this.findUserDataloader.load(id)
   }
 
+  async findUsers(objectIDs: Array<ObjectID>) {
+    return this.findUserDataloader.loadMany(objectIDs)
+  }
 }

@@ -1,3 +1,4 @@
+import { UserModel } from "../../repositories/user-repository";
 import { Resolvers } from "../generated";
 
 const resolvers: Resolvers = {
@@ -18,9 +19,22 @@ const resolvers: Resolvers = {
     }
   },
   TextPost: {
+    id(parent) {
+      return parent._id.toString()
+    },
+    liked(parent) {
+      return Math.random() > 0.5
+    },
+    likedBy(parent, _result, context) {
+      // TODO get rid of casting
+      return context.userService.findUsers(parent.likedBy) as Promise<UserModel[]>
+    },
     async user(textPost, _result, context) {
       const user = await context.userService.findUser(textPost.userID)
       return user!
+    },
+    createdAt(parent) {
+      return parent.createdAt.toISOString()
     }
   },
   Query: {

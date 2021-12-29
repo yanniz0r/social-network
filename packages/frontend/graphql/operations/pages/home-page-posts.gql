@@ -1,0 +1,16 @@
+query HomePagePosts {
+  posts {
+    id
+    text
+    createdAt
+    liked
+    user {
+      id
+      name
+    }
+    likedBy {
+      id
+      firstName
+    }
+  }
+}
