@@ -30,6 +30,6 @@ const schema = gql`
     me: User!
     posts: [Post!]!
   }
-`
+`;
 
-export default schema
+export default schema;
