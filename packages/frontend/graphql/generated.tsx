@@ -100,6 +100,11 @@ export type HomePagePostsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type HomePagePostsQuery = { __typename?: 'Query', posts: Array<{ __typename?: 'TextPost', id: string, text: string, createdAt: string, liked: boolean, user: { __typename?: 'User', id: string, name: string }, likedBy: Array<{ __typename?: 'User', id: string, firstName: string }> }> };
 
+export type ProfileMeQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ProfileMeQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, firstName: string, lastName: string, name: string } };
+
 
 export const CreatePostCardTextPostDocument = gql`
     mutation CreatePostCardTextPost($input: TextPostInput!) {
@@ -253,3 +258,40 @@ export function useHomePagePostsLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
 export type HomePagePostsQueryHookResult = ReturnType<typeof useHomePagePostsQuery>;
 export type HomePagePostsLazyQueryHookResult = ReturnType<typeof useHomePagePostsLazyQuery>;
 export type HomePagePostsQueryResult = Apollo.QueryResult<HomePagePostsQuery, HomePagePostsQueryVariables>;
+export const ProfileMeDocument = gql`
+    query ProfileMe {
+  me {
+    id
+    firstName
+    lastName
+    name
+  }
+}
+    `;
+
+/**
+ * __useProfileMeQuery__
+ *
+ * To run a query within a React component, call `useProfileMeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProfileMeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProfileMeQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useProfileMeQuery(baseOptions?: Apollo.QueryHookOptions<ProfileMeQuery, ProfileMeQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ProfileMeQuery, ProfileMeQueryVariables>(ProfileMeDocument, options);
+      }
+export function useProfileMeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ProfileMeQuery, ProfileMeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ProfileMeQuery, ProfileMeQueryVariables>(ProfileMeDocument, options);
+        }
+export type ProfileMeQueryHookResult = ReturnType<typeof useProfileMeQuery>;
+export type ProfileMeLazyQueryHookResult = ReturnType<typeof useProfileMeLazyQuery>;
+export type ProfileMeQueryResult = Apollo.QueryResult<ProfileMeQuery, ProfileMeQueryVariables>;
