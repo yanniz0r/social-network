@@ -20,7 +20,7 @@ type TextPost = BasePost<
 >;
 
 type ImagePost = BasePost<
-  "text",
+  "image",
   {
     image: string;
   }

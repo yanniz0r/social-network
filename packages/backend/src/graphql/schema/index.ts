@@ -26,9 +26,17 @@ const schema = gql`
     likedBy: [User!]!
   }
 
+  input TextPostInput {
+    text: String!
+  }
+
   type Query {
     me: User!
     posts: [Post!]!
+  }
+
+  type Mutation {
+    createTextPost(input: TextPostInput!): TextPost!
   }
 `;
 

@@ -1,5 +1,6 @@
 import { UserModel } from "../../repositories/user-repository";
 import { Resolvers } from "../generated";
+import Mutation from "./mutation";
 
 const resolvers: Resolvers = {
   Post: {
@@ -7,6 +8,8 @@ const resolvers: Resolvers = {
       switch (post.type) {
         case "text":
           return "TextPost";
+        case "image":
+          return "TextPost"; // TODO this makes no sense at all. Fix once we got image posts
       }
     },
   },
@@ -48,6 +51,7 @@ const resolvers: Resolvers = {
       return context.postService.getPosts();
     },
   },
+  Mutation,
 };
 
 export default resolvers;

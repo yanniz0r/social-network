@@ -2,6 +2,7 @@ import { MongoClient } from "mongodb";
 import { Logger } from "tslog";
 import PostRepository from "./repositories/post-repository";
 import UserRepository from "./repositories/user-repository";
+import AuthorizationService from "./services/authorization-service";
 import PostService from "./services/post-service";
 import UserService from "./services/user-service";
 
@@ -12,7 +13,8 @@ const MONGODB_NAME = "social";
 export class Context {
   constructor(
     public userService: UserService,
-    public postService: PostService
+    public postService: PostService,
+    public authorizationService: AuthorizationService,
   ) {}
 
   static async init(): Promise<Context> {
@@ -25,11 +27,12 @@ export class Context {
 
     const userRepository = new UserRepository(db);
     const userService = new UserService(userRepository);
+    const authorizationService = new AuthorizationService(userRepository)
 
     const postRepository = new PostRepository(db);
     const postService = new PostService(postRepository);
 
-    const context = new Context(userService, postService);
+    const context = new Context(userService, postService, authorizationService);
 
     // TODO add this back in once this is cached
     // logger.info('Context initialized')
