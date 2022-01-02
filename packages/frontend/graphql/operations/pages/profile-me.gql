@@ -5,6 +5,7 @@ query ProfileMe {
     lastName
     name
     birthday
+    online
     friends{
       id
       name

@@ -7,6 +7,8 @@ const schema = gql`
     lastName: String!
     name: String!
     friends: [User!]!
+    status: String
+    online: Boolean!
     birthday: String
   }
 

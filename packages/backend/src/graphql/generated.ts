@@ -76,6 +76,8 @@ export type User = {
   id: Scalars['ID'];
   lastName: Scalars['String'];
   name: Scalars['String'];
+  online: Scalars['Boolean'];
+  status?: Maybe<Scalars['String']>;
 };
 
 
@@ -209,6 +211,8 @@ export type UserResolvers<ContextType = Context, ParentType extends ResolversPar
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   lastName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  online?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  status?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 

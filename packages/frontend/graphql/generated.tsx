@@ -74,6 +74,8 @@ export type User = {
   id: Scalars['ID'];
   lastName: Scalars['String'];
   name: Scalars['String'];
+  online: Scalars['Boolean'];
+  status?: Maybe<Scalars['String']>;
 };
 
 export type CreatePostCardTextPostMutationVariables = Exact<{
@@ -105,7 +107,7 @@ export type HomePagePostsQuery = { __typename?: 'Query', posts: Array<{ __typena
 export type ProfileMeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ProfileMeQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, firstName: string, lastName: string, name: string, birthday?: string | null | undefined, friends: Array<{ __typename?: 'User', id: string, name: string }> } };
+export type ProfileMeQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, firstName: string, lastName: string, name: string, birthday?: string | null | undefined, online: boolean, friends: Array<{ __typename?: 'User', id: string, name: string }> } };
 
 
 export const CreatePostCardTextPostDocument = gql`
@@ -268,6 +270,7 @@ export const ProfileMeDocument = gql`
     lastName
     name
     birthday
+    online
     friends {
       id
       name

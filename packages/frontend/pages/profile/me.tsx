@@ -2,6 +2,7 @@ import { differenceInYears, format } from "date-fns";
 import { NextPage } from "next";
 import { FaBirthdayCake } from "react-icons/fa";
 import Card from "../../components/card";
+import OnlineIndicator from "../../components/online-indicator";
 import { useProfileMeQuery } from "../../graphql/generated";
 
 const ProfileMePage: NextPage = () => {
@@ -11,8 +12,9 @@ const ProfileMePage: NextPage = () => {
       {meQuery.data?.me &&
         <>
           <Card className="p-5 flex items-center">
-            <div className="w-16 h-16 flex items-center justify-center rounded-full bg-red-500 font-bold text-white">
+            <div className="w-16 h-16 flex items-center justify-center rounded-full bg-red-500 font-bold text-white relative">
               {meQuery.data.me.name[0]}
+              <OnlineIndicator online={meQuery.data.me.online} />
             </div>
             <div className="ml-5">
               <h1 className="text-xl text-gray-100 mb-2">{meQuery.data.me.name}</h1>

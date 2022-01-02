@@ -6,6 +6,7 @@
   "dependencies": {
     "apollo-server": "^3.5.0",
     "dataloader": "^2.0.0",
+    "date-fns": "^2.28.0",
     "graphql": "^16.2.0",
     "mongodb": "^4.2.2",
     "tslog": "^3.3.1"

@@ -1,6 +1,7 @@
 import { UserModel } from "../../repositories/user-repository";
 import { Resolvers } from "../generated";
 import Mutation from "./mutation";
+import { differenceInMinutes } from "date-fns";
 
 const resolvers: Resolvers = {
   Post: {
@@ -19,6 +20,15 @@ const resolvers: Resolvers = {
     },
     name(parent) {
       return [parent.firstName, parent.lastName].join(" ");
+    },
+    online(parent) {
+      if (!parent.lastOnlinePing) {
+        return false
+      }
+      if (differenceInMinutes(Date.now(), parent.lastOnlinePing) > 5) {
+        return false
+      }
+      return true
     },
     birthday(parent) {
       return parent.birthday?.toISOString() ?? null
