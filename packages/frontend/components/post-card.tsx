@@ -1,3 +1,4 @@
+import { formatDistance, formatRelative } from "date-fns";
 import { FC } from "react";
 import { Post, User } from "../graphql/generated";
 import LikeButton from "./like-button";
@@ -10,6 +11,9 @@ interface PostCardProps {
 }
 
 const PostCard: FC<PostCardProps> = ({ post }) => {
+  const createdAt = formatDistance(new Date(post.createdAt), new Date(), {
+    addSuffix: true,
+  })
   return (
     <div className="bg-white shadow-lg rounded-lg dark:bg-gray-800">
       <div className="p-5 flex">
@@ -19,7 +23,7 @@ const PostCard: FC<PostCardProps> = ({ post }) => {
         <div className="ml-4">
           <h4 className="text-xl dark:text-gray-200">{post.user.name}</h4>
           <span className="text-sm text-gray-500 dark:text-gray-400">
-            {post.createdAt}
+            {createdAt}
           </span>
         </div>
       </div>
