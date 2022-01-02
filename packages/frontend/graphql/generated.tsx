@@ -18,11 +18,23 @@ export type Scalars = {
 export type Mutation = {
   __typename?: 'Mutation';
   createTextPost: TextPost;
+  likePost: Post;
+  unlikePost: Post;
 };
 
 
 export type MutationCreateTextPostArgs = {
   input: TextPostInput;
+};
+
+
+export type MutationLikePostArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type MutationUnlikePostArgs = {
+  id: Scalars['ID'];
 };
 
 export type Post = {
@@ -69,6 +81,20 @@ export type CreatePostCardTextPostMutationVariables = Exact<{
 
 export type CreatePostCardTextPostMutation = { __typename?: 'Mutation', createTextPost: { __typename?: 'TextPost', id: string } };
 
+export type LikeButtonLikeMutationVariables = Exact<{
+  postID: Scalars['ID'];
+}>;
+
+
+export type LikeButtonLikeMutation = { __typename?: 'Mutation', likePost: { __typename?: 'TextPost', id: string, liked: boolean, likedBy: Array<{ __typename?: 'User', id: string }> } };
+
+export type LikeButtonUnlikeMutationVariables = Exact<{
+  postID: Scalars['ID'];
+}>;
+
+
+export type LikeButtonUnlikeMutation = { __typename?: 'Mutation', unlikePost: { __typename?: 'TextPost', id: string, liked: boolean, likedBy: Array<{ __typename?: 'User', id: string }> } };
+
 export type HomePagePostsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -108,6 +134,80 @@ export function useCreatePostCardTextPostMutation(baseOptions?: Apollo.MutationH
 export type CreatePostCardTextPostMutationHookResult = ReturnType<typeof useCreatePostCardTextPostMutation>;
 export type CreatePostCardTextPostMutationResult = Apollo.MutationResult<CreatePostCardTextPostMutation>;
 export type CreatePostCardTextPostMutationOptions = Apollo.BaseMutationOptions<CreatePostCardTextPostMutation, CreatePostCardTextPostMutationVariables>;
+export const LikeButtonLikeDocument = gql`
+    mutation LikeButtonLike($postID: ID!) {
+  likePost(id: $postID) {
+    id
+    likedBy {
+      id
+    }
+    liked
+  }
+}
+    `;
+export type LikeButtonLikeMutationFn = Apollo.MutationFunction<LikeButtonLikeMutation, LikeButtonLikeMutationVariables>;
+
+/**
+ * __useLikeButtonLikeMutation__
+ *
+ * To run a mutation, you first call `useLikeButtonLikeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useLikeButtonLikeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [likeButtonLikeMutation, { data, loading, error }] = useLikeButtonLikeMutation({
+ *   variables: {
+ *      postID: // value for 'postID'
+ *   },
+ * });
+ */
+export function useLikeButtonLikeMutation(baseOptions?: Apollo.MutationHookOptions<LikeButtonLikeMutation, LikeButtonLikeMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<LikeButtonLikeMutation, LikeButtonLikeMutationVariables>(LikeButtonLikeDocument, options);
+      }
+export type LikeButtonLikeMutationHookResult = ReturnType<typeof useLikeButtonLikeMutation>;
+export type LikeButtonLikeMutationResult = Apollo.MutationResult<LikeButtonLikeMutation>;
+export type LikeButtonLikeMutationOptions = Apollo.BaseMutationOptions<LikeButtonLikeMutation, LikeButtonLikeMutationVariables>;
+export const LikeButtonUnlikeDocument = gql`
+    mutation LikeButtonUnlike($postID: ID!) {
+  unlikePost(id: $postID) {
+    id
+    likedBy {
+      id
+    }
+    liked
+  }
+}
+    `;
+export type LikeButtonUnlikeMutationFn = Apollo.MutationFunction<LikeButtonUnlikeMutation, LikeButtonUnlikeMutationVariables>;
+
+/**
+ * __useLikeButtonUnlikeMutation__
+ *
+ * To run a mutation, you first call `useLikeButtonUnlikeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useLikeButtonUnlikeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [likeButtonUnlikeMutation, { data, loading, error }] = useLikeButtonUnlikeMutation({
+ *   variables: {
+ *      postID: // value for 'postID'
+ *   },
+ * });
+ */
+export function useLikeButtonUnlikeMutation(baseOptions?: Apollo.MutationHookOptions<LikeButtonUnlikeMutation, LikeButtonUnlikeMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<LikeButtonUnlikeMutation, LikeButtonUnlikeMutationVariables>(LikeButtonUnlikeDocument, options);
+      }
+export type LikeButtonUnlikeMutationHookResult = ReturnType<typeof useLikeButtonUnlikeMutation>;
+export type LikeButtonUnlikeMutationResult = Apollo.MutationResult<LikeButtonUnlikeMutation>;
+export type LikeButtonUnlikeMutationOptions = Apollo.BaseMutationOptions<LikeButtonUnlikeMutation, LikeButtonUnlikeMutationVariables>;
 export const HomePagePostsDocument = gql`
     query HomePagePosts {
   posts {

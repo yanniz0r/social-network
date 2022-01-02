@@ -1,0 +1,9 @@
+mutation LikeButtonUnlike($postID: ID!) {
+  unlikePost(id: $postID) {
+    id
+    likedBy{
+      id
+    }
+    liked
+  }
+}

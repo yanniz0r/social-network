@@ -3,7 +3,7 @@ import { Post, User } from "../graphql/generated";
 import LikeButton from "./like-button";
 
 interface PostCardProps {
-  post: Pick<Post, "text" | "createdAt" | "liked"> & {
+  post: Pick<Post, "id" | "text" | "createdAt" | "liked"> & {
     user: Pick<User, "name">;
     likedBy: Pick<User, "firstName" | "id">[];
   };
@@ -41,7 +41,7 @@ const PostCard: FC<PostCardProps> = ({ post }) => {
             ))}
           </div>
         )}
-        <LikeButton liked={post.liked} />
+        <LikeButton postID={post.id} liked={post.liked} />
       </div>
     </div>
   );

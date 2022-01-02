@@ -25,8 +25,9 @@ const resolvers: Resolvers = {
     id(parent) {
       return parent._id.toString();
     },
-    liked(parent) {
-      return Math.random() > 0.5;
+    async liked(parent, _arguments, context) {
+      const signedInUser = await context.authorizationService.ensureAuthorizedUser()
+      return parent.likedBy.some(liker => liker.equals(signedInUser._id))
     },
     likedBy(parent, _result, context) {
       // TODO get rid of casting

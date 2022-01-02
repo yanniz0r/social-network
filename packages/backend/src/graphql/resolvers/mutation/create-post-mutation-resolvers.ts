@@ -1,6 +1,6 @@
 import { Resolvers } from "../../generated";
 
-const createTextPostMutationResolver: Resolvers['Mutation'] = {
+const createPostMutationResolvers: Resolvers['Mutation'] = {
   async createTextPost(_parent, { input }, context) {
     const signedInUser = await context.authorizationService.ensureAuthorizedUser()
     const createdPost = await context.postService.createTextPost(signedInUser, input)
@@ -8,4 +8,4 @@ const createTextPostMutationResolver: Resolvers['Mutation'] = {
   }
 }
 
-export default createTextPostMutationResolver
+export default createPostMutationResolvers

@@ -1,12 +1,9 @@
 import { ObjectId } from "mongodb";
 import { Logger } from "tslog";
 import UserRepository, { UserModel } from "../repositories/user-repository";
+import initObjectID from "../utils/init-object-id";
 
 const logger = new Logger({ name: "UserService" });
-
-function initObjectID(id: ObjectId | string) {
-  return typeof id === "string" ? new ObjectId(id) : id;
-}
 
 export default class UserService {
   constructor(private userRepository: UserRepository) {}

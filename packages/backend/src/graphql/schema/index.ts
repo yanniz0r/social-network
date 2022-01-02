@@ -37,6 +37,8 @@ const schema = gql`
 
   type Mutation {
     createTextPost(input: TextPostInput!): TextPost!
+    likePost(id: ID!): Post!
+    unlikePost(id: ID!): Post!
   }
 `;
 

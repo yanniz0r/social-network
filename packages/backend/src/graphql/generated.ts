@@ -20,11 +20,23 @@ export type Scalars = {
 export type Mutation = {
   __typename?: 'Mutation';
   createTextPost: TextPost;
+  likePost: Post;
+  unlikePost: Post;
 };
 
 
 export type MutationCreateTextPostArgs = {
   input: TextPostInput;
+};
+
+
+export type MutationLikePostArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type MutationUnlikePostArgs = {
+  id: Scalars['ID'];
 };
 
 export type Post = {
@@ -159,6 +171,8 @@ export type ResolversParentTypes = {
 
 export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   createTextPost?: Resolver<ResolversTypes['TextPost'], ParentType, ContextType, RequireFields<MutationCreateTextPostArgs, 'input'>>;
+  likePost?: Resolver<ResolversTypes['Post'], ParentType, ContextType, RequireFields<MutationLikePostArgs, 'id'>>;
+  unlikePost?: Resolver<ResolversTypes['Post'], ParentType, ContextType, RequireFields<MutationUnlikePostArgs, 'id'>>;
 };
 
 export type PostResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Post'] = ResolversParentTypes['Post']> = {

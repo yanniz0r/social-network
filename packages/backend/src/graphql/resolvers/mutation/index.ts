@@ -1,8 +1,10 @@
 import { Resolvers } from "../../generated";
-import createTextPost from "./create-text-post-mutation-resolver";
+import createTextPost from "./create-post-mutation-resolvers";
+import likeMutationResolvers from "./like-mutation-resolvers";
 
 const mutationResolvers: Resolvers['Mutation'] = {
   ...createTextPost,
+  ...likeMutationResolvers,
 }
 
 export default mutationResolvers

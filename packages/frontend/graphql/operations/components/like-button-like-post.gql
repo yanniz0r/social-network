@@ -1,0 +1,9 @@
+mutation LikeButtonLike($postID: ID!) {
+  likePost(id: $postID) {
+    id
+    likedBy{
+      id
+    }
+    liked
+  }
+}
