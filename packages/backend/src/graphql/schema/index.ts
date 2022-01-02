@@ -7,6 +7,7 @@ const schema = gql`
     lastName: String!
     name: String!
     friends: [User!]!
+    birthday: String
   }
 
   interface Post {

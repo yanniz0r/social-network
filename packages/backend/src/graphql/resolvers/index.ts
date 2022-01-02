@@ -20,6 +20,9 @@ const resolvers: Resolvers = {
     name(parent) {
       return [parent.firstName, parent.lastName].join(" ");
     },
+    birthday(parent) {
+      return parent.birthday?.toISOString() ?? null
+    },
     async friends(parent, _arguments, context) {
       const friends = await context.userService.findFriendsForUser(parent._id)
       return friends

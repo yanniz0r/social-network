@@ -1,4 +1,6 @@
+import { differenceInYears, format } from "date-fns";
 import { NextPage } from "next";
+import { FaBirthdayCake } from "react-icons/fa";
 import Card from "../../components/card";
 import { useProfileMeQuery } from "../../graphql/generated";
 
@@ -13,7 +15,13 @@ const ProfileMePage: NextPage = () => {
               {meQuery.data.me.name[0]}
             </div>
             <div className="ml-5">
-              <h1 className="text-xl text-gray-100">{meQuery.data.me.name}</h1>
+              <h1 className="text-xl text-gray-100 mb-2">{meQuery.data.me.name}</h1>
+              {meQuery.data.me.birthday &&
+                <div className="flex items-center text-sm dark:text-gray-400">
+                  <FaBirthdayCake />
+                  <span className="ml-1">Geboren am {format(new Date(meQuery.data.me.birthday), 'dd.MM.yyyy')} ({differenceInYears(new Date(), new Date(meQuery.data.me.birthday))} Jahre alt)</span>
+                </div>
+              }
             </div>
           </Card>
           <div className="mt-4">

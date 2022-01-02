@@ -70,6 +70,7 @@ export type TextPostInput = {
 
 export type User = {
   __typename?: 'User';
+  birthday?: Maybe<Scalars['String']>;
   firstName: Scalars['String'];
   friends: Array<User>;
   id: Scalars['ID'];
@@ -202,6 +203,7 @@ export type TextPostResolvers<ContextType = Context, ParentType extends Resolver
 };
 
 export type UserResolvers<ContextType = Context, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
+  birthday?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   firstName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   friends?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;

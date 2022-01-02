@@ -4,6 +4,7 @@ query ProfileMe {
     firstName
     lastName
     name
+    birthday
     friends{
       id
       name
