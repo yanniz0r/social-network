@@ -69,6 +69,7 @@ export type TextPostInput = {
 export type User = {
   __typename?: 'User';
   firstName: Scalars['String'];
+  friends: Array<User>;
   id: Scalars['ID'];
   lastName: Scalars['String'];
   name: Scalars['String'];
@@ -103,7 +104,7 @@ export type HomePagePostsQuery = { __typename?: 'Query', posts: Array<{ __typena
 export type ProfileMeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ProfileMeQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, firstName: string, lastName: string, name: string } };
+export type ProfileMeQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, firstName: string, lastName: string, name: string, friends: Array<{ __typename?: 'User', id: string, name: string }> } };
 
 
 export const CreatePostCardTextPostDocument = gql`
@@ -265,6 +266,10 @@ export const ProfileMeDocument = gql`
     firstName
     lastName
     name
+    friends {
+      id
+      name
+    }
   }
 }
     `;

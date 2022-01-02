@@ -4,5 +4,9 @@ query ProfileMe {
     firstName
     lastName
     name
+    friends{
+      id
+      name
+    }
   }
 }
