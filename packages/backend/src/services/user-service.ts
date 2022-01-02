@@ -1,5 +1,6 @@
 import { ObjectId } from "mongodb";
 import { Logger } from "tslog";
+import { User } from "../graphql/generated";
 import UserRepository, { UserModel } from "../repositories/user-repository";
 import initObjectID from "../utils/init-object-id";
 
@@ -22,5 +23,21 @@ export default class UserService {
   async findUsers(ids: Array<ObjectId | string>) {
     logger.info("Find users", ids);
     return this.userRepository.findUsers(ids.map(initObjectID));
+  }
+
+  async findFriendsForUser(id: ObjectId | string): Promise<UserModel[]> {
+    const friendships = await this.userRepository.findFriendshipsForUser(initObjectID(id))
+    const friendIDs = friendships.map(friendship => {
+      if (friendship.receiver.equals(id)) {
+        return friendship.requester
+      } else {
+        return friendship.receiver
+      }
+    })
+    const loadedUsers = await this.userRepository.findUsers(friendIDs)
+    const users = loadedUsers.filter((user): user is UserModel => {
+      return Boolean(user) && !(user instanceof Error)
+    })
+    return users
   }
 }

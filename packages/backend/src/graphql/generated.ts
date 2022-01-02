@@ -71,6 +71,7 @@ export type TextPostInput = {
 export type User = {
   __typename?: 'User';
   firstName: Scalars['String'];
+  friends: Array<User>;
   id: Scalars['ID'];
   lastName: Scalars['String'];
   name: Scalars['String'];
@@ -202,6 +203,7 @@ export type TextPostResolvers<ContextType = Context, ParentType extends Resolver
 
 export type UserResolvers<ContextType = Context, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
   firstName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  friends?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   lastName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
