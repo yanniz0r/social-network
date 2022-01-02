@@ -17,6 +17,7 @@ const CreatePostCard: FC<CreatePostCardProps> = ({ onPost }) => {
         }
       }
     })
+    setText('')
     onPost?.()
   }
 
