@@ -21,13 +21,20 @@ export type FriendshipRequest = {
   __typename?: 'FriendshipRequest';
   date: Scalars['String'];
   from: User;
+  id: Scalars['ID'];
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
+  acceptFriendshipRequest: FriendshipRequest;
   createTextPost: TextPost;
   likePost: Post;
   unlikePost: Post;
+};
+
+
+export type MutationAcceptFriendshipRequestArgs = {
+  id: Scalars['ID'];
 };
 
 
@@ -59,6 +66,12 @@ export type Query = {
   friendshipRequests: Array<FriendshipRequest>;
   me: User;
   posts: Array<Post>;
+  user?: Maybe<User>;
+};
+
+
+export type QueryUserArgs = {
+  id: Scalars['ID'];
 };
 
 export type TextPost = Post & {
@@ -185,10 +198,12 @@ export type ResolversParentTypes = {
 export type FriendshipRequestResolvers<ContextType = Context, ParentType extends ResolversParentTypes['FriendshipRequest'] = ResolversParentTypes['FriendshipRequest']> = {
   date?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   from?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+  acceptFriendshipRequest?: Resolver<ResolversTypes['FriendshipRequest'], ParentType, ContextType, RequireFields<MutationAcceptFriendshipRequestArgs, 'id'>>;
   createTextPost?: Resolver<ResolversTypes['TextPost'], ParentType, ContextType, RequireFields<MutationCreateTextPostArgs, 'input'>>;
   likePost?: Resolver<ResolversTypes['Post'], ParentType, ContextType, RequireFields<MutationLikePostArgs, 'id'>>;
   unlikePost?: Resolver<ResolversTypes['Post'], ParentType, ContextType, RequireFields<MutationUnlikePostArgs, 'id'>>;
@@ -208,6 +223,7 @@ export type QueryResolvers<ContextType = Context, ParentType extends ResolversPa
   friendshipRequests?: Resolver<Array<ResolversTypes['FriendshipRequest']>, ParentType, ContextType>;
   me?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   posts?: Resolver<Array<ResolversTypes['Post']>, ParentType, ContextType>;
+  user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>;
 };
 
 export type TextPostResolvers<ContextType = Context, ParentType extends ResolversParentTypes['TextPost'] = ResolversParentTypes['TextPost']> = {

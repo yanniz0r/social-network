@@ -63,4 +63,20 @@ export default class UserRepository {
   async findUsers(objectIDs: Array<ObjectID>) {
     return this.findUserDataloader.loadMany(objectIDs);
   }
+
+  async findFriendship(id: ObjectID) {
+    return this.friendshipCollection.findOne({
+      _id: id
+    })
+  }
+
+  async updateFriendship(id: ObjectID, friendship: Partial<Friendship>) {
+    return this.friendshipCollection.updateOne({
+      _id: id
+    }, {
+      $set: {
+        ...friendship
+      }
+    })
+  }
 }

@@ -1,0 +1,14 @@
+query ProfileDetailPage($userID: ID!) {
+  user(id: $userID) {
+    id
+    name
+    status
+    online
+    birthday
+    friends {
+      id
+      name
+      online
+    }
+  } 
+}

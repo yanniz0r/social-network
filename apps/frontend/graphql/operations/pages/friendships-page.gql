@@ -1,0 +1,29 @@
+query FriendshipsPage {
+  me {
+    id
+    friends {
+      id
+      name
+      online
+    }
+  }
+  friendshipRequests {
+    id
+    date
+    from {
+      id
+      name
+      online
+    }
+  }
+}
+
+mutation FriendsPageAcceptFriendshipRequest($friendshipID: ID!) {
+  acceptFriendshipRequest(id: $friendshipID) {
+    id
+    date
+    from {
+      id
+    }
+  }
+}

@@ -19,13 +19,20 @@ export type FriendshipRequest = {
   __typename?: 'FriendshipRequest';
   date: Scalars['String'];
   from: User;
+  id: Scalars['ID'];
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
+  acceptFriendshipRequest: FriendshipRequest;
   createTextPost: TextPost;
   likePost: Post;
   unlikePost: Post;
+};
+
+
+export type MutationAcceptFriendshipRequestArgs = {
+  id: Scalars['ID'];
 };
 
 
@@ -57,6 +64,12 @@ export type Query = {
   friendshipRequests: Array<FriendshipRequest>;
   me: User;
   posts: Array<Post>;
+  user?: Maybe<User>;
+};
+
+
+export type QueryUserArgs = {
+  id: Scalars['ID'];
 };
 
 export type TextPost = Post & {
@@ -111,10 +124,29 @@ export type NavigationQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type NavigationQuery = { __typename?: 'Query', friendshipRequests: Array<{ __typename?: 'FriendshipRequest', date: string, from: { __typename?: 'User', id: string, name: string } }> };
 
+export type FriendshipsPageQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type FriendshipsPageQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, friends: Array<{ __typename?: 'User', id: string, name: string, online: boolean }> }, friendshipRequests: Array<{ __typename?: 'FriendshipRequest', id: string, date: string, from: { __typename?: 'User', id: string, name: string, online: boolean } }> };
+
+export type FriendsPageAcceptFriendshipRequestMutationVariables = Exact<{
+  friendshipID: Scalars['ID'];
+}>;
+
+
+export type FriendsPageAcceptFriendshipRequestMutation = { __typename?: 'Mutation', acceptFriendshipRequest: { __typename?: 'FriendshipRequest', id: string, date: string, from: { __typename?: 'User', id: string } } };
+
 export type HomePagePostsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type HomePagePostsQuery = { __typename?: 'Query', posts: Array<{ __typename?: 'TextPost', id: string, text: string, createdAt: string, liked: boolean, user: { __typename?: 'User', id: string, name: string }, likedBy: Array<{ __typename?: 'User', id: string, firstName: string }> }> };
+
+export type ProfileDetailPageQueryVariables = Exact<{
+  userID: Scalars['ID'];
+}>;
+
+
+export type ProfileDetailPageQuery = { __typename?: 'Query', user?: { __typename?: 'User', id: string, name: string, status?: string | null | undefined, online: boolean, birthday?: string | null | undefined, friends: Array<{ __typename?: 'User', id: string, name: string, online: boolean }> } | null | undefined };
 
 export type ProfileMeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -267,6 +299,91 @@ export function useNavigationLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type NavigationQueryHookResult = ReturnType<typeof useNavigationQuery>;
 export type NavigationLazyQueryHookResult = ReturnType<typeof useNavigationLazyQuery>;
 export type NavigationQueryResult = Apollo.QueryResult<NavigationQuery, NavigationQueryVariables>;
+export const FriendshipsPageDocument = gql`
+    query FriendshipsPage {
+  me {
+    id
+    friends {
+      id
+      name
+      online
+    }
+  }
+  friendshipRequests {
+    id
+    date
+    from {
+      id
+      name
+      online
+    }
+  }
+}
+    `;
+
+/**
+ * __useFriendshipsPageQuery__
+ *
+ * To run a query within a React component, call `useFriendshipsPageQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFriendshipsPageQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFriendshipsPageQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useFriendshipsPageQuery(baseOptions?: Apollo.QueryHookOptions<FriendshipsPageQuery, FriendshipsPageQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FriendshipsPageQuery, FriendshipsPageQueryVariables>(FriendshipsPageDocument, options);
+      }
+export function useFriendshipsPageLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FriendshipsPageQuery, FriendshipsPageQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FriendshipsPageQuery, FriendshipsPageQueryVariables>(FriendshipsPageDocument, options);
+        }
+export type FriendshipsPageQueryHookResult = ReturnType<typeof useFriendshipsPageQuery>;
+export type FriendshipsPageLazyQueryHookResult = ReturnType<typeof useFriendshipsPageLazyQuery>;
+export type FriendshipsPageQueryResult = Apollo.QueryResult<FriendshipsPageQuery, FriendshipsPageQueryVariables>;
+export const FriendsPageAcceptFriendshipRequestDocument = gql`
+    mutation FriendsPageAcceptFriendshipRequest($friendshipID: ID!) {
+  acceptFriendshipRequest(id: $friendshipID) {
+    id
+    date
+    from {
+      id
+    }
+  }
+}
+    `;
+export type FriendsPageAcceptFriendshipRequestMutationFn = Apollo.MutationFunction<FriendsPageAcceptFriendshipRequestMutation, FriendsPageAcceptFriendshipRequestMutationVariables>;
+
+/**
+ * __useFriendsPageAcceptFriendshipRequestMutation__
+ *
+ * To run a mutation, you first call `useFriendsPageAcceptFriendshipRequestMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useFriendsPageAcceptFriendshipRequestMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [friendsPageAcceptFriendshipRequestMutation, { data, loading, error }] = useFriendsPageAcceptFriendshipRequestMutation({
+ *   variables: {
+ *      friendshipID: // value for 'friendshipID'
+ *   },
+ * });
+ */
+export function useFriendsPageAcceptFriendshipRequestMutation(baseOptions?: Apollo.MutationHookOptions<FriendsPageAcceptFriendshipRequestMutation, FriendsPageAcceptFriendshipRequestMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<FriendsPageAcceptFriendshipRequestMutation, FriendsPageAcceptFriendshipRequestMutationVariables>(FriendsPageAcceptFriendshipRequestDocument, options);
+      }
+export type FriendsPageAcceptFriendshipRequestMutationHookResult = ReturnType<typeof useFriendsPageAcceptFriendshipRequestMutation>;
+export type FriendsPageAcceptFriendshipRequestMutationResult = Apollo.MutationResult<FriendsPageAcceptFriendshipRequestMutation>;
+export type FriendsPageAcceptFriendshipRequestMutationOptions = Apollo.BaseMutationOptions<FriendsPageAcceptFriendshipRequestMutation, FriendsPageAcceptFriendshipRequestMutationVariables>;
 export const HomePagePostsDocument = gql`
     query HomePagePosts {
   posts {
@@ -312,6 +429,50 @@ export function useHomePagePostsLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
 export type HomePagePostsQueryHookResult = ReturnType<typeof useHomePagePostsQuery>;
 export type HomePagePostsLazyQueryHookResult = ReturnType<typeof useHomePagePostsLazyQuery>;
 export type HomePagePostsQueryResult = Apollo.QueryResult<HomePagePostsQuery, HomePagePostsQueryVariables>;
+export const ProfileDetailPageDocument = gql`
+    query ProfileDetailPage($userID: ID!) {
+  user(id: $userID) {
+    id
+    name
+    status
+    online
+    birthday
+    friends {
+      id
+      name
+      online
+    }
+  }
+}
+    `;
+
+/**
+ * __useProfileDetailPageQuery__
+ *
+ * To run a query within a React component, call `useProfileDetailPageQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProfileDetailPageQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProfileDetailPageQuery({
+ *   variables: {
+ *      userID: // value for 'userID'
+ *   },
+ * });
+ */
+export function useProfileDetailPageQuery(baseOptions: Apollo.QueryHookOptions<ProfileDetailPageQuery, ProfileDetailPageQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ProfileDetailPageQuery, ProfileDetailPageQueryVariables>(ProfileDetailPageDocument, options);
+      }
+export function useProfileDetailPageLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ProfileDetailPageQuery, ProfileDetailPageQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ProfileDetailPageQuery, ProfileDetailPageQueryVariables>(ProfileDetailPageDocument, options);
+        }
+export type ProfileDetailPageQueryHookResult = ReturnType<typeof useProfileDetailPageQuery>;
+export type ProfileDetailPageLazyQueryHookResult = ReturnType<typeof useProfileDetailPageLazyQuery>;
+export type ProfileDetailPageQueryResult = Apollo.QueryResult<ProfileDetailPageQuery, ProfileDetailPageQueryVariables>;
 export const ProfileMeDocument = gql`
     query ProfileMe {
   me {

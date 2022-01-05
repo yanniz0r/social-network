@@ -31,6 +31,7 @@ const schema = gql`
   }
   
   type FriendshipRequest {
+    id: ID!
     date: String!
     from: User!
   }
@@ -39,15 +40,16 @@ const schema = gql`
     text: String!
   }
   
-
   type Query {
     me: User!
+    user(id: ID!): User
     friendshipRequests: [FriendshipRequest!]!
     posts: [Post!]!
   }
 
   type Mutation {
     createTextPost(input: TextPostInput!): TextPost!
+    acceptFriendshipRequest(id: ID!): FriendshipRequest!
     likePost(id: ID!): Post!
     unlikePost(id: ID!): Post!
   }

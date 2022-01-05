@@ -43,4 +43,15 @@ export default class UserService {
   async findFriendshipRequestsForUser(id: ObjectId | string): Promise<FriendshipModel[]> {
     return this.userRepository.findUnestablishedFriendshipsForUser(initObjectID(id))
   }
+
+  async findFriendshipRequest(id: ObjectId | string) {
+    return this.userRepository.findFriendship(initObjectID(id))
+  }
+
+  async acceptFriendshipRequest(id: ObjectId | string) {
+    await this.userRepository.updateFriendship(initObjectID(id), {
+      acceptedAt: new Date()
+    })
+  }
+
 }
