@@ -2,7 +2,7 @@ import { ApolloServer } from "apollo-server";
 import { Logger } from "tslog";
 import { Context } from "./context";
 import resolvers from "./graphql/resolvers";
-import schema from "./graphql/schema";
+import schema from "@social/schema";
 
 const logger = new Logger({ name: "apollo-server" });
 

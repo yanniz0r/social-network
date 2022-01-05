@@ -1,4 +1,4 @@
-import { gql } from "apollo-server";
+import { gql } from "graphql-tag";
 
 const schema = gql`
   type User {

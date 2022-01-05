@@ -1,8 +1,14 @@
 overwrite: true
-schema: "src/graphql/schema/index.ts"
+schema: "packages/schema/src/index.ts"
 documents: null
 generates:
-  src/graphql/generated.ts:
+  apps/frontend/graphql/generated.tsx:
+    documents: "apps/frontend/graphql/**/*.gql"
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"
+  apps/backend/src/graphql/generated.ts:
     config:
       contextType: ../context#Context
       mappers:

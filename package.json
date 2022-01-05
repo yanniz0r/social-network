@@ -3,13 +3,38 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
-  "private": "true",
+  "private": true,
   "workspaces": {
     "packages": [
-      "packages/*"
+      "packages/*",
+      "apps/*"
     ]
   },
+  "scripts": {
+    "dev": "yarn turbo run dev",
+    "generate:types": "graphql-codegen --config codegen.yml"
+  },
   "devDependencies": {
-    "prettier": "^2.5.1"
+    "prettier": "^2.5.1",
+    "turbo": "^1.0.24"
+  },
+  "turbo": {
+    "baseBranch": "origin/main",
+    "pipeline": {
+      "build": {
+        "dependsOn": ["^build"],
+        "outputs": [".next/**", "dist/**"]
+      },
+      "test": {
+        "dependsOn": ["^build"],
+        "outputs": []
+      },
+      "lint": {
+        "outputs": []
+      },
+      "dev": {
+        "cache": false
+      }
+    }
   }
 }

@@ -1,0 +1,16 @@
+{
+  "name": "@social/schema",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc -w"
+  },
+  "dependencies": {
+    "graphql-tag": "^2.12.6"
+  },
+  "devDependencies": {
+    "typescript": "^4.5.4"
+  }
+}
