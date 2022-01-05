@@ -15,6 +15,12 @@ export type Scalars = {
   Float: number;
 };
 
+export type FriendshipRequest = {
+  __typename?: 'FriendshipRequest';
+  date: Scalars['String'];
+  from: User;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   createTextPost: TextPost;
@@ -48,6 +54,7 @@ export type Post = {
 
 export type Query = {
   __typename?: 'Query';
+  friendshipRequests: Array<FriendshipRequest>;
   me: User;
   posts: Array<Post>;
 };
@@ -98,6 +105,11 @@ export type LikeButtonUnlikeMutationVariables = Exact<{
 
 
 export type LikeButtonUnlikeMutation = { __typename?: 'Mutation', unlikePost: { __typename?: 'TextPost', id: string, liked: boolean, likedBy: Array<{ __typename?: 'User', id: string }> } };
+
+export type NavigationQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type NavigationQuery = { __typename?: 'Query', friendshipRequests: Array<{ __typename?: 'FriendshipRequest', date: string, from: { __typename?: 'User', id: string, name: string } }> };
 
 export type HomePagePostsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -217,6 +229,44 @@ export function useLikeButtonUnlikeMutation(baseOptions?: Apollo.MutationHookOpt
 export type LikeButtonUnlikeMutationHookResult = ReturnType<typeof useLikeButtonUnlikeMutation>;
 export type LikeButtonUnlikeMutationResult = Apollo.MutationResult<LikeButtonUnlikeMutation>;
 export type LikeButtonUnlikeMutationOptions = Apollo.BaseMutationOptions<LikeButtonUnlikeMutation, LikeButtonUnlikeMutationVariables>;
+export const NavigationDocument = gql`
+    query Navigation {
+  friendshipRequests {
+    date
+    from {
+      id
+      name
+    }
+  }
+}
+    `;
+
+/**
+ * __useNavigationQuery__
+ *
+ * To run a query within a React component, call `useNavigationQuery` and pass it any options that fit your needs.
+ * When your component renders, `useNavigationQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useNavigationQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useNavigationQuery(baseOptions?: Apollo.QueryHookOptions<NavigationQuery, NavigationQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<NavigationQuery, NavigationQueryVariables>(NavigationDocument, options);
+      }
+export function useNavigationLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<NavigationQuery, NavigationQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<NavigationQuery, NavigationQueryVariables>(NavigationDocument, options);
+        }
+export type NavigationQueryHookResult = ReturnType<typeof useNavigationQuery>;
+export type NavigationLazyQueryHookResult = ReturnType<typeof useNavigationLazyQuery>;
+export type NavigationQueryResult = Apollo.QueryResult<NavigationQuery, NavigationQueryVariables>;
 export const HomePagePostsDocument = gql`
     query HomePagePosts {
   posts {

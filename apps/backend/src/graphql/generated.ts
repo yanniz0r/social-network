@@ -1,5 +1,5 @@
 import { GraphQLResolveInfo } from 'graphql';
-import { UserModel } from '../repositories/user-repository';
+import { UserModel, FriendshipModel } from '../repositories/user-repository';
 import { PostModel } from '../repositories/post-repository';
 import { Context } from '../context';
 export type Maybe<T> = T | null;
@@ -15,6 +15,12 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+};
+
+export type FriendshipRequest = {
+  __typename?: 'FriendshipRequest';
+  date: Scalars['String'];
+  from: User;
 };
 
 export type Mutation = {
@@ -50,6 +56,7 @@ export type Post = {
 
 export type Query = {
   __typename?: 'Query';
+  friendshipRequests: Array<FriendshipRequest>;
   me: User;
   posts: Array<Post>;
 };
@@ -150,6 +157,7 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  FriendshipRequest: ResolverTypeWrapper<FriendshipModel>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
   Mutation: ResolverTypeWrapper<{}>;
   Post: ResolverTypeWrapper<PostModel>;
@@ -163,6 +171,7 @@ export type ResolversTypes = {
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   Boolean: Scalars['Boolean'];
+  FriendshipRequest: FriendshipModel;
   ID: Scalars['ID'];
   Mutation: {};
   Post: PostModel;
@@ -171,6 +180,12 @@ export type ResolversParentTypes = {
   TextPost: PostModel;
   TextPostInput: TextPostInput;
   User: UserModel;
+};
+
+export type FriendshipRequestResolvers<ContextType = Context, ParentType extends ResolversParentTypes['FriendshipRequest'] = ResolversParentTypes['FriendshipRequest']> = {
+  date?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  from?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
@@ -190,6 +205,7 @@ export type PostResolvers<ContextType = Context, ParentType extends ResolversPar
 };
 
 export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+  friendshipRequests?: Resolver<Array<ResolversTypes['FriendshipRequest']>, ParentType, ContextType>;
   me?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   posts?: Resolver<Array<ResolversTypes['Post']>, ParentType, ContextType>;
 };
@@ -217,6 +233,7 @@ export type UserResolvers<ContextType = Context, ParentType extends ResolversPar
 };
 
 export type Resolvers<ContextType = Context> = {
+  FriendshipRequest?: FriendshipRequestResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Post?: PostResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;

@@ -1,0 +1,9 @@
+query Navigation {
+  friendshipRequests{
+    date
+    from{
+      id
+      name
+    }
+  }
+}

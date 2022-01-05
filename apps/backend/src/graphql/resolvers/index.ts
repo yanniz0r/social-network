@@ -2,8 +2,11 @@ import { UserModel } from "../../repositories/user-repository";
 import { Resolvers } from "../generated";
 import Mutation from "./mutation";
 import { differenceInMinutes } from "date-fns";
+import Query from "./query";
+import FriendshipRequest from "./type/friendship-request-type-resolver";
 
 const resolvers: Resolvers = {
+  FriendshipRequest,
   Post: {
     __resolveType(post) {
       switch (post.type) {
@@ -60,15 +63,7 @@ const resolvers: Resolvers = {
       return parent.createdAt.toISOString();
     },
   },
-  Query: {
-    async me(_parent, _result, context) {
-      const user = await context.userService.getUser();
-      return user;
-    },
-    async posts(_parent, _result, context) {
-      return context.postService.getPosts();
-    },
-  },
+  Query,
   Mutation,
 };
 

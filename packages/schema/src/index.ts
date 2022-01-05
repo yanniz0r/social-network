@@ -29,13 +29,20 @@ const schema = gql`
     liked: Boolean!
     likedBy: [User!]!
   }
+  
+  type FriendshipRequest {
+    date: String!
+    from: User!
+  }
 
   input TextPostInput {
     text: String!
   }
+  
 
   type Query {
     me: User!
+    friendshipRequests: [FriendshipRequest!]!
     posts: [Post!]!
   }
 

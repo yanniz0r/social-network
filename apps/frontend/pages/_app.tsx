@@ -1,4 +1,6 @@
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+import { AppProps } from "next/app";
+import Navigation from "../components/navigation";
 import "../styles/globals.css";
 
 const apolloClient = new ApolloClient({
@@ -6,11 +8,14 @@ const apolloClient = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps }: AppProps) {
   return (
     <div className="bg-gray-50 dark:bg-gray-900 min-h-screen">
       <ApolloProvider client={apolloClient}>
-        <Component {...pageProps} />
+        <>
+          <Navigation />
+          <Component {...pageProps} />
+        </>
       </ApolloProvider>
     </div>
   );

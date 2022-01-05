@@ -13,6 +13,7 @@ generates:
       contextType: ../context#Context
       mappers:
         User: ../repositories/user-repository#UserModel
+        FriendshipRequest: ../repositories/user-repository#FriendshipModel
         Post: ../repositories/post-repository#PostModel
         TextPost: ../repositories/post-repository#PostModel
     plugins:

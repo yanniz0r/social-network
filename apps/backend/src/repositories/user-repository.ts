@@ -2,6 +2,7 @@ import { ObjectID } from "bson";
 import DataLoader from "dataloader";
 import { Collection, Db, ObjectId, WithId } from "mongodb";
 import { Logger } from "tslog";
+import FriendshipDataloader from "../dataloader/friendship-dataloader";
 import Friendship from "../types/friendship";
 import User from "../types/user";
 
@@ -33,39 +34,14 @@ export default class UserRepository {
     }
   );
 
-  private findEstablishedFriendshipsDataloader = new DataLoader<ObjectId, FriendshipModel[]>(
-    async (keys) => {
-      const friendships = await this.friendshipCollection.find({
-        acceptedAt: {
-          $exists: true
-        },
-        $or: [
-          {
-            receiver: {
-              $in: keys
-            }
-          },
-          {
-            requester: {
-              $in: keys
-            }
-          },
-        ]
-      }).toArray()
-      
-      return keys.map(userID => {
-        const matchingFriendships = friendships.filter(friendship => {
-          return friendship.requester.equals(userID) || friendship.receiver.equals(userID)
-        })
-        return matchingFriendships
-      })
-    }
-  );
-
+  private findEstablishedFriendshipsDataloader: FriendshipDataloader
+  private findUnestablishedFriendshipsDataloader: FriendshipDataloader
 
   constructor(db: Db) {
     this.userCollection = db.collection("users");
     this.friendshipCollection = db.collection("friendships");
+    this.findEstablishedFriendshipsDataloader = new FriendshipDataloader(this.friendshipCollection, true)
+    this.findUnestablishedFriendshipsDataloader = new FriendshipDataloader(this.friendshipCollection, false)
   }
 
   async findFirst() {
@@ -76,8 +52,12 @@ export default class UserRepository {
     return this.findUserDataloader.load(id);
   }
 
-  async findFriendshipsForUser(id: ObjectId) {
+  async findEstablishedFriendshipsForUser(id: ObjectId) {
     return this.findEstablishedFriendshipsDataloader.load(id);
+  }
+
+  async findUnestablishedFriendshipsForUser(id: ObjectId) {
+    return this.findUnestablishedFriendshipsDataloader.load(id);
   }
 
   async findUsers(objectIDs: Array<ObjectID>) {

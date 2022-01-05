@@ -1,7 +1,6 @@
 import { ObjectId } from "mongodb";
 import { Logger } from "tslog";
-import { User } from "../graphql/generated";
-import UserRepository, { UserModel } from "../repositories/user-repository";
+import UserRepository, { FriendshipModel, UserModel } from "../repositories/user-repository";
 import initObjectID from "../utils/init-object-id";
 
 const logger = new Logger({ name: "UserService" });
@@ -26,7 +25,7 @@ export default class UserService {
   }
 
   async findFriendsForUser(id: ObjectId | string): Promise<UserModel[]> {
-    const friendships = await this.userRepository.findFriendshipsForUser(initObjectID(id))
+    const friendships = await this.userRepository.findEstablishedFriendshipsForUser(initObjectID(id))
     const friendIDs = friendships.map(friendship => {
       if (friendship.receiver.equals(id)) {
         return friendship.requester
@@ -39,5 +38,9 @@ export default class UserService {
       return Boolean(user) && !(user instanceof Error)
     })
     return users
+  }
+
+  async findFriendshipRequestsForUser(id: ObjectId | string): Promise<FriendshipModel[]> {
+    return this.userRepository.findUnestablishedFriendshipsForUser(initObjectID(id))
   }
 }

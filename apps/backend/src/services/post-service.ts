@@ -6,7 +6,7 @@ import { UserModel } from "../repositories/user-repository";
 import Post from "../types/post";
 import initObjectID from "../utils/init-object-id";
 
-const logger = new Logger({ name: "UserService" });
+const logger = new Logger({ name: "PostService" });
 
 export default class PostService {
 
