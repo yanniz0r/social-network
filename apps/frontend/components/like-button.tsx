@@ -1,6 +1,9 @@
 import { FC } from "react";
 import { FaThumbsUp } from "react-icons/fa";
-import { useLikeButtonLikeMutation, useLikeButtonUnlikeMutation } from "../graphql/generated";
+import {
+  useLikeButtonLikeMutation,
+  useLikeButtonUnlikeMutation,
+} from "../graphql/generated";
 
 interface LikeButtonProps {
   postID: string;
@@ -8,8 +11,8 @@ interface LikeButtonProps {
 }
 
 const LikeButton: FC<LikeButtonProps> = ({ liked, postID }) => {
-  const [likePost] = useLikeButtonLikeMutation()
-  const [unlikePost] = useLikeButtonUnlikeMutation()
+  const [likePost] = useLikeButtonLikeMutation();
+  const [unlikePost] = useLikeButtonUnlikeMutation();
 
   let buttonClasses = "flex items-center rounded-lg px-4 py-2 bg-opacity-10 ";
   if (liked) {
@@ -22,15 +25,15 @@ const LikeButton: FC<LikeButtonProps> = ({ liked, postID }) => {
     if (liked) {
       await unlikePost({
         variables: {
-          postID: postID
-        }
-      })
+          postID: postID,
+        },
+      });
     } else {
       await likePost({
         variables: {
-          postID: postID
-        }
-      })
+          postID: postID,
+        },
+      });
     }
   }
 

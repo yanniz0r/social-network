@@ -1,6 +1,9 @@
 import { ObjectId } from "mongodb";
 import { Logger } from "tslog";
-import UserRepository, { FriendshipModel, UserModel } from "../repositories/user-repository";
+import UserRepository, {
+  FriendshipModel,
+  UserModel,
+} from "../repositories/user-repository";
 import initObjectID from "../utils/init-object-id";
 
 const logger = new Logger({ name: "UserService" });
@@ -25,33 +28,39 @@ export default class UserService {
   }
 
   async findFriendsForUser(id: ObjectId | string): Promise<UserModel[]> {
-    const friendships = await this.userRepository.findEstablishedFriendshipsForUser(initObjectID(id))
-    const friendIDs = friendships.map(friendship => {
+    const friendships =
+      await this.userRepository.findEstablishedFriendshipsForUser(
+        initObjectID(id)
+      );
+    const friendIDs = friendships.map((friendship) => {
       if (friendship.receiver.equals(id)) {
-        return friendship.requester
+        return friendship.requester;
       } else {
-        return friendship.receiver
+        return friendship.receiver;
       }
-    })
-    const loadedUsers = await this.userRepository.findUsers(friendIDs)
+    });
+    const loadedUsers = await this.userRepository.findUsers(friendIDs);
     const users = loadedUsers.filter((user): user is UserModel => {
-      return Boolean(user) && !(user instanceof Error)
-    })
-    return users
+      return Boolean(user) && !(user instanceof Error);
+    });
+    return users;
   }
 
-  async findFriendshipRequestsForUser(id: ObjectId | string): Promise<FriendshipModel[]> {
-    return this.userRepository.findUnestablishedFriendshipsForUser(initObjectID(id))
+  async findFriendshipRequestsForUser(
+    id: ObjectId | string
+  ): Promise<FriendshipModel[]> {
+    return this.userRepository.findUnestablishedFriendshipsForUser(
+      initObjectID(id)
+    );
   }
 
   async findFriendshipRequest(id: ObjectId | string) {
-    return this.userRepository.findFriendship(initObjectID(id))
+    return this.userRepository.findFriendship(initObjectID(id));
   }
 
   async acceptFriendshipRequest(id: ObjectId | string) {
     await this.userRepository.updateFriendship(initObjectID(id), {
-      acceptedAt: new Date()
-    })
+      acceptedAt: new Date(),
+    });
   }
-
 }

@@ -10,20 +10,22 @@ const UserDetailPage: NextPage<UserDetailPageProps> = ({ userID }) => {
   const userDetailPageQuery = useProfileDetailPageQuery({
     variables: {
       userID,
-    }
-  })
-  return <div className="p-10">
-    <Card>
-      {userID}
-      {userDetailPageQuery.data?.user?.name}
-    </Card>
-  </div>
-}
+    },
+  });
+  return (
+    <div className="p-10">
+      <Card>
+        {userID}
+        {userDetailPageQuery.data?.user?.name}
+      </Card>
+    </div>
+  );
+};
 
 UserDetailPage.getInitialProps = (context) => {
   return {
-    userID: context.query['userID'] as string
-  }
-}
+    userID: context.query["userID"] as string,
+  };
+};
 
-export default UserDetailPage
+export default UserDetailPage;

@@ -1,33 +1,38 @@
 import { formatDistance } from "date-fns";
 import { FC, useState } from "react";
 import { FaComment } from "react-icons/fa";
-import { Post, User, Comment, usePostCardCommentPostMutation } from "../graphql/generated";
+import {
+  Post,
+  User,
+  Comment,
+  usePostCardCommentPostMutation,
+} from "../graphql/generated";
 import Avatar from "./avatar";
 import IconButton from "./icon-button";
 import LikeButton from "./like-button";
 
 interface PostCardProps {
-  me: Pick<User, 'id' | 'name' | 'online'>
+  me: Pick<User, "id" | "name" | "online">;
   post: Pick<Post, "id" | "text" | "createdAt" | "liked"> & {
     user: Pick<User, "name">;
     likedBy: Pick<User, "firstName" | "id">[];
     comments: Array<
       Pick<Comment, "text" | "createdAt"> & {
-        user: Pick<User, "id" | "name" | "online">
+        user: Pick<User, "id" | "name" | "online">;
       }
-    >
+    >;
   };
 }
 
 const PostCard: FC<PostCardProps> = ({ post, me }) => {
-  const [comment, setComment] = useState('')
-  const [commentPostMutation] = usePostCardCommentPostMutation()
+  const [comment, setComment] = useState("");
+  const [commentPostMutation] = usePostCardCommentPostMutation();
   const createdAt = formatDistance(new Date(post.createdAt), new Date(), {
     addSuffix: true,
-  })
+  });
 
   function createComment() {
-    if (!comment) return
+    if (!comment) return;
     commentPostMutation({
       variables: {
         postID: post.id,
@@ -35,9 +40,9 @@ const PostCard: FC<PostCardProps> = ({ post, me }) => {
       },
       optimisticResponse() {
         return {
-          __typename: 'Mutation',
+          __typename: "Mutation",
           commentPost: {
-            __typename: 'TextPost',
+            __typename: "TextPost",
             id: post.id,
             comments: [
               ...post.comments,
@@ -46,14 +51,14 @@ const PostCard: FC<PostCardProps> = ({ post, me }) => {
                 text: comment,
                 user: {
                   ...me,
-                }
-              }
-            ]
-          }
-        }
-      }
-    })
-    setComment('')
+                },
+              },
+            ],
+          },
+        };
+      },
+    });
+    setComment("");
   }
 
   return (
@@ -90,11 +95,22 @@ const PostCard: FC<PostCardProps> = ({ post, me }) => {
         <LikeButton postID={post.id} liked={post.liked} />
       </div>
       <div className="px-5 pb-5">
-        {post.comments.map(comment => (
+        {post.comments.map((comment) => (
           <div className="flex mt-4">
-            <Avatar size="md" name={comment.user.name} online={comment.user.online} />
+            <Avatar
+              size="md"
+              name={comment.user.name}
+              online={comment.user.online}
+            />
             <div className="ml-2">
-              <h4 className="text-lg dark:text-white">{comment.user.name} <small className="dark:text-gray-400">{formatDistance(new Date(comment.createdAt), new Date(), { addSuffix: true })}</small></h4>
+              <h4 className="text-lg dark:text-white">
+                {comment.user.name}{" "}
+                <small className="dark:text-gray-400">
+                  {formatDistance(new Date(comment.createdAt), new Date(), {
+                    addSuffix: true,
+                  })}
+                </small>
+              </h4>
               <p className="text-md dark:text-gray-300">{comment.text}</p>
             </div>
           </div>
@@ -102,8 +118,12 @@ const PostCard: FC<PostCardProps> = ({ post, me }) => {
       </div>
       <div className="px-5 pb-5">
         <div className="flex">
-          <textarea className="flex-grow dark:bg-gray-700 rounded-lg p-2 dark:text-gray-100" rows={1} onChange={e => setComment(e.target.value)
-          } value={comment}></textarea>
+          <textarea
+            className="flex-grow dark:bg-gray-700 rounded-lg p-2 dark:text-gray-100"
+            rows={1}
+            onChange={(e) => setComment(e.target.value)}
+            value={comment}
+          ></textarea>
           {/* <button className="px-4 py-2 bg-">Kommentieren</button> */}
           <div className="ml-2">
             <IconButton onClick={createComment}>

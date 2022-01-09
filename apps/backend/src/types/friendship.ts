@@ -4,5 +4,5 @@ export default interface Friendship {
   acceptedAt?: Date;
   requester: ObjectID;
   receiver: ObjectID;
-  createdAt: Date
+  createdAt: Date;
 }

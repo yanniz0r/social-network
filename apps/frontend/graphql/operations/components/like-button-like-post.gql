@@ -1,7 +1,7 @@
 mutation LikeButtonLike($postID: ID!) {
   likePost(id: $postID) {
     id
-    likedBy{
+    likedBy {
       id
     }
     liked

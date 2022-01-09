@@ -30,25 +30,26 @@ const resolvers: Resolvers = {
     },
     online(parent) {
       if (!parent.lastOnlinePing) {
-        return false
+        return false;
       }
       if (differenceInMinutes(Date.now(), parent.lastOnlinePing) > 5) {
-        return false
+        return false;
       }
-      return true
+      return true;
     },
     async friends(parent, _arguments, context) {
-      const friends = await context.userService.findFriendsForUser(parent._id)
-      return friends
-    }
+      const friends = await context.userService.findFriendsForUser(parent._id);
+      return friends;
+    },
   },
   TextPost: {
     id(parent) {
       return parent._id.toString();
     },
     async liked(parent, _arguments, context) {
-      const signedInUser = await context.authorizationService.ensureAuthorizedUser()
-      return parent.likedBy.some(liker => liker.equals(signedInUser._id))
+      const signedInUser =
+        await context.authorizationService.ensureAuthorizedUser();
+      return parent.likedBy.some((liker) => liker.equals(signedInUser._id));
     },
     likedBy(parent, _result, context) {
       // TODO get rid of casting
@@ -61,7 +62,7 @@ const resolvers: Resolvers = {
       return user!;
     },
     comments(parent) {
-      return parent.comments ?? []
+      return parent.comments ?? [];
     },
   },
   Query,

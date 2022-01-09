@@ -34,14 +34,20 @@ export default class UserRepository {
     }
   );
 
-  private findEstablishedFriendshipsDataloader: FriendshipDataloader
-  private findUnestablishedFriendshipsDataloader: FriendshipDataloader
+  private findEstablishedFriendshipsDataloader: FriendshipDataloader;
+  private findUnestablishedFriendshipsDataloader: FriendshipDataloader;
 
   constructor(db: Db) {
     this.userCollection = db.collection("users");
     this.friendshipCollection = db.collection("friendships");
-    this.findEstablishedFriendshipsDataloader = new FriendshipDataloader(this.friendshipCollection, true)
-    this.findUnestablishedFriendshipsDataloader = new FriendshipDataloader(this.friendshipCollection, false)
+    this.findEstablishedFriendshipsDataloader = new FriendshipDataloader(
+      this.friendshipCollection,
+      true
+    );
+    this.findUnestablishedFriendshipsDataloader = new FriendshipDataloader(
+      this.friendshipCollection,
+      false
+    );
   }
 
   async findFirst() {
@@ -66,17 +72,20 @@ export default class UserRepository {
 
   async findFriendship(id: ObjectID) {
     return this.friendshipCollection.findOne({
-      _id: id
-    })
+      _id: id,
+    });
   }
 
   async updateFriendship(id: ObjectID, friendship: Partial<Friendship>) {
-    return this.friendshipCollection.updateOne({
-      _id: id
-    }, {
-      $set: {
-        ...friendship
+    return this.friendshipCollection.updateOne(
+      {
+        _id: id,
+      },
+      {
+        $set: {
+          ...friendship,
+        },
       }
-    })
+    );
   }
 }

@@ -8,7 +8,7 @@ export default class AuthorizationService {
   constructor(private userRepository: UserRepository) {}
 
   async ensureAuthorizedUser() {
-    const authorizedUser = await this.userRepository.findFirst()
-    return authorizedUser!
+    const authorizedUser = await this.userRepository.findFirst();
+    return authorizedUser!;
   }
 }

@@ -14,7 +14,7 @@ export class Context {
   constructor(
     public userService: UserService,
     public postService: PostService,
-    public authorizationService: AuthorizationService,
+    public authorizationService: AuthorizationService
   ) {}
 
   static async init(): Promise<Context> {
@@ -27,7 +27,7 @@ export class Context {
 
     const userRepository = new UserRepository(db);
     const userService = new UserService(userRepository);
-    const authorizationService = new AuthorizationService(userRepository)
+    const authorizationService = new AuthorizationService(userRepository);
 
     const postRepository = new PostRepository(db);
     const postService = new PostService(postRepository);

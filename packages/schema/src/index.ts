@@ -39,7 +39,7 @@ const schema = gql`
     likedBy: [User!]!
     comments: [Comment!]!
   }
-  
+
   type FriendshipRequest {
     id: ID!
     date: Date!
@@ -49,7 +49,7 @@ const schema = gql`
   input TextPostInput {
     text: String!
   }
-  
+
   type Query {
     me: User!
     user(id: ID!): User
