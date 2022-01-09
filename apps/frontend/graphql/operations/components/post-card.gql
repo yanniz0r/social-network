@@ -1,0 +1,14 @@
+mutation PostCardCommentPost($postID: ID!, $text: String!) {
+  commentPost(id: $postID, text: $text) {
+    id
+    comments {
+      createdAt
+      text
+      user {
+        id
+        name
+        online
+      }
+    }
+  }
+}

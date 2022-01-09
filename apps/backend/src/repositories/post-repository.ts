@@ -1,6 +1,6 @@
 import { Collection, Db, ObjectId, WithId } from "mongodb";
 import { Logger } from "tslog";
-import Post from "../types/post";
+import Post, { Comment } from "../types/post";
 import { DistributiveOmit } from "../utils/distributive-omit";
 import { UserModel } from "./user-repository";
 
@@ -8,7 +8,9 @@ const logger = new Logger({ name: "PostRepository" });
 
 export type PostModel = WithId<Post>;
 
-export type PostInput = DistributiveOmit<Post, 'createdAt' | 'likedBy' | 'userID'>
+export type PostInput = DistributiveOmit<Post, 'createdAt' | 'likedBy' | 'userID' | 'comments'>
+
+type CommentInput = Omit<Comment, 'createdAt'>
 
 export default class PostRepository {
 
@@ -32,6 +34,7 @@ export default class PostRepository {
       createdAt: new Date(),
       userID: user._id,
       likedBy: [],
+      comments: [],
     }
     const { insertedId } = await this.collection.insertOne(post)
     logger.debug('Created post', insertedId)
@@ -57,6 +60,21 @@ export default class PostRepository {
     }, {
       $pull: {
         likedBy: userID
+      }
+    })
+  }
+
+  async commentPost(postID: ObjectId, comment: CommentInput) {
+    return this.collection.updateOne({
+      _id: postID
+    }, {
+      $push: {
+        comments: {
+          createdAt: new Date(),
+          text: comment.text,
+          userID: comment.userID,
+          
+        }
       }
     })
   }

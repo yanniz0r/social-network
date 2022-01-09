@@ -10,7 +10,14 @@ type BasePost<T, D> = D & {
   text?: string;
   userID: ObjectID;
   likedBy: ObjectID[];
+  comments: Comment[]
 };
+
+export interface Comment {
+  userID: ObjectID
+  text: string
+  createdAt: Date
+}
 
 type TextPost = BasePost<
   "text",

@@ -4,6 +4,8 @@ import Mutation from "./mutation";
 import { differenceInMinutes } from "date-fns";
 import Query from "./query";
 import FriendshipRequest from "./type/friendship-request-type-resolver";
+import Comment from "./type/comment-type-resolver";
+import dateScalar from "./scalar/date";
 
 const resolvers: Resolvers = {
   FriendshipRequest,
@@ -17,6 +19,8 @@ const resolvers: Resolvers = {
       }
     },
   },
+  Comment,
+  Date: dateScalar,
   User: {
     id(parent) {
       return parent._id.toString();
@@ -32,9 +36,6 @@ const resolvers: Resolvers = {
         return false
       }
       return true
-    },
-    birthday(parent) {
-      return parent.birthday?.toISOString() ?? null
     },
     async friends(parent, _arguments, context) {
       const friends = await context.userService.findFriendsForUser(parent._id)
@@ -59,8 +60,8 @@ const resolvers: Resolvers = {
       const user = await context.userService.findUser(textPost.userID);
       return user!;
     },
-    createdAt(parent) {
-      return parent.createdAt.toISOString();
+    comments(parent) {
+      return parent.comments ?? []
     },
   },
   Query,

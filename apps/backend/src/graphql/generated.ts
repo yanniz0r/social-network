@@ -1,6 +1,7 @@
-import { GraphQLResolveInfo } from 'graphql';
+import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
 import { UserModel, FriendshipModel } from '../repositories/user-repository';
 import { PostModel } from '../repositories/post-repository';
+import { Comment } from '../types/post';
 import { Context } from '../context';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
@@ -15,11 +16,19 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  Date: any;
+};
+
+export type Comment = {
+  __typename?: 'Comment';
+  createdAt: Scalars['Date'];
+  text: Scalars['String'];
+  user: User;
 };
 
 export type FriendshipRequest = {
   __typename?: 'FriendshipRequest';
-  date: Scalars['String'];
+  date: Scalars['Date'];
   from: User;
   id: Scalars['ID'];
 };
@@ -27,6 +36,7 @@ export type FriendshipRequest = {
 export type Mutation = {
   __typename?: 'Mutation';
   acceptFriendshipRequest: FriendshipRequest;
+  commentPost: Post;
   createTextPost: TextPost;
   likePost: Post;
   unlikePost: Post;
@@ -35,6 +45,12 @@ export type Mutation = {
 
 export type MutationAcceptFriendshipRequestArgs = {
   id: Scalars['ID'];
+};
+
+
+export type MutationCommentPostArgs = {
+  id: Scalars['ID'];
+  text: Scalars['String'];
 };
 
 
@@ -53,7 +69,8 @@ export type MutationUnlikePostArgs = {
 };
 
 export type Post = {
-  createdAt: Scalars['String'];
+  comments: Array<Comment>;
+  createdAt: Scalars['Date'];
   id: Scalars['ID'];
   liked: Scalars['Boolean'];
   likedBy: Array<User>;
@@ -76,7 +93,8 @@ export type QueryUserArgs = {
 
 export type TextPost = Post & {
   __typename?: 'TextPost';
-  createdAt: Scalars['String'];
+  comments: Array<Comment>;
+  createdAt: Scalars['Date'];
   id: Scalars['ID'];
   liked: Scalars['Boolean'];
   likedBy: Array<User>;
@@ -90,7 +108,7 @@ export type TextPostInput = {
 
 export type User = {
   __typename?: 'User';
-  birthday?: Maybe<Scalars['String']>;
+  birthday?: Maybe<Scalars['Date']>;
   firstName: Scalars['String'];
   friends: Array<User>;
   id: Scalars['ID'];
@@ -170,6 +188,8 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  Comment: ResolverTypeWrapper<Comment>;
+  Date: ResolverTypeWrapper<Scalars['Date']>;
   FriendshipRequest: ResolverTypeWrapper<FriendshipModel>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
   Mutation: ResolverTypeWrapper<{}>;
@@ -184,6 +204,8 @@ export type ResolversTypes = {
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   Boolean: Scalars['Boolean'];
+  Comment: Comment;
+  Date: Scalars['Date'];
   FriendshipRequest: FriendshipModel;
   ID: Scalars['ID'];
   Mutation: {};
@@ -195,8 +217,19 @@ export type ResolversParentTypes = {
   User: UserModel;
 };
 
+export type CommentResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Comment'] = ResolversParentTypes['Comment']> = {
+  createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
+  text?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Date'], any> {
+  name: 'Date';
+}
+
 export type FriendshipRequestResolvers<ContextType = Context, ParentType extends ResolversParentTypes['FriendshipRequest'] = ResolversParentTypes['FriendshipRequest']> = {
-  date?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  date?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
   from?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -204,6 +237,7 @@ export type FriendshipRequestResolvers<ContextType = Context, ParentType extends
 
 export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   acceptFriendshipRequest?: Resolver<ResolversTypes['FriendshipRequest'], ParentType, ContextType, RequireFields<MutationAcceptFriendshipRequestArgs, 'id'>>;
+  commentPost?: Resolver<ResolversTypes['Post'], ParentType, ContextType, RequireFields<MutationCommentPostArgs, 'id' | 'text'>>;
   createTextPost?: Resolver<ResolversTypes['TextPost'], ParentType, ContextType, RequireFields<MutationCreateTextPostArgs, 'input'>>;
   likePost?: Resolver<ResolversTypes['Post'], ParentType, ContextType, RequireFields<MutationLikePostArgs, 'id'>>;
   unlikePost?: Resolver<ResolversTypes['Post'], ParentType, ContextType, RequireFields<MutationUnlikePostArgs, 'id'>>;
@@ -211,7 +245,8 @@ export type MutationResolvers<ContextType = Context, ParentType extends Resolver
 
 export type PostResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Post'] = ResolversParentTypes['Post']> = {
   __resolveType: TypeResolveFn<'TextPost', ParentType, ContextType>;
-  createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  comments?: Resolver<Array<ResolversTypes['Comment']>, ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   liked?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   likedBy?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>;
@@ -227,7 +262,8 @@ export type QueryResolvers<ContextType = Context, ParentType extends ResolversPa
 };
 
 export type TextPostResolvers<ContextType = Context, ParentType extends ResolversParentTypes['TextPost'] = ResolversParentTypes['TextPost']> = {
-  createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  comments?: Resolver<Array<ResolversTypes['Comment']>, ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   liked?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   likedBy?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>;
@@ -237,7 +273,7 @@ export type TextPostResolvers<ContextType = Context, ParentType extends Resolver
 };
 
 export type UserResolvers<ContextType = Context, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
-  birthday?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  birthday?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
   firstName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   friends?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
@@ -249,6 +285,8 @@ export type UserResolvers<ContextType = Context, ParentType extends ResolversPar
 };
 
 export type Resolvers<ContextType = Context> = {
+  Comment?: CommentResolvers<ContextType>;
+  Date?: GraphQLScalarType;
   FriendshipRequest?: FriendshipRequestResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Post?: PostResolvers<ContextType>;

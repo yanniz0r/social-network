@@ -1,4 +1,9 @@
 query HomePagePosts {
+  me {
+    id
+    name
+    online
+  }
   posts {
     id
     text
@@ -11,6 +16,15 @@ query HomePagePosts {
     likedBy {
       id
       firstName
+    }
+    comments {
+      text
+      createdAt
+      user {
+        id
+        name
+        online
+      }
     }
   }
 }

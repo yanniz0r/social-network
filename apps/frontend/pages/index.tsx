@@ -13,7 +13,7 @@ const HomePage: NextPage = () => {
       <div className="p-10">
         {homePagePostsQuery.data?.posts?.map((post) => (
           <div className="mb-5" key={post.id}>
-            <PostCard post={post} />
+            <PostCard post={post} me={homePagePostsQuery.data?.me!} />
           </div>
         ))}
       </div>

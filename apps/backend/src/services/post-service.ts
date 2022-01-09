@@ -3,7 +3,6 @@ import { Logger } from "tslog";
 import { TextPostInput } from "../graphql/generated";
 import PostRepository, { PostInput, PostModel } from "../repositories/post-repository";
 import { UserModel } from "../repositories/user-repository";
-import Post from "../types/post";
 import initObjectID from "../utils/init-object-id";
 
 const logger = new Logger({ name: "PostService" });
@@ -36,6 +35,13 @@ export default class PostService {
 
   async unlikePost(user: UserModel, post: PostModel) {
     return this.postRepository.removeUserFromLikedBy(user._id, post._id)
+  }
+
+  async commentPost(userID: ObjectId, postID: ObjectId, text: string) {
+    await this.postRepository.commentPost(postID, {
+      userID,
+      text
+    })
   }
 
 }

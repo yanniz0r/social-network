@@ -13,11 +13,19 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  Date: any;
+};
+
+export type Comment = {
+  __typename?: 'Comment';
+  createdAt: Scalars['Date'];
+  text: Scalars['String'];
+  user: User;
 };
 
 export type FriendshipRequest = {
   __typename?: 'FriendshipRequest';
-  date: Scalars['String'];
+  date: Scalars['Date'];
   from: User;
   id: Scalars['ID'];
 };
@@ -25,6 +33,7 @@ export type FriendshipRequest = {
 export type Mutation = {
   __typename?: 'Mutation';
   acceptFriendshipRequest: FriendshipRequest;
+  commentPost: Post;
   createTextPost: TextPost;
   likePost: Post;
   unlikePost: Post;
@@ -33,6 +42,12 @@ export type Mutation = {
 
 export type MutationAcceptFriendshipRequestArgs = {
   id: Scalars['ID'];
+};
+
+
+export type MutationCommentPostArgs = {
+  id: Scalars['ID'];
+  text: Scalars['String'];
 };
 
 
@@ -51,7 +66,8 @@ export type MutationUnlikePostArgs = {
 };
 
 export type Post = {
-  createdAt: Scalars['String'];
+  comments: Array<Comment>;
+  createdAt: Scalars['Date'];
   id: Scalars['ID'];
   liked: Scalars['Boolean'];
   likedBy: Array<User>;
@@ -74,7 +90,8 @@ export type QueryUserArgs = {
 
 export type TextPost = Post & {
   __typename?: 'TextPost';
-  createdAt: Scalars['String'];
+  comments: Array<Comment>;
+  createdAt: Scalars['Date'];
   id: Scalars['ID'];
   liked: Scalars['Boolean'];
   likedBy: Array<User>;
@@ -88,7 +105,7 @@ export type TextPostInput = {
 
 export type User = {
   __typename?: 'User';
-  birthday?: Maybe<Scalars['String']>;
+  birthday?: Maybe<Scalars['Date']>;
   firstName: Scalars['String'];
   friends: Array<User>;
   id: Scalars['ID'];
@@ -122,36 +139,44 @@ export type LikeButtonUnlikeMutation = { __typename?: 'Mutation', unlikePost: { 
 export type NavigationQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type NavigationQuery = { __typename?: 'Query', friendshipRequests: Array<{ __typename?: 'FriendshipRequest', date: string, from: { __typename?: 'User', id: string, name: string } }> };
+export type NavigationQuery = { __typename?: 'Query', friendshipRequests: Array<{ __typename?: 'FriendshipRequest', date: any, from: { __typename?: 'User', id: string, name: string } }> };
+
+export type PostCardCommentPostMutationVariables = Exact<{
+  postID: Scalars['ID'];
+  text: Scalars['String'];
+}>;
+
+
+export type PostCardCommentPostMutation = { __typename?: 'Mutation', commentPost: { __typename?: 'TextPost', id: string, comments: Array<{ __typename?: 'Comment', createdAt: any, text: string, user: { __typename?: 'User', id: string, name: string, online: boolean } }> } };
 
 export type FriendshipsPageQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FriendshipsPageQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, friends: Array<{ __typename?: 'User', id: string, name: string, online: boolean }> }, friendshipRequests: Array<{ __typename?: 'FriendshipRequest', id: string, date: string, from: { __typename?: 'User', id: string, name: string, online: boolean } }> };
+export type FriendshipsPageQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, friends: Array<{ __typename?: 'User', id: string, name: string, online: boolean }> }, friendshipRequests: Array<{ __typename?: 'FriendshipRequest', id: string, date: any, from: { __typename?: 'User', id: string, name: string, online: boolean } }> };
 
 export type FriendsPageAcceptFriendshipRequestMutationVariables = Exact<{
   friendshipID: Scalars['ID'];
 }>;
 
 
-export type FriendsPageAcceptFriendshipRequestMutation = { __typename?: 'Mutation', acceptFriendshipRequest: { __typename?: 'FriendshipRequest', id: string, date: string, from: { __typename?: 'User', id: string } } };
+export type FriendsPageAcceptFriendshipRequestMutation = { __typename?: 'Mutation', acceptFriendshipRequest: { __typename?: 'FriendshipRequest', id: string, date: any, from: { __typename?: 'User', id: string } } };
 
 export type HomePagePostsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type HomePagePostsQuery = { __typename?: 'Query', posts: Array<{ __typename?: 'TextPost', id: string, text: string, createdAt: string, liked: boolean, user: { __typename?: 'User', id: string, name: string }, likedBy: Array<{ __typename?: 'User', id: string, firstName: string }> }> };
+export type HomePagePostsQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, name: string, online: boolean }, posts: Array<{ __typename?: 'TextPost', id: string, text: string, createdAt: any, liked: boolean, user: { __typename?: 'User', id: string, name: string }, likedBy: Array<{ __typename?: 'User', id: string, firstName: string }>, comments: Array<{ __typename?: 'Comment', text: string, createdAt: any, user: { __typename?: 'User', id: string, name: string, online: boolean } }> }> };
 
 export type ProfileDetailPageQueryVariables = Exact<{
   userID: Scalars['ID'];
 }>;
 
 
-export type ProfileDetailPageQuery = { __typename?: 'Query', user?: { __typename?: 'User', id: string, name: string, status?: string | null | undefined, online: boolean, birthday?: string | null | undefined, friends: Array<{ __typename?: 'User', id: string, name: string, online: boolean }> } | null | undefined };
+export type ProfileDetailPageQuery = { __typename?: 'Query', user?: { __typename?: 'User', id: string, name: string, status?: string | null | undefined, online: boolean, birthday?: any | null | undefined, friends: Array<{ __typename?: 'User', id: string, name: string, online: boolean }> } | null | undefined };
 
 export type ProfileMeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ProfileMeQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, firstName: string, lastName: string, name: string, birthday?: string | null | undefined, online: boolean, friends: Array<{ __typename?: 'User', id: string, name: string }> } };
+export type ProfileMeQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, firstName: string, lastName: string, name: string, birthday?: any | null | undefined, online: boolean, friends: Array<{ __typename?: 'User', id: string, name: string }> } };
 
 
 export const CreatePostCardTextPostDocument = gql`
@@ -299,6 +324,49 @@ export function useNavigationLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type NavigationQueryHookResult = ReturnType<typeof useNavigationQuery>;
 export type NavigationLazyQueryHookResult = ReturnType<typeof useNavigationLazyQuery>;
 export type NavigationQueryResult = Apollo.QueryResult<NavigationQuery, NavigationQueryVariables>;
+export const PostCardCommentPostDocument = gql`
+    mutation PostCardCommentPost($postID: ID!, $text: String!) {
+  commentPost(id: $postID, text: $text) {
+    id
+    comments {
+      createdAt
+      text
+      user {
+        id
+        name
+        online
+      }
+    }
+  }
+}
+    `;
+export type PostCardCommentPostMutationFn = Apollo.MutationFunction<PostCardCommentPostMutation, PostCardCommentPostMutationVariables>;
+
+/**
+ * __usePostCardCommentPostMutation__
+ *
+ * To run a mutation, you first call `usePostCardCommentPostMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePostCardCommentPostMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [postCardCommentPostMutation, { data, loading, error }] = usePostCardCommentPostMutation({
+ *   variables: {
+ *      postID: // value for 'postID'
+ *      text: // value for 'text'
+ *   },
+ * });
+ */
+export function usePostCardCommentPostMutation(baseOptions?: Apollo.MutationHookOptions<PostCardCommentPostMutation, PostCardCommentPostMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<PostCardCommentPostMutation, PostCardCommentPostMutationVariables>(PostCardCommentPostDocument, options);
+      }
+export type PostCardCommentPostMutationHookResult = ReturnType<typeof usePostCardCommentPostMutation>;
+export type PostCardCommentPostMutationResult = Apollo.MutationResult<PostCardCommentPostMutation>;
+export type PostCardCommentPostMutationOptions = Apollo.BaseMutationOptions<PostCardCommentPostMutation, PostCardCommentPostMutationVariables>;
 export const FriendshipsPageDocument = gql`
     query FriendshipsPage {
   me {
@@ -386,6 +454,11 @@ export type FriendsPageAcceptFriendshipRequestMutationResult = Apollo.MutationRe
 export type FriendsPageAcceptFriendshipRequestMutationOptions = Apollo.BaseMutationOptions<FriendsPageAcceptFriendshipRequestMutation, FriendsPageAcceptFriendshipRequestMutationVariables>;
 export const HomePagePostsDocument = gql`
     query HomePagePosts {
+  me {
+    id
+    name
+    online
+  }
   posts {
     id
     text
@@ -398,6 +471,15 @@ export const HomePagePostsDocument = gql`
     likedBy {
       id
       firstName
+    }
+    comments {
+      text
+      createdAt
+      user {
+        id
+        name
+        online
+      }
     }
   }
 }
