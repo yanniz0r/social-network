@@ -3,3 +3,8 @@ mutation CreatePostCardTextPost($input: TextPostInput!) {
     id
   }
 }
+mutation CreatePostCardImagePost($input: ImagePostInput!) {
+  createImagePost(input: $input) {
+    id
+  }
+}

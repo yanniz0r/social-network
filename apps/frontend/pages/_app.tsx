@@ -1,11 +1,14 @@
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+import { createUploadLink } from "apollo-upload-client";
 import { AppProps } from "next/app";
 import Navigation from "../components/navigation";
 import "../styles/globals.css";
 
 const apolloClient = new ApolloClient({
-  uri: "http://localhost:4000/",
   cache: new InMemoryCache(),
+  link: createUploadLink({
+    uri: "http://localhost:4000/graphql",
+  })
 });
 
 function MyApp({ Component, pageProps }: AppProps) {

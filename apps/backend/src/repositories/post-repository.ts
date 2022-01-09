@@ -30,20 +30,9 @@ export default class PostRepository {
     return this.collection.findOne({ _id: id });
   }
 
-  async createPost(user: UserModel, input: PostInput): Promise<PostModel> {
-    const post: Post = {
-      ...input,
-      createdAt: new Date(),
-      userID: user._id,
-      likedBy: [],
-      comments: [],
-    };
+  async createPost(post: Post): Promise<ObjectId> {
     const { insertedId } = await this.collection.insertOne(post);
-    logger.debug("Created post", insertedId);
-    return {
-      ...post,
-      _id: insertedId,
-    };
+    return insertedId
   }
 
   async addUserToLikedBy(userID: ObjectId, postID: ObjectId) {

@@ -5,6 +5,7 @@ query HomePagePosts {
     online
   }
   posts {
+    __typename
     id
     text
     createdAt
@@ -25,6 +26,9 @@ query HomePagePosts {
         name
         online
       }
+    }
+    ...on ImagePost {
+      imageURL
     }
   }
 }

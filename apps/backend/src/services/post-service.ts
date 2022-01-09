@@ -1,17 +1,21 @@
+import { Upload } from "graphql-upload";
 import { ObjectId } from "mongodb";
 import { Logger } from "tslog";
-import { TextPostInput } from "../graphql/generated";
+import * as uuid from "uuid";
+import { ImagePostInput, TextPostInput } from "../graphql/generated";
 import PostRepository, {
   PostInput,
   PostModel,
 } from "../repositories/post-repository";
 import { UserModel } from "../repositories/user-repository";
+import Post from "../types/post";
 import initObjectID from "../utils/init-object-id";
+import UploadService from "./upload-service";
 
 const logger = new Logger({ name: "PostService" });
 
 export default class PostService {
-  constructor(private postRepository: PostRepository) {}
+  constructor(private postRepository: PostRepository, private uploadService: UploadService) {}
 
   async getPosts(): Promise<PostModel[]> {
     const posts = await this.postRepository.findAll();
@@ -20,11 +24,43 @@ export default class PostService {
   }
 
   async createTextPost(user: UserModel, input: TextPostInput) {
-    const textPostInput: PostInput = {
+    const post: Post = {
       type: "text",
       text: input.text,
+      comments: [],
+      createdAt: new Date(),
+      likedBy: [],
+      userID: user._id,
     };
-    return this.postRepository.createPost(user, textPostInput);
+    const insertedId = await this.postRepository.createPost(post);
+    return {
+      ...post,
+      _id: insertedId,
+    }
+  }
+
+  async createImagePost(user: UserModel, input: ImagePostInput): Promise<PostModel> {
+    const upload = input.file as Upload
+    const file = await upload
+    const stream = file.createReadStream()
+
+    const filename = uuid.v4()
+
+    await this.uploadService.uploadStream('image-post', filename, stream)
+    const post: Post = {
+      type: "image",
+      text: input.text ?? undefined,
+      image: filename,
+      comments: [],
+      createdAt: new Date(),
+      likedBy: [],
+      userID: user._id,
+    };
+    const insertedId = await this.postRepository.createPost(post);
+    return {
+      ...post,
+      _id: insertedId
+    }
   }
 
   async getPostByID(id: string | ObjectId) {

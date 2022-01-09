@@ -1,4 +1,4 @@
-import { ApolloError } from "apollo-server";
+import { ApolloError } from "apollo-server-express";
 import { MutationResolvers } from "../../generated";
 
 const friendshipMutationResolvers: MutationResolvers = {

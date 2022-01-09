@@ -2,6 +2,7 @@ import { gql } from "graphql-tag";
 
 const schema = gql`
   scalar Date
+  scalar Upload
 
   type User {
     id: ID!
@@ -40,6 +41,17 @@ const schema = gql`
     comments: [Comment!]!
   }
 
+  type ImagePost implements Post {
+    id: ID!
+    text: String
+    imageURL: String!
+    createdAt: Date!
+    user: User!
+    liked: Boolean!
+    likedBy: [User!]!
+    comments: [Comment!]!
+  }
+
   type FriendshipRequest {
     id: ID!
     date: Date!
@@ -48,6 +60,11 @@ const schema = gql`
 
   input TextPostInput {
     text: String!
+  }
+
+  input ImagePostInput {
+    text: String
+    file: Upload!
   }
 
   type Query {
@@ -59,6 +76,7 @@ const schema = gql`
 
   type Mutation {
     createTextPost(input: TextPostInput!): TextPost!
+    createImagePost(input: ImagePostInput!): ImagePost!
     acceptFriendshipRequest(id: ID!): FriendshipRequest!
     likePost(id: ID!): Post!
     unlikePost(id: ID!): Post!

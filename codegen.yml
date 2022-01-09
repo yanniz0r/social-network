@@ -17,6 +17,7 @@ generates:
         Post: ../repositories/post-repository#PostModel
         Comment: ../types/post#Comment
         TextPost: ../repositories/post-repository#PostModel
+        ImagePost: ../repositories/post-repository#PostModel
     plugins:
       - "typescript"
       - "typescript-resolvers"
