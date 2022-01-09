@@ -10,6 +10,7 @@ import {
 import Avatar from "./avatar";
 import IconButton from "./icon-button";
 import LikeButton from "./like-button";
+import RichText from "./rich-text";
 
 interface PostCardProps {
   me: Pick<User, "id" | "name" | "online">;
@@ -77,9 +78,13 @@ const PostCard: FC<PostCardProps> = ({ post, me }) => {
           </span>
         </div>
       </div>
-      <div className="px-5 pb-5">
-        <p className="text-lg dark:text-white">{post.text}</p>
-      </div>
+      {post.text &&
+        <div className="px-5 pb-5">
+          <p className="text-lg dark:text-white">
+            <RichText text={post.text} />
+          </p>
+        </div>
+      }
       {post.__typename === "ImagePost" && (
         <div className="mb-5">
           <img src={post.imageURL} />
