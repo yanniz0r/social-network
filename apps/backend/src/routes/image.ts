@@ -9,7 +9,7 @@ router.get("/static/images/image-post/:postID", async (request, response) => {
   if (!post || post.type !== "image") {
     return response.status(404);
   }
-  const stream = await request.context.uploadService.downloadStream(
+  const stream = await request.context.fileStorageService.downloadStream(
     "image-post",
     post.image
   );

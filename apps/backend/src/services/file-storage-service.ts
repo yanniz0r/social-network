@@ -1,7 +1,7 @@
 import { Client } from "minio";
-import { createReadStream, ReadStream } from "fs";
+import { ReadStream } from "fs";
 
-export default class UploadService {
+export default class FileStorageService {
   constructor(private minio: Client) {}
 
   uploadStream(bucket: string, filename: string, stream: ReadStream) {

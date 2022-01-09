@@ -10,14 +10,14 @@ import PostRepository, {
 import { UserModel } from "../repositories/user-repository";
 import Post from "../types/post";
 import initObjectID from "../utils/init-object-id";
-import UploadService from "./upload-service";
+import FileStorageService from "./file-storage-service";
 
 const logger = new Logger({ name: "PostService" });
 
 export default class PostService {
   constructor(
     private postRepository: PostRepository,
-    private uploadService: UploadService
+    private fileStorageService: FileStorageService
   ) {}
 
   async getPosts(): Promise<PostModel[]> {
@@ -52,7 +52,7 @@ export default class PostService {
 
     const filename = uuid.v4();
 
-    await this.uploadService.uploadStream("image-post", filename, stream);
+    await this.fileStorageService.uploadStream("image-post", filename, stream);
     const post: Post = {
       type: "image",
       text: input.text ?? undefined,

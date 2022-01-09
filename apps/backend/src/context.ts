@@ -5,7 +5,7 @@ import PostRepository from "./repositories/post-repository";
 import UserRepository from "./repositories/user-repository";
 import AuthorizationService from "./services/authorization-service";
 import PostService from "./services/post-service";
-import UploadService from "./services/upload-service";
+import FileStorageService from "./services/file-storage-service";
 import UserService from "./services/user-service";
 
 const logger = new Logger({ name: "Context" });
@@ -17,7 +17,7 @@ export class Context {
     public userService: UserService,
     public postService: PostService,
     public authorizationService: AuthorizationService,
-    public uploadService: UploadService
+    public fileStorageService: FileStorageService
   ) {}
 
   static async init(): Promise<Context> {
@@ -28,15 +28,15 @@ export class Context {
     const userService = new UserService(userRepository);
     const authorizationService = new AuthorizationService(userRepository);
 
-    const uploadService = new UploadService(minio);
+    const fileStorageService = new FileStorageService(minio);
     const postRepository = new PostRepository(db);
-    const postService = new PostService(postRepository, uploadService);
+    const postService = new PostService(postRepository, fileStorageService);
 
     const context = new Context(
       userService,
       postService,
       authorizationService,
-      uploadService
+      fileStorageService
     );
 
     // TODO add this back in once this is cached

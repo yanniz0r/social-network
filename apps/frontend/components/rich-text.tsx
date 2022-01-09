@@ -4,35 +4,35 @@ interface RichTextProps {
   text: string;
 }
 
-const emojiMap: {find: string, replace: string}[] = [
+const emojiMap: { find: string; replace: string }[] = [
   {
-    find: '^^',
-    replace: '😁',
+    find: "^^",
+    replace: "😁",
   },
   {
-    find: ':D',
-    replace: '😀',
+    find: ":D",
+    replace: "😀",
   },
   {
-    find: '<3',
-    replace: '❤️',
+    find: "<3",
+    replace: "❤️",
   },
   {
-    find: ':o',
-    replace: '😮',
-  }
-]
+    find: ":o",
+    replace: "😮",
+  },
+];
 
 function emojifi(text: string) {
   let modifiedText = text;
   emojiMap.forEach(({ find, replace }) => {
-    modifiedText = modifiedText.replaceAll(find, replace)
-  })
-  return modifiedText
+    modifiedText = modifiedText.replaceAll(find, replace);
+  });
+  return modifiedText;
 }
 
 const RichText: FC<RichTextProps> = ({ text }) => {
-  return <>{emojifi(text)}</>
-}
+  return <>{emojifi(text)}</>;
+};
 
-export default RichText
+export default RichText;

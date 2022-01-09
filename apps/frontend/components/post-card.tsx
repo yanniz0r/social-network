@@ -78,13 +78,13 @@ const PostCard: FC<PostCardProps> = ({ post, me }) => {
           </span>
         </div>
       </div>
-      {post.text &&
+      {post.text && (
         <div className="px-5 pb-5">
           <p className="text-lg dark:text-white">
             <RichText text={post.text} />
           </p>
         </div>
-      }
+      )}
       {post.__typename === "ImagePost" && (
         <div className="mb-5">
           <img src={post.imageURL} />
