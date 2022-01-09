@@ -4,15 +4,21 @@ const createPostMutationResolvers: Resolvers["Mutation"] = {
   async createTextPost(_parent, { input }, context) {
     const signedInUser =
       await context.authorizationService.ensureAuthorizedUser();
-    const createdPost = await context.postService.createTextPost(signedInUser, input)
+    const createdPost = await context.postService.createTextPost(
+      signedInUser,
+      input
+    );
     return createdPost;
   },
   async createImagePost(_parent, { input }, context) {
     const signedInUser =
       await context.authorizationService.ensureAuthorizedUser();
-    const createdPost = await context.postService.createImagePost(signedInUser, input)
-    return createdPost
-  }
+    const createdPost = await context.postService.createImagePost(
+      signedInUser,
+      input
+    );
+    return createdPost;
+  },
 };
 
 export default createPostMutationResolvers;

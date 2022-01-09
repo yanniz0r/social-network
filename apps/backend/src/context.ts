@@ -32,7 +32,6 @@ export class Context {
     const postRepository = new PostRepository(db);
     const postService = new PostService(postRepository, uploadService);
 
-
     const context = new Context(
       userService,
       postService,

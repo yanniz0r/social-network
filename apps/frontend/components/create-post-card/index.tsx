@@ -1,5 +1,8 @@
 import { FC, useState } from "react";
-import { useCreatePostCardImagePostMutation as useCreateImagePostMutation, useCreatePostCardTextPostMutation as useCreateTextPostMutation } from "../../graphql/generated";
+import {
+  useCreatePostCardImagePostMutation as useCreateImagePostMutation,
+  useCreatePostCardTextPostMutation as useCreateTextPostMutation,
+} from "../../graphql/generated";
 import PostTypeSelect from "../post-type-select";
 
 interface CreatePostCardProps {
@@ -7,14 +10,14 @@ interface CreatePostCardProps {
 }
 
 const CreatePostCard: FC<CreatePostCardProps> = ({ onPost }) => {
-  const [postType, setPostType] = useState<'text' | 'image'>('text')
+  const [postType, setPostType] = useState<"text" | "image">("text");
   const [text, setText] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [createImagePost] = useCreateImagePostMutation();
   const [createTextPost] = useCreateTextPostMutation();
 
   async function onSubmit() {
-    if (postType === 'text') {
+    if (postType === "text") {
       await createTextPost({
         variables: {
           input: {
@@ -46,11 +49,15 @@ const CreatePostCard: FC<CreatePostCardProps> = ({ onPost }) => {
         value={text}
         onChange={(e) => setText(e.target.value)}
       />
-      {postType === 'image' &&
+      {postType === "image" && (
         <div className="mt-4">
-          <input type="file" onChange={e => e.target.files && setFile(e.target.files[0])} className="bg-gray-700 rounded-full" />
+          <input
+            type="file"
+            onChange={(e) => e.target.files && setFile(e.target.files[0])}
+            className="bg-gray-700 rounded-full"
+          />
         </div>
-      }
+      )}
       <div className="flex justify-end pt-5">
         <button
           className="bg-blue-600 bg-opacity-25 text-blue-400 px-4 py-2 rounded-lg"

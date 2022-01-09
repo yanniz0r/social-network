@@ -90,8 +90,8 @@ const resolvers: Resolvers = {
       return parent.comments ?? [];
     },
     imageURL(parent) {
-      return `http://localhost:4000/static/images/image-post/${parent._id}`
-    }
+      return `http://localhost:4000/static/images/image-post/${parent._id}`;
+    },
   },
   Query,
   Mutation,

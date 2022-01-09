@@ -32,7 +32,7 @@ export default class PostRepository {
 
   async createPost(post: Post): Promise<ObjectId> {
     const { insertedId } = await this.collection.insertOne(post);
-    return insertedId
+    return insertedId;
   }
 
   async addUserToLikedBy(userID: ObjectId, postID: ObjectId) {

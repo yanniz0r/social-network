@@ -15,30 +15,30 @@ async function start() {
     resolvers: resolvers,
     typeDefs: schema,
     context(express) {
-      return express.req.context
+      return express.req.context;
     },
   });
-  
+
   const app = express();
 
   app.use(async (req, _res, next) => {
-    req.context = await Context.init()
-    next()
-  })
+    req.context = await Context.init();
+    next();
+  });
 
-  app.use(cors())
-  
+  app.use(cors());
+
   app.use(graphqlUploadExpress());
-  
+
   await apolloServer.start();
-  
+
   apolloServer.applyMiddleware({ app });
-  
+
   app.listen({ port: 4000 }, () => {
     logger.info(`🚀 Server ready`);
   });
 
-  app.use(imageRouter)
-}  
+  app.use(imageRouter);
+}
 
-start()
+start();

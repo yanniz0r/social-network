@@ -27,7 +27,7 @@ query HomePagePosts {
         online
       }
     }
-    ...on ImagePost {
+    ... on ImagePost {
       imageURL
     }
   }

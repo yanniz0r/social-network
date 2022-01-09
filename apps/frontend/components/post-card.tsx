@@ -22,9 +22,9 @@ interface PostCardProps {
       }
     >;
   } & (
-    | { __typename: "ImagePost", imageURL: string }
-    | { __typename: "TextPost" }
-  );
+      | { __typename: "ImagePost"; imageURL: string }
+      | { __typename: "TextPost" }
+    );
 }
 
 const PostCard: FC<PostCardProps> = ({ post, me }) => {
@@ -80,11 +80,11 @@ const PostCard: FC<PostCardProps> = ({ post, me }) => {
       <div className="px-5 pb-5">
         <p className="text-lg dark:text-white">{post.text}</p>
       </div>
-      {post.__typename === 'ImagePost' &&
+      {post.__typename === "ImagePost" && (
         <div className="mb-5">
           <img src={post.imageURL} />
         </div>
-      }
+      )}
       <div className="px-5 pb-5">
         {post.likedBy.length > 0 && (
           <div className="mb-2 dark:text-gray-400">

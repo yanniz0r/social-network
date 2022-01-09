@@ -15,7 +15,10 @@ import UploadService from "./upload-service";
 const logger = new Logger({ name: "PostService" });
 
 export default class PostService {
-  constructor(private postRepository: PostRepository, private uploadService: UploadService) {}
+  constructor(
+    private postRepository: PostRepository,
+    private uploadService: UploadService
+  ) {}
 
   async getPosts(): Promise<PostModel[]> {
     const posts = await this.postRepository.findAll();
@@ -36,17 +39,20 @@ export default class PostService {
     return {
       ...post,
       _id: insertedId,
-    }
+    };
   }
 
-  async createImagePost(user: UserModel, input: ImagePostInput): Promise<PostModel> {
-    const upload = input.file as Upload
-    const file = await upload
-    const stream = file.createReadStream()
+  async createImagePost(
+    user: UserModel,
+    input: ImagePostInput
+  ): Promise<PostModel> {
+    const upload = input.file as Upload;
+    const file = await upload;
+    const stream = file.createReadStream();
 
-    const filename = uuid.v4()
+    const filename = uuid.v4();
 
-    await this.uploadService.uploadStream('image-post', filename, stream)
+    await this.uploadService.uploadStream("image-post", filename, stream);
     const post: Post = {
       type: "image",
       text: input.text ?? undefined,
@@ -59,8 +65,8 @@ export default class PostService {
     const insertedId = await this.postRepository.createPost(post);
     return {
       ...post,
-      _id: insertedId
-    }
+      _id: insertedId,
+    };
   }
 
   async getPostByID(id: string | ObjectId) {
