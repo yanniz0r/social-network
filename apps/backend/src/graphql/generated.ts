@@ -1,26 +1,14 @@
-import {
-  GraphQLResolveInfo,
-  GraphQLScalarType,
-  GraphQLScalarTypeConfig,
-} from "graphql";
-import { UserModel, FriendshipModel } from "../repositories/user-repository";
-import { PostModel } from "../repositories/post-repository";
-import { Comment } from "../types/post";
-import { Context } from "../context";
+import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
+import { UserModel, FriendshipModel } from '../repositories/user-repository';
+import { PostModel } from '../repositories/post-repository';
+import { Comment } from '../types/post';
+import { Context } from '../context';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = {
-  [K in keyof T]: T[K];
-};
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
-  [SubKey in K]?: Maybe<T[SubKey]>;
-};
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
-  [SubKey in K]: Maybe<T[SubKey]>;
-};
-export type RequireFields<T, K extends keyof T> = {
-  [X in Exclude<keyof T, K>]?: T[X];
-} & { [P in K]-?: NonNullable<T[P]> };
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -33,38 +21,38 @@ export type Scalars = {
 };
 
 export type Comment = {
-  __typename?: "Comment";
-  createdAt: Scalars["Date"];
-  text: Scalars["String"];
+  __typename?: 'Comment';
+  createdAt: Scalars['Date'];
+  text: Scalars['String'];
   user: User;
 };
 
 export type FriendshipRequest = {
-  __typename?: "FriendshipRequest";
-  date: Scalars["Date"];
+  __typename?: 'FriendshipRequest';
+  date: Scalars['Date'];
   from: User;
-  id: Scalars["ID"];
+  id: Scalars['ID'];
 };
 
 export type ImagePost = Post & {
-  __typename?: "ImagePost";
+  __typename?: 'ImagePost';
   comments: Array<Comment>;
-  createdAt: Scalars["Date"];
-  id: Scalars["ID"];
-  imageURL: Scalars["String"];
-  liked: Scalars["Boolean"];
+  createdAt: Scalars['Date'];
+  id: Scalars['ID'];
+  imageURL: Scalars['String'];
+  liked: Scalars['Boolean'];
   likedBy: Array<User>;
-  text?: Maybe<Scalars["String"]>;
+  text?: Maybe<Scalars['String']>;
   user: User;
 };
 
 export type ImagePostInput = {
-  file: Scalars["Upload"];
-  text?: InputMaybe<Scalars["String"]>;
+  file: Scalars['Upload'];
+  text?: InputMaybe<Scalars['String']>;
 };
 
 export type Mutation = {
-  __typename?: "Mutation";
+  __typename?: 'Mutation';
   acceptFriendshipRequest: FriendshipRequest;
   commentPost: Post;
   createImagePost: ImagePost;
@@ -73,88 +61,96 @@ export type Mutation = {
   unlikePost: Post;
 };
 
+
 export type MutationAcceptFriendshipRequestArgs = {
-  id: Scalars["ID"];
+  id: Scalars['ID'];
 };
 
+
 export type MutationCommentPostArgs = {
-  id: Scalars["ID"];
-  text: Scalars["String"];
+  id: Scalars['ID'];
+  text: Scalars['String'];
 };
+
 
 export type MutationCreateImagePostArgs = {
   input: ImagePostInput;
 };
 
+
 export type MutationCreateTextPostArgs = {
   input: TextPostInput;
 };
 
+
 export type MutationLikePostArgs = {
-  id: Scalars["ID"];
+  id: Scalars['ID'];
 };
 
+
 export type MutationUnlikePostArgs = {
-  id: Scalars["ID"];
+  id: Scalars['ID'];
 };
 
 export type Post = {
   comments: Array<Comment>;
-  createdAt: Scalars["Date"];
-  id: Scalars["ID"];
-  liked: Scalars["Boolean"];
+  createdAt: Scalars['Date'];
+  id: Scalars['ID'];
+  liked: Scalars['Boolean'];
   likedBy: Array<User>;
-  text?: Maybe<Scalars["String"]>;
+  text?: Maybe<Scalars['String']>;
   user: User;
 };
 
 export type Query = {
-  __typename?: "Query";
+  __typename?: 'Query';
   friendshipRequests: Array<FriendshipRequest>;
   me: User;
   posts: Array<Post>;
   user?: Maybe<User>;
 };
 
+
 export type QueryUserArgs = {
-  id: Scalars["ID"];
+  id: Scalars['ID'];
 };
 
 export type TextPost = Post & {
-  __typename?: "TextPost";
+  __typename?: 'TextPost';
   comments: Array<Comment>;
-  createdAt: Scalars["Date"];
-  id: Scalars["ID"];
-  liked: Scalars["Boolean"];
+  createdAt: Scalars['Date'];
+  id: Scalars['ID'];
+  liked: Scalars['Boolean'];
   likedBy: Array<User>;
-  text: Scalars["String"];
+  text: Scalars['String'];
   user: User;
 };
 
 export type TextPostInput = {
-  text: Scalars["String"];
+  text: Scalars['String'];
 };
 
 export type User = {
-  __typename?: "User";
-  birthday?: Maybe<Scalars["Date"]>;
-  firstName: Scalars["String"];
+  __typename?: 'User';
+  birthday?: Maybe<Scalars['Date']>;
+  firstName: Scalars['String'];
   friends: Array<User>;
-  id: Scalars["ID"];
-  lastName: Scalars["String"];
-  name: Scalars["String"];
-  online: Scalars["Boolean"];
-  status?: Maybe<Scalars["String"]>;
+  id: Scalars['ID'];
+  lastName: Scalars['String'];
+  name: Scalars['String'];
+  online: Scalars['Boolean'];
+  status?: Maybe<Scalars['String']>;
 };
 
+
+
 export type ResolverTypeWrapper<T> = Promise<T> | T;
+
 
 export type ResolverWithResolve<TResult, TParent, TContext, TArgs> = {
   resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
 };
-export type Resolver<TResult, TParent = {}, TContext = {}, TArgs = {}> =
-  | ResolverFn<TResult, TParent, TContext, TArgs>
-  | ResolverWithResolve<TResult, TParent, TContext, TArgs>;
+export type Resolver<TResult, TParent = {}, TContext = {}, TArgs = {}> = ResolverFn<TResult, TParent, TContext, TArgs> | ResolverWithResolve<TResult, TParent, TContext, TArgs>;
 
 export type ResolverFn<TResult, TParent, TContext, TArgs> = (
   parent: TParent,
@@ -177,25 +173,9 @@ export type SubscriptionResolveFn<TResult, TParent, TContext, TArgs> = (
   info: GraphQLResolveInfo
 ) => TResult | Promise<TResult>;
 
-export interface SubscriptionSubscriberObject<
-  TResult,
-  TKey extends string,
-  TParent,
-  TContext,
-  TArgs
-> {
-  subscribe: SubscriptionSubscribeFn<
-    { [key in TKey]: TResult },
-    TParent,
-    TContext,
-    TArgs
-  >;
-  resolve?: SubscriptionResolveFn<
-    TResult,
-    { [key in TKey]: TResult },
-    TContext,
-    TArgs
-  >;
+export interface SubscriptionSubscriberObject<TResult, TKey extends string, TParent, TContext, TArgs> {
+  subscribe: SubscriptionSubscribeFn<{ [key in TKey]: TResult }, TParent, TContext, TArgs>;
+  resolve?: SubscriptionResolveFn<TResult, { [key in TKey]: TResult }, TContext, TArgs>;
 }
 
 export interface SubscriptionResolverObject<TResult, TParent, TContext, TArgs> {
@@ -203,26 +183,12 @@ export interface SubscriptionResolverObject<TResult, TParent, TContext, TArgs> {
   resolve: SubscriptionResolveFn<TResult, any, TContext, TArgs>;
 }
 
-export type SubscriptionObject<
-  TResult,
-  TKey extends string,
-  TParent,
-  TContext,
-  TArgs
-> =
+export type SubscriptionObject<TResult, TKey extends string, TParent, TContext, TArgs> =
   | SubscriptionSubscriberObject<TResult, TKey, TParent, TContext, TArgs>
   | SubscriptionResolverObject<TResult, TParent, TContext, TArgs>;
 
-export type SubscriptionResolver<
-  TResult,
-  TKey extends string,
-  TParent = {},
-  TContext = {},
-  TArgs = {}
-> =
-  | ((
-      ...args: any[]
-    ) => SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>)
+export type SubscriptionResolver<TResult, TKey extends string, TParent = {}, TContext = {}, TArgs = {}> =
+  | ((...args: any[]) => SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>)
   | SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>;
 
 export type TypeResolveFn<TTypes, TParent = {}, TContext = {}> = (
@@ -231,20 +197,11 @@ export type TypeResolveFn<TTypes, TParent = {}, TContext = {}> = (
   info: GraphQLResolveInfo
 ) => Maybe<TTypes> | Promise<Maybe<TTypes>>;
 
-export type IsTypeOfResolverFn<T = {}, TContext = {}> = (
-  obj: T,
-  context: TContext,
-  info: GraphQLResolveInfo
-) => boolean | Promise<boolean>;
+export type IsTypeOfResolverFn<T = {}, TContext = {}> = (obj: T, context: TContext, info: GraphQLResolveInfo) => boolean | Promise<boolean>;
 
 export type NextResolverFn<T> = () => Promise<T>;
 
-export type DirectiveResolverFn<
-  TResult = {},
-  TParent = {},
-  TContext = {},
-  TArgs = {}
-> = (
+export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs = {}> = (
   next: NextResolverFn<TResult>,
   parent: TParent,
   args: TArgs,
@@ -254,204 +211,123 @@ export type DirectiveResolverFn<
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
-  Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Comment: ResolverTypeWrapper<Comment>;
-  Date: ResolverTypeWrapper<Scalars["Date"]>;
+  Date: ResolverTypeWrapper<Scalars['Date']>;
   FriendshipRequest: ResolverTypeWrapper<FriendshipModel>;
-  ID: ResolverTypeWrapper<Scalars["ID"]>;
+  ID: ResolverTypeWrapper<Scalars['ID']>;
   ImagePost: ResolverTypeWrapper<PostModel>;
   ImagePostInput: ImagePostInput;
   Mutation: ResolverTypeWrapper<{}>;
   Post: ResolverTypeWrapper<PostModel>;
   Query: ResolverTypeWrapper<{}>;
-  String: ResolverTypeWrapper<Scalars["String"]>;
+  String: ResolverTypeWrapper<Scalars['String']>;
   TextPost: ResolverTypeWrapper<PostModel>;
   TextPostInput: TextPostInput;
-  Upload: ResolverTypeWrapper<Scalars["Upload"]>;
+  Upload: ResolverTypeWrapper<Scalars['Upload']>;
   User: ResolverTypeWrapper<UserModel>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
-  Boolean: Scalars["Boolean"];
+  Boolean: Scalars['Boolean'];
   Comment: Comment;
-  Date: Scalars["Date"];
+  Date: Scalars['Date'];
   FriendshipRequest: FriendshipModel;
-  ID: Scalars["ID"];
+  ID: Scalars['ID'];
   ImagePost: PostModel;
   ImagePostInput: ImagePostInput;
   Mutation: {};
   Post: PostModel;
   Query: {};
-  String: Scalars["String"];
+  String: Scalars['String'];
   TextPost: PostModel;
   TextPostInput: TextPostInput;
-  Upload: Scalars["Upload"];
+  Upload: Scalars['Upload'];
   User: UserModel;
 };
 
-export type CommentResolvers<
-  ContextType = Context,
-  ParentType extends ResolversParentTypes["Comment"] = ResolversParentTypes["Comment"]
-> = {
-  createdAt?: Resolver<ResolversTypes["Date"], ParentType, ContextType>;
-  text?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  user?: Resolver<ResolversTypes["User"], ParentType, ContextType>;
+export type CommentResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Comment'] = ResolversParentTypes['Comment']> = {
+  createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
+  text?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export interface DateScalarConfig
-  extends GraphQLScalarTypeConfig<ResolversTypes["Date"], any> {
-  name: "Date";
+export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Date'], any> {
+  name: 'Date';
 }
 
-export type FriendshipRequestResolvers<
-  ContextType = Context,
-  ParentType extends ResolversParentTypes["FriendshipRequest"] = ResolversParentTypes["FriendshipRequest"]
-> = {
-  date?: Resolver<ResolversTypes["Date"], ParentType, ContextType>;
-  from?: Resolver<ResolversTypes["User"], ParentType, ContextType>;
-  id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+export type FriendshipRequestResolvers<ContextType = Context, ParentType extends ResolversParentTypes['FriendshipRequest'] = ResolversParentTypes['FriendshipRequest']> = {
+  date?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
+  from?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type ImagePostResolvers<
-  ContextType = Context,
-  ParentType extends ResolversParentTypes["ImagePost"] = ResolversParentTypes["ImagePost"]
-> = {
-  comments?: Resolver<
-    Array<ResolversTypes["Comment"]>,
-    ParentType,
-    ContextType
-  >;
-  createdAt?: Resolver<ResolversTypes["Date"], ParentType, ContextType>;
-  id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
-  imageURL?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  liked?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
-  likedBy?: Resolver<Array<ResolversTypes["User"]>, ParentType, ContextType>;
-  text?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
-  user?: Resolver<ResolversTypes["User"], ParentType, ContextType>;
+export type ImagePostResolvers<ContextType = Context, ParentType extends ResolversParentTypes['ImagePost'] = ResolversParentTypes['ImagePost']> = {
+  comments?: Resolver<Array<ResolversTypes['Comment']>, ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  imageURL?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  liked?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  likedBy?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>;
+  text?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type MutationResolvers<
-  ContextType = Context,
-  ParentType extends ResolversParentTypes["Mutation"] = ResolversParentTypes["Mutation"]
-> = {
-  acceptFriendshipRequest?: Resolver<
-    ResolversTypes["FriendshipRequest"],
-    ParentType,
-    ContextType,
-    RequireFields<MutationAcceptFriendshipRequestArgs, "id">
-  >;
-  commentPost?: Resolver<
-    ResolversTypes["Post"],
-    ParentType,
-    ContextType,
-    RequireFields<MutationCommentPostArgs, "id" | "text">
-  >;
-  createImagePost?: Resolver<
-    ResolversTypes["ImagePost"],
-    ParentType,
-    ContextType,
-    RequireFields<MutationCreateImagePostArgs, "input">
-  >;
-  createTextPost?: Resolver<
-    ResolversTypes["TextPost"],
-    ParentType,
-    ContextType,
-    RequireFields<MutationCreateTextPostArgs, "input">
-  >;
-  likePost?: Resolver<
-    ResolversTypes["Post"],
-    ParentType,
-    ContextType,
-    RequireFields<MutationLikePostArgs, "id">
-  >;
-  unlikePost?: Resolver<
-    ResolversTypes["Post"],
-    ParentType,
-    ContextType,
-    RequireFields<MutationUnlikePostArgs, "id">
-  >;
+export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+  acceptFriendshipRequest?: Resolver<ResolversTypes['FriendshipRequest'], ParentType, ContextType, RequireFields<MutationAcceptFriendshipRequestArgs, 'id'>>;
+  commentPost?: Resolver<ResolversTypes['Post'], ParentType, ContextType, RequireFields<MutationCommentPostArgs, 'id' | 'text'>>;
+  createImagePost?: Resolver<ResolversTypes['ImagePost'], ParentType, ContextType, RequireFields<MutationCreateImagePostArgs, 'input'>>;
+  createTextPost?: Resolver<ResolversTypes['TextPost'], ParentType, ContextType, RequireFields<MutationCreateTextPostArgs, 'input'>>;
+  likePost?: Resolver<ResolversTypes['Post'], ParentType, ContextType, RequireFields<MutationLikePostArgs, 'id'>>;
+  unlikePost?: Resolver<ResolversTypes['Post'], ParentType, ContextType, RequireFields<MutationUnlikePostArgs, 'id'>>;
 };
 
-export type PostResolvers<
-  ContextType = Context,
-  ParentType extends ResolversParentTypes["Post"] = ResolversParentTypes["Post"]
-> = {
-  __resolveType: TypeResolveFn<
-    "ImagePost" | "TextPost",
-    ParentType,
-    ContextType
-  >;
-  comments?: Resolver<
-    Array<ResolversTypes["Comment"]>,
-    ParentType,
-    ContextType
-  >;
-  createdAt?: Resolver<ResolversTypes["Date"], ParentType, ContextType>;
-  id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
-  liked?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
-  likedBy?: Resolver<Array<ResolversTypes["User"]>, ParentType, ContextType>;
-  text?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
-  user?: Resolver<ResolversTypes["User"], ParentType, ContextType>;
+export type PostResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Post'] = ResolversParentTypes['Post']> = {
+  __resolveType: TypeResolveFn<'ImagePost' | 'TextPost', ParentType, ContextType>;
+  comments?: Resolver<Array<ResolversTypes['Comment']>, ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  liked?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  likedBy?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>;
+  text?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
 };
 
-export type QueryResolvers<
-  ContextType = Context,
-  ParentType extends ResolversParentTypes["Query"] = ResolversParentTypes["Query"]
-> = {
-  friendshipRequests?: Resolver<
-    Array<ResolversTypes["FriendshipRequest"]>,
-    ParentType,
-    ContextType
-  >;
-  me?: Resolver<ResolversTypes["User"], ParentType, ContextType>;
-  posts?: Resolver<Array<ResolversTypes["Post"]>, ParentType, ContextType>;
-  user?: Resolver<
-    Maybe<ResolversTypes["User"]>,
-    ParentType,
-    ContextType,
-    RequireFields<QueryUserArgs, "id">
-  >;
+export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+  friendshipRequests?: Resolver<Array<ResolversTypes['FriendshipRequest']>, ParentType, ContextType>;
+  me?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  posts?: Resolver<Array<ResolversTypes['Post']>, ParentType, ContextType>;
+  user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>;
 };
 
-export type TextPostResolvers<
-  ContextType = Context,
-  ParentType extends ResolversParentTypes["TextPost"] = ResolversParentTypes["TextPost"]
-> = {
-  comments?: Resolver<
-    Array<ResolversTypes["Comment"]>,
-    ParentType,
-    ContextType
-  >;
-  createdAt?: Resolver<ResolversTypes["Date"], ParentType, ContextType>;
-  id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
-  liked?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
-  likedBy?: Resolver<Array<ResolversTypes["User"]>, ParentType, ContextType>;
-  text?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  user?: Resolver<ResolversTypes["User"], ParentType, ContextType>;
+export type TextPostResolvers<ContextType = Context, ParentType extends ResolversParentTypes['TextPost'] = ResolversParentTypes['TextPost']> = {
+  comments?: Resolver<Array<ResolversTypes['Comment']>, ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  liked?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  likedBy?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>;
+  text?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export interface UploadScalarConfig
-  extends GraphQLScalarTypeConfig<ResolversTypes["Upload"], any> {
-  name: "Upload";
+export interface UploadScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Upload'], any> {
+  name: 'Upload';
 }
 
-export type UserResolvers<
-  ContextType = Context,
-  ParentType extends ResolversParentTypes["User"] = ResolversParentTypes["User"]
-> = {
-  birthday?: Resolver<Maybe<ResolversTypes["Date"]>, ParentType, ContextType>;
-  firstName?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  friends?: Resolver<Array<ResolversTypes["User"]>, ParentType, ContextType>;
-  id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
-  lastName?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  name?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  online?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
-  status?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+export type UserResolvers<ContextType = Context, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
+  birthday?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
+  firstName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  friends?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  lastName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  online?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  status?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -467,3 +343,4 @@ export type Resolvers<ContextType = Context> = {
   Upload?: GraphQLScalarType;
   User?: UserResolvers<ContextType>;
 };
+
