@@ -131,7 +131,9 @@ const PostCard: FC<PostCardProps> = ({ post, me }) => {
                   })}
                 </small>
               </h4>
-              <p className="text-md dark:text-gray-300">{comment.text}</p>
+              <p className="text-md dark:text-gray-300">
+                <RichText text={comment.text} />
+              </p>
             </div>
           </div>
         ))}
