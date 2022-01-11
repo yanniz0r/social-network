@@ -7,7 +7,7 @@ const Navigation: FC = () => {
   const navigationQuery = useNavigationQuery();
   return (
     <div className="pb-20">
-      <div className="w-full bg-gray-700 fixed shadow-lg bg-opacity-50 backdrop-blur">
+      <div className="w-full bg-gray-700 fixed z-10 shadow-lg bg-opacity-50 backdrop-blur">
         <div className="flex justify-between px-10">
           <div className="p-5 text-xl text-pink-500">Inselnet</div>
           <div className="flex items-center">
