@@ -169,7 +169,7 @@ export type EditAvatarMutationVariables = Exact<{
 }>;
 
 
-export type EditAvatarMutation = { __typename?: 'Mutation', updateMe: { __typename?: 'User', id: string } };
+export type EditAvatarMutation = { __typename?: 'Mutation', updateMe: { __typename?: 'User', id: string, avatarURL?: string | null | undefined } };
 
 export type LikeButtonLikeMutationVariables = Exact<{
   postID: Scalars['ID'];
@@ -298,6 +298,7 @@ export const EditAvatarDocument = gql`
     mutation EditAvatar($avatarUpload: Upload!) {
   updateMe(input: {avatar: $avatarUpload}) {
     id
+    avatarURL
   }
 }
     `;

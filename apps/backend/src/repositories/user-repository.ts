@@ -97,6 +97,7 @@ export default class UserRepository {
       {
         $set: {
           ...user,
+          updatedAt: new Date(),
         },
       }
     );

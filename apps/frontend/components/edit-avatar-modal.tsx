@@ -1,5 +1,7 @@
 import { FC, useState } from "react"
 import { useEditAvatarMutation } from "../graphql/generated"
+import Button from "./button"
+import FileInput from "./file-input"
 import Modal, { ModalContent } from "./modal"
 
 interface EditAvatarModalProps {
@@ -21,20 +23,22 @@ const EditAvatarModal: FC<EditAvatarModalProps> = ({ open, onClose }) => {
     onClose()
   }
 
+  console.log({ file })
+
   return <Modal open={open} onClose={onClose}>
     <ModalContent>
       <div className="p-5">
         <h2 className="text-3xl text-gray-200 leading-none">Avatar bearbeiten</h2>
         <p className="mt-3 text-gray-400">Hier kannst du ein Bild von dir hochladen. Bitte beachte, dass es für alle Nutzer sichtbar sein wird :3</p>
 
-        <input type="file" className="mt-3" onChange={(event) => {
-          const firstFile = event.target.files?.[0]
-          if (firstFile) {
-            setFile(firstFile)
-          }
-        }} />
-        <div>
-          <button className="block" onClick={uploadAvatar}>Upload</button>
+        <div className="py-3">
+          <FileInput onChange={setFile} />
+        </div>
+
+        <hr className="border-gray-900"/>
+        <div className="flex justify-end mt-3">
+          <Button onClick={onClose} variant="secondary" className="mr-2">Abbrechen</Button>
+          <Button onClick={uploadAvatar}>Upload</Button>
         </div>
       </div>
     </ModalContent>

@@ -4,4 +4,6 @@ export default interface User {
   birthday?: Date;
   avatar?: string;
   lastOnlinePing?: Date;
+  updatedAt?: Date;
+  createdAt: Date;
 }

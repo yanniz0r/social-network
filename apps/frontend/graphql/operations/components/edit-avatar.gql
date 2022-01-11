@@ -1,5 +1,6 @@
 mutation EditAvatar($avatarUpload: Upload!) {
   updateMe(input: { avatar: $avatarUpload }) {
     id
+    avatarURL
   }
 }
