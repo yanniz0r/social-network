@@ -1,4 +1,4 @@
-import { formatDistance } from "date-fns";
+import { format, formatDistance } from "date-fns";
 import { FC, useState } from "react";
 import { FaComment } from "react-icons/fa";
 import {
@@ -11,6 +11,7 @@ import Avatar from "./avatar";
 import IconButton from "./icon-button";
 import LikeButton from "./like-button";
 import RichText from "./rich-text";
+import Tooltip from "./tooltip";
 
 interface PostCardProps {
   me: Pick<User, "id" | "name" | "online">;
@@ -73,9 +74,11 @@ const PostCard: FC<PostCardProps> = ({ post, me }) => {
         </div>
         <div className="ml-4">
           <h4 className="text-xl dark:text-gray-200">{post.user.name}</h4>
-          <span className="text-sm text-gray-500 dark:text-gray-400">
-            {createdAt}
-          </span>
+          <Tooltip text={format(new Date(post.createdAt), 'dd.MM.yyyy, HH:mm')}>
+            <span className="text-sm text-gray-500 dark:text-gray-400">
+              {createdAt}
+            </span>
+          </Tooltip>
         </div>
       </div>
       {post.text && (
