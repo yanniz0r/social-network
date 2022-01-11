@@ -59,6 +59,7 @@ export type Mutation = {
   createTextPost: TextPost;
   likePost: Post;
   unlikePost: Post;
+  updateMe: User;
 };
 
 
@@ -90,6 +91,11 @@ export type MutationLikePostArgs = {
 
 export type MutationUnlikePostArgs = {
   id: Scalars['ID'];
+};
+
+
+export type MutationUpdateMeArgs = {
+  input: UpdateMeInput;
 };
 
 export type Post = {
@@ -130,8 +136,13 @@ export type TextPostInput = {
   text: Scalars['String'];
 };
 
+export type UpdateMeInput = {
+  avatar?: InputMaybe<Scalars['Upload']>;
+};
+
 export type User = {
   __typename?: 'User';
+  avatarURL?: Maybe<Scalars['String']>;
   birthday?: Maybe<Scalars['Date']>;
   firstName: Scalars['String'];
   friends: Array<User>;
@@ -224,6 +235,7 @@ export type ResolversTypes = {
   String: ResolverTypeWrapper<Scalars['String']>;
   TextPost: ResolverTypeWrapper<PostModel>;
   TextPostInput: TextPostInput;
+  UpdateMeInput: UpdateMeInput;
   Upload: ResolverTypeWrapper<Scalars['Upload']>;
   User: ResolverTypeWrapper<UserModel>;
 };
@@ -243,6 +255,7 @@ export type ResolversParentTypes = {
   String: Scalars['String'];
   TextPost: PostModel;
   TextPostInput: TextPostInput;
+  UpdateMeInput: UpdateMeInput;
   Upload: Scalars['Upload'];
   User: UserModel;
 };
@@ -284,6 +297,7 @@ export type MutationResolvers<ContextType = Context, ParentType extends Resolver
   createTextPost?: Resolver<ResolversTypes['TextPost'], ParentType, ContextType, RequireFields<MutationCreateTextPostArgs, 'input'>>;
   likePost?: Resolver<ResolversTypes['Post'], ParentType, ContextType, RequireFields<MutationLikePostArgs, 'id'>>;
   unlikePost?: Resolver<ResolversTypes['Post'], ParentType, ContextType, RequireFields<MutationUnlikePostArgs, 'id'>>;
+  updateMe?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationUpdateMeArgs, 'input'>>;
 };
 
 export type PostResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Post'] = ResolversParentTypes['Post']> = {
@@ -320,6 +334,7 @@ export interface UploadScalarConfig extends GraphQLScalarTypeConfig<ResolversTyp
 }
 
 export type UserResolvers<ContextType = Context, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
+  avatarURL?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   birthday?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
   firstName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   friends?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>;

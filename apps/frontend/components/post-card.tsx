@@ -16,11 +16,11 @@ import Tooltip from "./tooltip";
 interface PostCardProps {
   me: Pick<User, "id" | "name" | "online">;
   post: Pick<Post, "id" | "text" | "createdAt" | "liked"> & {
-    user: Pick<User, "name">;
+    user: Pick<User, "name" | "avatarURL" | "online">;
     likedBy: Pick<User, "firstName" | "id">[];
     comments: Array<
       Pick<Comment, "text" | "createdAt"> & {
-        user: Pick<User, "id" | "name" | "online">;
+        user: Pick<User, "id" | "name" | "online" | "avatarURL">;
       }
     >;
   } & (
@@ -69,9 +69,12 @@ const PostCard: FC<PostCardProps> = ({ post, me }) => {
   return (
     <div className="bg-white shadow-lg rounded-lg dark:bg-gray-800">
       <div className="p-5 flex">
-        <div className="flex items-center justify-center w-14 h-14 bg-red-500 font-bold text-white text-xl rounded-full">
-          {post.user.name[0]}
-        </div>
+        <Avatar
+          size="lg"
+          name={post.user.name}
+          online={post.user.online}
+          imageURL={post.user.avatarURL ?? undefined}
+        />
         <div className="ml-4">
           <h4 className="text-xl dark:text-gray-200">{post.user.name}</h4>
           <Tooltip text={format(new Date(post.createdAt), 'dd.MM.yyyy, HH:mm')}>
@@ -116,6 +119,7 @@ const PostCard: FC<PostCardProps> = ({ post, me }) => {
             <Avatar
               size="md"
               name={comment.user.name}
+              imageURL={comment.user.avatarURL ?? undefined}
               online={comment.user.online}
             />
             <div className="ml-2">

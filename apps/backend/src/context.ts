@@ -24,11 +24,12 @@ export class Context {
     const db = await Context.initMongodb();
     const minio = Context.initMinio();
 
+    const fileStorageService = new FileStorageService(minio);
+
     const userRepository = new UserRepository(db);
-    const userService = new UserService(userRepository);
+    const userService = new UserService(userRepository, fileStorageService);
     const authorizationService = new AuthorizationService(userRepository);
 
-    const fileStorageService = new FileStorageService(minio);
     const postRepository = new PostRepository(db);
     const postService = new PostService(postRepository, fileStorageService);
 

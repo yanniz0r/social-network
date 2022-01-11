@@ -1,3 +1,4 @@
+import { FileUpload } from "graphql-upload";
 import { ObjectId } from "mongodb";
 import { Logger } from "tslog";
 import UserRepository, {
@@ -5,11 +6,16 @@ import UserRepository, {
   UserModel,
 } from "../repositories/user-repository";
 import initObjectID from "../utils/init-object-id";
+import FileStorageService from "./file-storage-service";
+import * as uuid from "uuid";
 
 const logger = new Logger({ name: "UserService" });
 
 export default class UserService {
-  constructor(private userRepository: UserRepository) {}
+  constructor(
+    private userRepository: UserRepository,
+    private fileStorageService: FileStorageService,
+  ) {}
 
   async getUser(): Promise<UserModel> {
     const user = await this.userRepository.findFirst();
@@ -63,4 +69,14 @@ export default class UserService {
       acceptedAt: new Date(),
     });
   }
+
+  async setAvatar(id: ObjectId | string, avatar: FileUpload) {
+    const avatarStream = avatar.createReadStream()
+    const fileName = uuid.v4()
+    await this.fileStorageService.uploadStream('avatar', fileName, avatarStream)
+    await this.userRepository.updateUser(initObjectID(id), {
+      avatar: fileName,
+    })
+  }
+
 }

@@ -13,6 +13,7 @@ const schema = gql`
     status: String
     online: Boolean!
     birthday: Date
+    avatarURL: String
   }
 
   type Comment {
@@ -66,6 +67,10 @@ const schema = gql`
     text: String
     file: Upload!
   }
+  
+  input UpdateMeInput {
+    avatar: Upload
+  }
 
   type Query {
     me: User!
@@ -75,6 +80,7 @@ const schema = gql`
   }
 
   type Mutation {
+    updateMe(input: UpdateMeInput!): User!
     createTextPost(input: TextPostInput!): TextPost!
     createImagePost(input: ImagePostInput!): ImagePost!
     acceptFriendshipRequest(id: ID!): FriendshipRequest!

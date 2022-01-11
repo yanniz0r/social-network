@@ -30,6 +30,10 @@ const resolvers: Resolvers = {
     name(parent) {
       return [parent.firstName, parent.lastName].join(" ");
     },
+    avatarURL({ avatar, _id }) {
+      if (!avatar) return null
+      return `http://localhost:4000/static/images/avatar/${_id}`;
+    },
     online(parent) {
       if (!parent.lastOnlinePing) {
         return false;

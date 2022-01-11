@@ -12,6 +12,8 @@ query HomePagePosts {
     liked
     user {
       id
+      online
+      avatarURL
       name
     }
     likedBy {
@@ -22,6 +24,7 @@ query HomePagePosts {
       text
       createdAt
       user {
+        avatarURL
         id
         name
         online

@@ -88,4 +88,17 @@ export default class UserRepository {
       }
     );
   }
+
+  async updateUser(id: ObjectID, user: Partial<User>) {
+    return this.userCollection.updateOne(
+      {
+        _id: id,
+      },
+      {
+        $set: {
+          ...user,
+        },
+      }
+    );
+  }
 }

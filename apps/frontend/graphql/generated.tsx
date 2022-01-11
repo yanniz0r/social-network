@@ -56,6 +56,7 @@ export type Mutation = {
   createTextPost: TextPost;
   likePost: Post;
   unlikePost: Post;
+  updateMe: User;
 };
 
 
@@ -87,6 +88,11 @@ export type MutationLikePostArgs = {
 
 export type MutationUnlikePostArgs = {
   id: Scalars['ID'];
+};
+
+
+export type MutationUpdateMeArgs = {
+  input: UpdateMeInput;
 };
 
 export type Post = {
@@ -127,8 +133,13 @@ export type TextPostInput = {
   text: Scalars['String'];
 };
 
+export type UpdateMeInput = {
+  avatar?: InputMaybe<Scalars['Upload']>;
+};
+
 export type User = {
   __typename?: 'User';
+  avatarURL?: Maybe<Scalars['String']>;
   birthday?: Maybe<Scalars['Date']>;
   firstName: Scalars['String'];
   friends: Array<User>;
@@ -152,6 +163,13 @@ export type CreatePostCardImagePostMutationVariables = Exact<{
 
 
 export type CreatePostCardImagePostMutation = { __typename?: 'Mutation', createImagePost: { __typename?: 'ImagePost', id: string } };
+
+export type EditAvatarMutationVariables = Exact<{
+  avatarUpload: Scalars['Upload'];
+}>;
+
+
+export type EditAvatarMutation = { __typename?: 'Mutation', updateMe: { __typename?: 'User', id: string } };
 
 export type LikeButtonLikeMutationVariables = Exact<{
   postID: Scalars['ID'];
@@ -195,7 +213,7 @@ export type FriendsPageAcceptFriendshipRequestMutation = { __typename?: 'Mutatio
 export type HomePagePostsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type HomePagePostsQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, name: string, online: boolean }, posts: Array<{ __typename: 'ImagePost', imageURL: string, id: string, text?: string | null | undefined, createdAt: any, liked: boolean, user: { __typename?: 'User', id: string, name: string }, likedBy: Array<{ __typename?: 'User', id: string, firstName: string }>, comments: Array<{ __typename?: 'Comment', text: string, createdAt: any, user: { __typename?: 'User', id: string, name: string, online: boolean } }> } | { __typename: 'TextPost', id: string, text: string, createdAt: any, liked: boolean, user: { __typename?: 'User', id: string, name: string }, likedBy: Array<{ __typename?: 'User', id: string, firstName: string }>, comments: Array<{ __typename?: 'Comment', text: string, createdAt: any, user: { __typename?: 'User', id: string, name: string, online: boolean } }> }> };
+export type HomePagePostsQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, name: string, online: boolean }, posts: Array<{ __typename: 'ImagePost', imageURL: string, id: string, text?: string | null | undefined, createdAt: any, liked: boolean, user: { __typename?: 'User', id: string, online: boolean, avatarURL?: string | null | undefined, name: string }, likedBy: Array<{ __typename?: 'User', id: string, firstName: string }>, comments: Array<{ __typename?: 'Comment', text: string, createdAt: any, user: { __typename?: 'User', avatarURL?: string | null | undefined, id: string, name: string, online: boolean } }> } | { __typename: 'TextPost', id: string, text: string, createdAt: any, liked: boolean, user: { __typename?: 'User', id: string, online: boolean, avatarURL?: string | null | undefined, name: string }, likedBy: Array<{ __typename?: 'User', id: string, firstName: string }>, comments: Array<{ __typename?: 'Comment', text: string, createdAt: any, user: { __typename?: 'User', avatarURL?: string | null | undefined, id: string, name: string, online: boolean } }> }> };
 
 export type ProfileDetailPageQueryVariables = Exact<{
   userID: Scalars['ID'];
@@ -207,7 +225,7 @@ export type ProfileDetailPageQuery = { __typename?: 'Query', user?: { __typename
 export type ProfileMeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ProfileMeQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, firstName: string, lastName: string, name: string, birthday?: any | null | undefined, online: boolean, friends: Array<{ __typename?: 'User', id: string, online: boolean, name: string }> } };
+export type ProfileMeQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, avatarURL?: string | null | undefined, firstName: string, lastName: string, name: string, birthday?: any | null | undefined, online: boolean, friends: Array<{ __typename?: 'User', id: string, online: boolean, name: string }> } };
 
 
 export const CreatePostCardTextPostDocument = gql`
@@ -276,6 +294,39 @@ export function useCreatePostCardImagePostMutation(baseOptions?: Apollo.Mutation
 export type CreatePostCardImagePostMutationHookResult = ReturnType<typeof useCreatePostCardImagePostMutation>;
 export type CreatePostCardImagePostMutationResult = Apollo.MutationResult<CreatePostCardImagePostMutation>;
 export type CreatePostCardImagePostMutationOptions = Apollo.BaseMutationOptions<CreatePostCardImagePostMutation, CreatePostCardImagePostMutationVariables>;
+export const EditAvatarDocument = gql`
+    mutation EditAvatar($avatarUpload: Upload!) {
+  updateMe(input: {avatar: $avatarUpload}) {
+    id
+  }
+}
+    `;
+export type EditAvatarMutationFn = Apollo.MutationFunction<EditAvatarMutation, EditAvatarMutationVariables>;
+
+/**
+ * __useEditAvatarMutation__
+ *
+ * To run a mutation, you first call `useEditAvatarMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useEditAvatarMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [editAvatarMutation, { data, loading, error }] = useEditAvatarMutation({
+ *   variables: {
+ *      avatarUpload: // value for 'avatarUpload'
+ *   },
+ * });
+ */
+export function useEditAvatarMutation(baseOptions?: Apollo.MutationHookOptions<EditAvatarMutation, EditAvatarMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<EditAvatarMutation, EditAvatarMutationVariables>(EditAvatarDocument, options);
+      }
+export type EditAvatarMutationHookResult = ReturnType<typeof useEditAvatarMutation>;
+export type EditAvatarMutationResult = Apollo.MutationResult<EditAvatarMutation>;
+export type EditAvatarMutationOptions = Apollo.BaseMutationOptions<EditAvatarMutation, EditAvatarMutationVariables>;
 export const LikeButtonLikeDocument = gql`
     mutation LikeButtonLike($postID: ID!) {
   likePost(id: $postID) {
@@ -531,6 +582,8 @@ export const HomePagePostsDocument = gql`
     liked
     user {
       id
+      online
+      avatarURL
       name
     }
     likedBy {
@@ -541,6 +594,7 @@ export const HomePagePostsDocument = gql`
       text
       createdAt
       user {
+        avatarURL
         id
         name
         online
@@ -627,6 +681,7 @@ export const ProfileMeDocument = gql`
     query ProfileMe {
   me {
     id
+    avatarURL
     firstName
     lastName
     name
