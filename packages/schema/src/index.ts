@@ -67,7 +67,7 @@ const schema = gql`
     text: String
     file: Upload!
   }
-  
+
   input UpdateMeInput {
     avatar: Upload
   }

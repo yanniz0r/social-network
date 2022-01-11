@@ -1,7 +1,7 @@
-import { FC, ReactNode } from 'react'
+import { FC, ReactNode } from "react";
 
 interface TooltipProps {
-  text: ReactNode
+  text: ReactNode;
 }
 
 const Tooltip: FC<TooltipProps> = ({ children, text }) => {
@@ -19,7 +19,7 @@ const Tooltip: FC<TooltipProps> = ({ children, text }) => {
       </div>
       {children}
     </div>
-  )
-}
+  );
+};
 
-export default Tooltip
+export default Tooltip;

@@ -14,7 +14,7 @@ const logger = new Logger({ name: "UserService" });
 export default class UserService {
   constructor(
     private userRepository: UserRepository,
-    private fileStorageService: FileStorageService,
+    private fileStorageService: FileStorageService
   ) {}
 
   async getUser(): Promise<UserModel> {
@@ -71,12 +71,15 @@ export default class UserService {
   }
 
   async setAvatar(id: ObjectId | string, avatar: FileUpload) {
-    const avatarStream = avatar.createReadStream()
-    const fileName = uuid.v4()
-    await this.fileStorageService.uploadStream('avatar', fileName, avatarStream)
+    const avatarStream = avatar.createReadStream();
+    const fileName = uuid.v4();
+    await this.fileStorageService.uploadStream(
+      "avatar",
+      fileName,
+      avatarStream
+    );
     await this.userRepository.updateUser(initObjectID(id), {
       avatar: fileName,
-    })
+    });
   }
-
 }

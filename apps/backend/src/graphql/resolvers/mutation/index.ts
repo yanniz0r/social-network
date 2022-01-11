@@ -10,7 +10,7 @@ const mutationResolvers: Resolvers["Mutation"] = {
   ...likeMutationResolvers,
   ...friendshipMutationResolvers,
   ...commentMutationResolvers,
-  ...meMutationResolvers
+  ...meMutationResolvers,
 };
 
 export default mutationResolvers;

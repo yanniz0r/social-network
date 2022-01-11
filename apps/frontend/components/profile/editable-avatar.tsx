@@ -1,12 +1,12 @@
-
-
-import React from "react"
-import Avatar from "../avatar"
+import React from "react";
+import Avatar from "../avatar";
 
 function EditableAvatar() {
-  return <div>
-    <Avatar size="md" name="Peter" />
-  </div>
+  return (
+    <div>
+      <Avatar size="md" name="Peter" />
+    </div>
+  );
 }
 
-export default EditableAvatar
+export default EditableAvatar;

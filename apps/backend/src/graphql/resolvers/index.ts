@@ -31,8 +31,10 @@ const resolvers: Resolvers = {
       return [parent.firstName, parent.lastName].join(" ");
     },
     avatarURL({ avatar, updatedAt, _id }) {
-      if (!avatar) return null
-      return `http://localhost:4000/static/images/avatar/${_id}${updatedAt ? `?c=${updatedAt.getTime()}` : ''}`;
+      if (!avatar) return null;
+      return `http://localhost:4000/static/images/avatar/${_id}${
+        updatedAt ? `?c=${updatedAt.getTime()}` : ""
+      }`;
     },
     online(parent) {
       if (!parent.lastOnlinePing) {

@@ -28,12 +28,12 @@ router.get("/static/images/avatar/:userID", async (request, response) => {
   try {
     const stream = await request.context.fileStorageService.downloadStream(
       "avatar",
-      user.avatar,
+      user.avatar
     );
     stream.pipe(response);
     response.status(200);
   } catch (e) {
-    return response.sendStatus(404)
+    return response.sendStatus(404);
   }
   // response.json({test: "wow"})
 });

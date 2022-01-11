@@ -26,9 +26,12 @@ const Avatar: FC<AvatarProps> = ({ name, size, online, imageURL }) => {
   );
 
   return (
-    <div className={containerClassNames} style={{
-      backgroundImage: imageURL ? `url(${imageURL})` : undefined,
-    }}>
+    <div
+      className={containerClassNames}
+      style={{
+        backgroundImage: imageURL ? `url(${imageURL})` : undefined,
+      }}
+    >
       {!imageURL && name[0]}
       <OnlineIndicator size={size} online={online} />
     </div>
