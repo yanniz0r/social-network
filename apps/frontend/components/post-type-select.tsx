@@ -33,6 +33,7 @@ const PostTypeSelect: FC<PostTypeSelectProps> = ({ value, onChange }) => {
     <div className="flex">
       {types.map((type) => (
         <button
+          key={type.value}
           className={classNames(
             "px-4 py-2 text-green-300 rounded-full mr-2 flex items-center",
             {

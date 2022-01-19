@@ -89,6 +89,14 @@ export default class UserRepository {
     );
   }
 
+  async createUser(user: User): Promise<UserModel> {
+    const { insertedId } = await this.userCollection.insertOne(user)
+    return {
+      _id: insertedId,
+      ...user
+    }
+  } 
+
   async updateUser(id: ObjectID, user: Partial<User>) {
     return this.userCollection.updateOne(
       {
@@ -101,5 +109,11 @@ export default class UserRepository {
         },
       }
     );
+  }
+
+  async findUserWithMatchingAuth(auth: Partial<User["auth"]>) {
+    return this.userCollection.findOne({
+      auth
+    })
   }
 }

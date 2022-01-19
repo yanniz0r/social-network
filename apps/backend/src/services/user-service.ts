@@ -8,6 +8,7 @@ import UserRepository, {
 import initObjectID from "../utils/init-object-id";
 import FileStorageService from "./file-storage-service";
 import * as uuid from "uuid";
+import User from "../types/user";
 
 const logger = new Logger({ name: "UserService" });
 
@@ -82,4 +83,20 @@ export default class UserService {
       avatar: fileName,
     });
   }
+
+  createUser(user: Omit<User, 'createdAt'>) {
+    return this.userRepository.createUser({
+      createdAt: new Date(),
+      ...user
+    })
+  }
+
+  findUserByGoogleID(id: string) {
+    return this.userRepository.findUserWithMatchingAuth({
+      google: {
+        id,
+      }
+    })
+  }
+
 }

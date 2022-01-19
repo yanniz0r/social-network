@@ -1,0 +1,21 @@
+{
+  "Common": {
+    "baseURL": "http://localhost:4000"
+  },
+  "Auth": {
+    "google": {
+      "clientId": "1095516303409-ogq98bg3riskn177oamqca83qcmho75l.apps.googleusercontent.com",
+      "clientSecret": 5984
+    }
+  },
+  "MongoDB": {
+    "url": "mongodb://root:example@localhost:27017"
+  },
+  "MinIO": {
+    "endPoint": "localhost",
+    "port": 9000,
+    "useSSL": false,
+    "accessKey": "Q3AM3UQ867SPQQA43P2F",
+    "secretKey": "zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG"
+  }
+}

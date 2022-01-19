@@ -7,6 +7,8 @@ import AuthorizationService from "./services/authorization-service";
 import PostService from "./services/post-service";
 import FileStorageService from "./services/file-storage-service";
 import UserService from "./services/user-service";
+import config from "config"
+import { Request, Response } from "express";
 
 const logger = new Logger({ name: "Context" });
 
@@ -17,10 +19,12 @@ export class Context {
     public userService: UserService,
     public postService: PostService,
     public authorizationService: AuthorizationService,
-    public fileStorageService: FileStorageService
+    public fileStorageService: FileStorageService,
+    private request?: Request,
+    private response?: Response
   ) {}
 
-  static async init(): Promise<Context> {
+  static async init(request: Request, response: Response): Promise<Context> {
     const db = await Context.initMongodb();
     const minio = Context.initMinio();
 
@@ -37,7 +41,9 @@ export class Context {
       userService,
       postService,
       authorizationService,
-      fileStorageService
+      fileStorageService,
+      request,
+      response,
     );
 
     // TODO add this back in once this is cached
@@ -48,7 +54,7 @@ export class Context {
 
   static async initMongodb() {
     const mongoClient = new MongoClient(
-      "mongodb://root:example@localhost:27017"
+      config.get<string>("MongoDB.url")
     );
     await mongoClient.connect();
 
@@ -58,13 +64,20 @@ export class Context {
   }
 
   static initMinio() {
-    const minioClient = new MinioClient({
-      endPoint: "localhost",
-      port: 9000,
-      useSSL: false,
-      accessKey: "Q3AM3UQ867SPQQA43P2F",
-      secretKey: "zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG",
-    });
+    const minioClient = new MinioClient(config.get("MinIO"));
     return minioClient;
   }
+
+  getCookie(name: string) {
+    if (!this.request) throw new Error("A request has to be set to use cookies")
+    return this.request.cookies[name]
+  }
+
+  setCookie(name: string, value: string) {
+    if (!this.response) throw new Error("A response has to be set to use cookies")
+    this.response.cookie(name, value, {
+      maxAge: 1000 * 60 * 60 * 24 * 30 // 30 days
+    })
+  }
+
 }

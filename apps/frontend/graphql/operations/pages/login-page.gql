@@ -1,0 +1,3 @@
+query LoginPage($googleRedirectURL: String!) {
+  googleOAuthURL(redirectURL: $googleRedirectURL)
+}

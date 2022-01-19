@@ -7,6 +7,7 @@ import FriendshipRequest from "./type/friendship-request-type-resolver";
 import Comment from "./type/comment-type-resolver";
 import dateScalar from "./scalar/date";
 import { GraphQLUpload } from "graphql-upload";
+import config from "config";
 
 const resolvers: Resolvers = {
   FriendshipRequest,
@@ -32,7 +33,7 @@ const resolvers: Resolvers = {
     },
     avatarURL({ avatar, updatedAt, _id }) {
       if (!avatar) return null;
-      return `http://localhost:4000/static/images/avatar/${_id}${
+      return `${config.get("Common.baseURL")}/static/images/avatar/${_id}${
         updatedAt ? `?c=${updatedAt.getTime()}` : ""
       }`;
     },
@@ -78,9 +79,16 @@ const resolvers: Resolvers = {
       return parent._id.toString();
     },
     async liked(parent, _arguments, context) {
-      const signedInUser =
-        await context.authorizationService.ensureAuthorizedUser();
-      return parent.likedBy.some((liker) => liker.equals(signedInUser._id));
+      const signedInUser = context.authorizationService.ensureAuthorizedUser();
+      return parent.likedBy.some((liker) => {
+        if (!liker) {
+          console.log({
+            liker,
+            parent
+          })
+        }
+        return liker.equals(signedInUser._id)
+      });
     },
     likedBy(parent, _result, context) {
       // TODO get rid of casting
@@ -96,7 +104,7 @@ const resolvers: Resolvers = {
       return parent.comments ?? [];
     },
     imageURL(parent) {
-      return `http://localhost:4000/static/images/image-post/${parent._id}`;
+      return `${config.get("Common.baseURL")}/static/images/image-post/${parent._id}`;
     },
   },
   Query,

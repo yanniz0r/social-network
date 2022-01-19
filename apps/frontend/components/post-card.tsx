@@ -115,7 +115,7 @@ const PostCard: FC<PostCardProps> = ({ post, me }) => {
       </div>
       <div className="px-5 pb-5">
         {post.comments.map((comment) => (
-          <div className="flex mt-4">
+          <div className="flex mt-4" key={comment.createdAt}>
             <Avatar
               size="md"
               name={comment.user.name}

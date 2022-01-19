@@ -71,12 +71,18 @@ const schema = gql`
   input UpdateMeInput {
     avatar: Upload
   }
+  
+  type Authentication {
+    user: User!
+    token: String!
+  }
 
   type Query {
     me: User!
     user(id: ID!): User
     friendshipRequests: [FriendshipRequest!]!
     posts: [Post!]!
+    googleOAuthURL(redirectURL: String!): String!
   }
 
   type Mutation {
@@ -87,6 +93,7 @@ const schema = gql`
     likePost(id: ID!): Post!
     unlikePost(id: ID!): Post!
     commentPost(id: ID!, text: String!): Post!
+    authenticateWithGoogle(code: String!, redirectURL: String!): Authentication!
   }
 `;
 

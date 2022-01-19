@@ -7,6 +7,8 @@ import imageRouter from "./routes/image";
 import { graphqlUploadExpress } from "graphql-upload";
 import schema from "@social/schema";
 import cors from "cors";
+import cookieParser from "cookie-parser";
+import config from "config";
 
 const logger = new Logger({ name: "apollo-server" });
 
@@ -21,18 +23,32 @@ async function start() {
 
   const app = express();
 
-  app.use(async (req, _res, next) => {
-    req.context = await Context.init();
+  app.use(cookieParser())
+
+  app.use(async (req, res, next) => {
+    req.context = await Context.init(req, res);
+    
+    const authenticationCookie = req.context.getCookie('authentication')
+    if (authenticationCookie) {
+      logger.debug("Sent cookie", authenticationCookie)
+      await req.context.authorizationService.authenticateUser(authenticationCookie)
+    }
+
     next();
   });
 
-  app.use(cors());
+  app.use(
+    cors(config.get('Common.cors'))
+  );
 
   app.use(graphqlUploadExpress());
 
   await apolloServer.start();
 
-  apolloServer.applyMiddleware({ app });
+  apolloServer.applyMiddleware({
+    app, 
+    cors: config.get('Common.cors')
+  });
 
   app.listen({ port: 4000 }, () => {
     logger.info(`🚀 Server ready`);

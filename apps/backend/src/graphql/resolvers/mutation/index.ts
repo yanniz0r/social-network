@@ -4,6 +4,7 @@ import friendshipMutationResolvers from "./friendship-mutation-resolvers";
 import likeMutationResolvers from "./like-mutation-resolvers";
 import commentMutationResolvers from "./comment-mutation-resolvers";
 import meMutationResolvers from "./me-mutation-resolvers";
+import authenticationMutationResolvers from "./authentication-mutation-resolvers";
 
 const mutationResolvers: Resolvers["Mutation"] = {
   ...createTextPost,
@@ -11,6 +12,7 @@ const mutationResolvers: Resolvers["Mutation"] = {
   ...friendshipMutationResolvers,
   ...commentMutationResolvers,
   ...meMutationResolvers,
+  ...authenticationMutationResolvers,
 };
 
 export default mutationResolvers;

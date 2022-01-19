@@ -5,7 +5,7 @@ const userResolvers: QueryResolvers = {
     return context.userService.findUser(id);
   },
   async me(_parent, _result, context) {
-    const user = await context.userService.getUser();
+    const user = await context.authorizationService.ensureAuthorizedUser();
     return user;
   },
 };

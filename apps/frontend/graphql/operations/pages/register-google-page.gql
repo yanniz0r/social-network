@@ -1,0 +1,8 @@
+mutation RegisterGooglePageRegister($code: String!, $redirectURL: String!) {
+  authenticateWithGoogle(code: $code, redirectURL: $redirectURL) {
+    user {
+      id
+    }
+    token
+  }
+}

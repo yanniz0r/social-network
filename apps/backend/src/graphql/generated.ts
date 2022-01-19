@@ -8,6 +8,7 @@ export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -18,6 +19,12 @@ export type Scalars = {
   Float: number;
   Date: any;
   Upload: any;
+};
+
+export type Authentication = {
+  __typename?: 'Authentication';
+  token: Scalars['String'];
+  user: User;
 };
 
 export type Comment = {
@@ -54,6 +61,7 @@ export type ImagePostInput = {
 export type Mutation = {
   __typename?: 'Mutation';
   acceptFriendshipRequest: FriendshipRequest;
+  authenticateWithGoogle: Authentication;
   commentPost: Post;
   createImagePost: ImagePost;
   createTextPost: TextPost;
@@ -65,6 +73,12 @@ export type Mutation = {
 
 export type MutationAcceptFriendshipRequestArgs = {
   id: Scalars['ID'];
+};
+
+
+export type MutationAuthenticateWithGoogleArgs = {
+  code: Scalars['String'];
+  redirectURL: Scalars['String'];
 };
 
 
@@ -111,9 +125,15 @@ export type Post = {
 export type Query = {
   __typename?: 'Query';
   friendshipRequests: Array<FriendshipRequest>;
+  googleOAuthURL: Scalars['String'];
   me: User;
   posts: Array<Post>;
   user?: Maybe<User>;
+};
+
+
+export type QueryGoogleOAuthUrlArgs = {
+  redirectURL: Scalars['String'];
 };
 
 
@@ -222,6 +242,7 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
+  Authentication: ResolverTypeWrapper<Omit<Authentication, 'user'> & { user: ResolversTypes['User'] }>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Comment: ResolverTypeWrapper<Comment>;
   Date: ResolverTypeWrapper<Scalars['Date']>;
@@ -242,6 +263,7 @@ export type ResolversTypes = {
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
+  Authentication: Omit<Authentication, 'user'> & { user: ResolversParentTypes['User'] };
   Boolean: Scalars['Boolean'];
   Comment: Comment;
   Date: Scalars['Date'];
@@ -258,6 +280,12 @@ export type ResolversParentTypes = {
   UpdateMeInput: UpdateMeInput;
   Upload: Scalars['Upload'];
   User: UserModel;
+};
+
+export type AuthenticationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Authentication'] = ResolversParentTypes['Authentication']> = {
+  token?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type CommentResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Comment'] = ResolversParentTypes['Comment']> = {
@@ -292,6 +320,7 @@ export type ImagePostResolvers<ContextType = Context, ParentType extends Resolve
 
 export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   acceptFriendshipRequest?: Resolver<ResolversTypes['FriendshipRequest'], ParentType, ContextType, RequireFields<MutationAcceptFriendshipRequestArgs, 'id'>>;
+  authenticateWithGoogle?: Resolver<ResolversTypes['Authentication'], ParentType, ContextType, RequireFields<MutationAuthenticateWithGoogleArgs, 'code' | 'redirectURL'>>;
   commentPost?: Resolver<ResolversTypes['Post'], ParentType, ContextType, RequireFields<MutationCommentPostArgs, 'id' | 'text'>>;
   createImagePost?: Resolver<ResolversTypes['ImagePost'], ParentType, ContextType, RequireFields<MutationCreateImagePostArgs, 'input'>>;
   createTextPost?: Resolver<ResolversTypes['TextPost'], ParentType, ContextType, RequireFields<MutationCreateTextPostArgs, 'input'>>;
@@ -313,6 +342,7 @@ export type PostResolvers<ContextType = Context, ParentType extends ResolversPar
 
 export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   friendshipRequests?: Resolver<Array<ResolversTypes['FriendshipRequest']>, ParentType, ContextType>;
+  googleOAuthURL?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<QueryGoogleOAuthUrlArgs, 'redirectURL'>>;
   me?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   posts?: Resolver<Array<ResolversTypes['Post']>, ParentType, ContextType>;
   user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>;
@@ -347,6 +377,7 @@ export type UserResolvers<ContextType = Context, ParentType extends ResolversPar
 };
 
 export type Resolvers<ContextType = Context> = {
+  Authentication?: AuthenticationResolvers<ContextType>;
   Comment?: CommentResolvers<ContextType>;
   Date?: GraphQLScalarType;
   FriendshipRequest?: FriendshipRequestResolvers<ContextType>;

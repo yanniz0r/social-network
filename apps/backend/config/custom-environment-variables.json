@@ -1,0 +1,8 @@
+{
+  "Auth": {
+    "google": {
+      "clientID": "AUTH_GOOGLE_CLIENT_ID",
+      "clientSecret": "AUTH_GOOGLE_CLIENT_SECRET"
+    }
+  }
+}

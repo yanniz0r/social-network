@@ -6,4 +6,11 @@ export default interface User {
   lastOnlinePing?: Date;
   updatedAt?: Date;
   createdAt: Date;
+  auth?: UserAuth;
+}
+
+interface UserAuth {
+  google?: {
+    id: string
+  }
 }
