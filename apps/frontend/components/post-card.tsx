@@ -1,4 +1,5 @@
 import { format, formatDistance } from "date-fns";
+import Link from "next/link";
 import { FC, useState } from "react";
 import { FaComment } from "react-icons/fa";
 import {
@@ -16,7 +17,7 @@ import Tooltip from "./tooltip";
 interface PostCardProps {
   me: Pick<User, "id" | "name" | "online">;
   post: Pick<Post, "id" | "text" | "createdAt" | "liked"> & {
-    user: Pick<User, "name" | "avatarURL" | "online">;
+    user: Pick<User, "name" | "avatarURL" | "online" | "id">;
     likedBy: Pick<User, "firstName" | "id">[];
     comments: Array<
       Pick<Comment, "text" | "createdAt"> & {
@@ -68,21 +69,25 @@ const PostCard: FC<PostCardProps> = ({ post, me }) => {
 
   return (
     <div className="bg-white shadow-lg rounded-lg dark:bg-gray-800">
-      <div className="p-5 flex">
-        <Avatar
-          size="lg"
-          name={post.user.name}
-          online={post.user.online}
-          imageURL={post.user.avatarURL ?? undefined}
-        />
-        <div className="ml-4">
-          <h4 className="text-xl dark:text-gray-200">{post.user.name}</h4>
-          <Tooltip text={format(new Date(post.createdAt), "dd.MM.yyyy, HH:mm")}>
-            <span className="text-sm text-gray-500 dark:text-gray-400">
-              {createdAt}
-            </span>
-          </Tooltip>
-        </div>
+      <div className="p-5">
+        <Link passHref href={`/profile/${post.user.id}`}>
+          <a className="flex items-center">
+            <Avatar
+              size="lg"
+              name={post.user.name}
+              online={post.user.online}
+              imageURL={post.user.avatarURL ?? undefined}
+            />
+            <div className="ml-4">
+              <h4 className="text-xl dark:text-gray-200">{post.user.name}</h4>
+              <Tooltip text={format(new Date(post.createdAt), "dd.MM.yyyy, HH:mm")}>
+                <span className="text-sm text-gray-500 dark:text-gray-400">
+                  {createdAt}
+                </span>
+              </Tooltip>
+            </div>
+          </a>
+        </Link>
       </div>
       {post.text && (
         <div className="px-5 pb-5">
