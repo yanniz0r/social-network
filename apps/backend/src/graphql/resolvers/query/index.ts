@@ -18,7 +18,12 @@ const queryResolvers: QueryResolvers = {
     })
   },
   async posts(_parent, _result, context) {
-    return context.postService.getPosts();
+    const authenticatedUser = context.authorizationService.ensureAuthorizedUser()
+    const friends = await context.userService.findFriendsForUser(authenticatedUser._id)
+    console.log({
+      friends
+    })
+    return context.postService.getPostsFrom(friends);
   },
 };
 

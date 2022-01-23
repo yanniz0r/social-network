@@ -15,7 +15,7 @@ export default class UserRepository {
   private userCollection: Collection<User>;
   private friendshipCollection: Collection<Friendship>;
 
-  private findUserDataloader = new DataLoader<ObjectId, UserModel | null>(
+  private findUserDataloader = new DataLoader<ObjectId, UserModel | null, string>(
     async (keys) => {
       const users = await this.userCollection
         .find({
@@ -31,6 +31,11 @@ export default class UserRepository {
         const value = users.find((user) => user._id.equals(key));
         return value ?? null;
       });
+    },
+    {
+      cacheKeyFn(key) {
+        return key.toString()
+      }
     }
   );
 

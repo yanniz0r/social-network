@@ -20,8 +20,12 @@ export default class PostRepository {
     this.collection = db.collection("posts");
   }
 
-  async findAll() {
-    return this.collection.find().sort({ createdAt: "desc" }).toArray();
+  async findAllByUser(userIDs: ObjectId[]) {
+    return this.collection.find({
+      userID: {
+        $in: userIDs,
+      }
+    }).sort({ createdAt: "desc" }).toArray();
   }
 
   async findPostById(id: ObjectId) {

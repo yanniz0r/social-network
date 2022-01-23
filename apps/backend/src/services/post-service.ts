@@ -20,9 +20,10 @@ export default class PostService {
     private fileStorageService: FileStorageService
   ) {}
 
-  async getPosts(): Promise<PostModel[]> {
-    const posts = await this.postRepository.findAll();
-    logger.debug(posts);
+  async getPostsFrom(user: Array<UserModel>): Promise<PostModel[]> {
+    const posts = await this.postRepository.findAllByUser(
+      user.map(user => user._id)
+    );
     return posts;
   }
 
