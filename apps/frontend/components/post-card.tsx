@@ -141,6 +141,7 @@ const PostCard: FC<PostCardProps> = ({ post, me }) => {
       <div className="px-5 pb-5">
         <div className="flex">
           <textarea
+            placeholder="Kommentiere diesen Beitrag"
             className="flex-grow dark:bg-gray-700 rounded-lg p-2 dark:text-gray-100"
             rows={1}
             onChange={(e) => setComment(e.target.value)}

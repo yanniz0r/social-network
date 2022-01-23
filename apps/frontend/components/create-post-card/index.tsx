@@ -1,8 +1,10 @@
-import { FC, useState } from "react";
+import { FC, useMemo, useState } from "react";
+import { FaPaperPlane } from "react-icons/fa";
 import {
   useCreatePostCardImagePostMutation as useCreateImagePostMutation,
   useCreatePostCardTextPostMutation as useCreateTextPostMutation,
 } from "../../graphql/generated";
+import Button from "../button";
 import PostTypeSelect from "../post-type-select";
 
 interface CreatePostCardProps {
@@ -10,6 +12,16 @@ interface CreatePostCardProps {
 }
 
 const CreatePostCard: FC<CreatePostCardProps> = ({ onPost }) => {
+  const placeholder = useMemo(() => {
+    const placeholders = [
+      'Wie geht es Dir?',
+      'Woran denkst du gerade?',
+      'Wie war dein Tag?',
+      'Was wünscht du Dir?',
+      'Was ist deine "Unpopular Opinion"?'
+    ]
+    return placeholders[Math.floor(Math.random() * placeholders.length)]
+  }, [])
   const [postType, setPostType] = useState<"text" | "image">("text");
   const [text, setText] = useState("");
   const [file, setFile] = useState<File | null>(null);
@@ -45,7 +57,8 @@ const CreatePostCard: FC<CreatePostCardProps> = ({ onPost }) => {
         <PostTypeSelect value={postType} onChange={setPostType} />
       </div>
       <textarea
-        className="block w-full bg-gray-700 rounded-lg text-gray-200 p-3"
+        placeholder={placeholder}
+        className="block w-full bg-gray-700 rounded-t-lg text-gray-200 p-3 border-b-2 border-gray-500"
         value={text}
         onChange={(e) => setText(e.target.value)}
       />
@@ -59,12 +72,12 @@ const CreatePostCard: FC<CreatePostCardProps> = ({ onPost }) => {
         </div>
       )}
       <div className="flex justify-end pt-5">
-        <button
-          className="bg-blue-600 bg-opacity-25 text-blue-400 px-4 py-2 rounded-lg"
+        <Button
+          iconStart={<FaPaperPlane />}
           onClick={onSubmit}
         >
           Posten
-        </button>
+        </Button>
       </div>
     </div>
   );

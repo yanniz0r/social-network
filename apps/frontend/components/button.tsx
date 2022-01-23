@@ -16,7 +16,7 @@ const Button: FC<ButtonProps> = ({
   iconStart
 }) => {
   const className = classNames(
-    "inline-flex  items-center px-4 py-2 rounded-lg bg-opacity-20 transition-all transform hover:scale-105",
+    "inline-flex flex-row items-center px-4 py-2 rounded-lg bg-opacity-20 transition-all transform hover:scale-105",
     {
       "bg-blue-500 text-blue-400": variant === "primary",
       "bg-gray-700 bg-opacity-100 text-gray-300": variant === "secondary",
