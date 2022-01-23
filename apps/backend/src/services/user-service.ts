@@ -81,6 +81,27 @@ export default class UserService {
     });
   }
 
+  async getFriendRecommendations(id: ObjectId | string) {
+    const userId = initObjectID(id)
+    const friends = await this.findFriendsForUser(userId)
+    
+    const friendLayers = [friends]
+    const maxFriendLayers = 3
+    
+    for (let friendLayer = 1; friendLayer < maxFriendLayers; friendLayer++) {
+      const previousLayer = friendLayers[friendLayer - 1]
+      const friendLists = await Promise.all(
+        previousLayer.map(user => this.findFriendsForUser(user._id))
+      )
+      const friendsOfFriends = friendLists.flat()
+      friendLayers[friendLayer] = Array.from(new Set(friendsOfFriends))
+    }
+
+    return Array.from(new Set(friendLayers.flat())).filter(user => {
+      return user._id !== userId && !friends.some(friend => friend._id === user._id)
+    })
+  }
+
   async setAvatar(id: ObjectId | string, avatar: FileUpload) {
     const avatarStream = avatar.createReadStream();
     const fileName = uuid.v4();

@@ -134,6 +134,7 @@ export type Post = {
 
 export type Query = {
   __typename?: 'Query';
+  friendshipRecommendations: Array<User>;
   friendshipRequests: Array<FriendshipRequest>;
   googleOAuthURL: Scalars['String'];
   me: User;
@@ -248,7 +249,7 @@ export type SearchQuery = { __typename?: 'Query', searchUsers: Array<{ __typenam
 export type FriendshipsPageQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FriendshipsPageQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, friends: Array<{ __typename?: 'User', id: string, name: string, online: boolean }> }, friendshipRequests: Array<{ __typename?: 'FriendshipRequest', id: string, date: any, from: { __typename?: 'User', id: string, name: string, online: boolean } }> };
+export type FriendshipsPageQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, friends: Array<{ __typename?: 'User', id: string, name: string, online: boolean }> }, friendshipRecommendations: Array<{ __typename?: 'User', id: string, name: string, online: boolean, avatarURL?: string | null | undefined }>, friendshipRequests: Array<{ __typename?: 'FriendshipRequest', id: string, date: any, from: { __typename?: 'User', id: string, name: string, online: boolean } }> };
 
 export type FriendsPageAcceptFriendshipRequestMutationVariables = Exact<{
   friendshipID: Scalars['ID'];
@@ -599,6 +600,12 @@ export const FriendshipsPageDocument = gql`
       name
       online
     }
+  }
+  friendshipRecommendations {
+    id
+    name
+    online
+    avatarURL
   }
   friendshipRequests {
     id

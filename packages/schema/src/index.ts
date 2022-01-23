@@ -91,6 +91,7 @@ const schema = gql`
     user(id: ID!): User
     searchUsers(query: String!): [User!]!
     friendshipRequests: [FriendshipRequest!]!
+    friendshipRecommendations: [User!]!
     posts: [Post!]!
     googleOAuthURL(redirectURL: String!): String!
   }

@@ -138,6 +138,7 @@ export type Post = {
 
 export type Query = {
   __typename?: 'Query';
+  friendshipRecommendations: Array<User>;
   friendshipRequests: Array<FriendshipRequest>;
   googleOAuthURL: Scalars['String'];
   me: User;
@@ -365,6 +366,7 @@ export type PostResolvers<ContextType = Context, ParentType extends ResolversPar
 };
 
 export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+  friendshipRecommendations?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>;
   friendshipRequests?: Resolver<Array<ResolversTypes['FriendshipRequest']>, ParentType, ContextType>;
   googleOAuthURL?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<QueryGoogleOAuthUrlArgs, 'redirectURL'>>;
   me?: Resolver<ResolversTypes['User'], ParentType, ContextType>;

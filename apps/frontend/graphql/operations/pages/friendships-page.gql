@@ -7,6 +7,12 @@ query FriendshipsPage {
       online
     }
   }
+  friendshipRecommendations {
+    id
+    name
+    online
+    avatarURL
+  }
   friendshipRequests {
     id
     date
