@@ -82,15 +82,27 @@ const FriendshipsPage: NextPage = () => {
       )}
 
       <Card className="p-5 mb-5">
-        <h2 className="text-xl dark:text-white mb-2">Vielleicht kennst du...?</h2>
+        <h2 className="text-xl dark:text-white mb-2">
+          Vielleicht kennst du...?
+        </h2>
         <ul className="grid grid-cols-5 gap-4 mt-4">
           {friendsPageQuery.data?.friendshipRecommendations.map(
             (recommendation) => (
-              <li key={recommendation.id} className="inline-block cursor-pointer">
+              <li
+                key={recommendation.id}
+                className="inline-block cursor-pointer"
+              >
                 <Link passHref href={`/profile/${recommendation.id}`}>
                   <div className="border-2 border-gray-900 rounded-lg p-5 flex flex-col items-center">
-                    <Avatar size="lg" online={recommendation.online} imageURL={recommendation.avatarURL ?? undefined} name={recommendation.name} />
-                    <h4 className="text-gray-200 my-2">{recommendation.name}</h4>
+                    <Avatar
+                      size="lg"
+                      online={recommendation.online}
+                      imageURL={recommendation.avatarURL ?? undefined}
+                      name={recommendation.name}
+                    />
+                    <h4 className="text-gray-200 my-2">
+                      {recommendation.name}
+                    </h4>
                     <Button>Freund:in hinzufügen</Button>
                   </div>
                 </Link>

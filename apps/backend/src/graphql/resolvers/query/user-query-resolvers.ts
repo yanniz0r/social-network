@@ -9,9 +9,9 @@ const userResolvers: QueryResolvers = {
     return user;
   },
   async searchUsers(_parent, { query }, context) {
-    await new Promise(res => setTimeout(res, 2000))
-    return context.userService.searchUsers(query)
-  }
+    await new Promise((res) => setTimeout(res, 2000));
+    return context.userService.searchUsers(query);
+  },
 };
 
 export default userResolvers;

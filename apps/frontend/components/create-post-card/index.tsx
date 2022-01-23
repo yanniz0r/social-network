@@ -14,14 +14,14 @@ interface CreatePostCardProps {
 const CreatePostCard: FC<CreatePostCardProps> = ({ onPost }) => {
   const placeholder = useMemo(() => {
     const placeholders = [
-      'Wie geht es Dir?',
-      'Woran denkst du gerade?',
-      'Wie war dein Tag?',
-      'Was wünscht du Dir?',
-      'Was ist deine "Unpopular Opinion"?'
-    ]
-    return placeholders[Math.floor(Math.random() * placeholders.length)]
-  }, [])
+      "Wie geht es Dir?",
+      "Woran denkst du gerade?",
+      "Wie war dein Tag?",
+      "Was wünscht du Dir?",
+      'Was ist deine "Unpopular Opinion"?',
+    ];
+    return placeholders[Math.floor(Math.random() * placeholders.length)];
+  }, []);
   const [postType, setPostType] = useState<"text" | "image">("text");
   const [text, setText] = useState("");
   const [file, setFile] = useState<File | null>(null);
@@ -72,10 +72,7 @@ const CreatePostCard: FC<CreatePostCardProps> = ({ onPost }) => {
         </div>
       )}
       <div className="flex justify-end pt-5">
-        <Button
-          iconStart={<FaPaperPlane />}
-          onClick={onSubmit}
-        >
+        <Button iconStart={<FaPaperPlane />} onClick={onSubmit}>
           Posten
         </Button>
       </div>

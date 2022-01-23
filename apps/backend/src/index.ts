@@ -23,31 +23,31 @@ async function start() {
 
   const app = express();
 
-  app.use(cookieParser())
+  app.use(cookieParser());
 
   app.use(async (req, res, next) => {
     req.context = await Context.init(req, res);
-    
-    const authenticationCookie = req.context.getCookie('authentication')
+
+    const authenticationCookie = req.context.getCookie("authentication");
     if (authenticationCookie) {
-      logger.debug("Sent cookie", authenticationCookie)
-      await req.context.authorizationService.authenticateUser(authenticationCookie)
+      logger.debug("Sent cookie", authenticationCookie);
+      await req.context.authorizationService.authenticateUser(
+        authenticationCookie
+      );
     }
 
     next();
   });
 
-  app.use(
-    cors(config.get('Common.cors'))
-  );
+  app.use(cors(config.get("Common.cors")));
 
   app.use(graphqlUploadExpress());
 
   await apolloServer.start();
 
   apolloServer.applyMiddleware({
-    app, 
-    cors: config.get('Common.cors')
+    app,
+    cors: config.get("Common.cors"),
   });
 
   app.listen({ port: 4000 }, () => {

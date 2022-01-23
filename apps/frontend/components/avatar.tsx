@@ -33,9 +33,9 @@ const Avatar: FC<AvatarProps> = ({ name, size, online, imageURL }) => {
       }}
     >
       {!imageURL && name[0]}
-      {typeof online === 'boolean' &&
+      {typeof online === "boolean" && (
         <OnlineIndicator size={size} online={online} />
-      }
+      )}
     </div>
   );
 };

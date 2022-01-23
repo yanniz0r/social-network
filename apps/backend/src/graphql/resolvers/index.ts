@@ -58,10 +58,10 @@ const resolvers: Resolvers = {
         if (!liker) {
           console.log({
             liker,
-            parent
-          })
+            parent,
+          });
         }
-        return liker.equals(signedInUser._id)
+        return liker.equals(signedInUser._id);
       });
     },
     likedBy(parent, _result, context) {
@@ -78,7 +78,9 @@ const resolvers: Resolvers = {
       return parent.comments ?? [];
     },
     imageURL(parent) {
-      return `${config.get("Common.baseURL")}/static/images/image-post/${parent._id}`;
+      return `${config.get("Common.baseURL")}/static/images/image-post/${
+        parent._id
+      }`;
     },
   },
   Query,

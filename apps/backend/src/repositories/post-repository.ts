@@ -21,11 +21,14 @@ export default class PostRepository {
   }
 
   async findAllByUser(userIDs: ObjectId[]) {
-    return this.collection.find({
-      userID: {
-        $in: userIDs,
-      }
-    }).sort({ createdAt: "desc" }).toArray();
+    return this.collection
+      .find({
+        userID: {
+          $in: userIDs,
+        },
+      })
+      .sort({ createdAt: "desc" })
+      .toArray();
   }
 
   async findPostById(id: ObjectId) {

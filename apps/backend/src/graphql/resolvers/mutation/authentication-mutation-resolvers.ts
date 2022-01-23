@@ -1,6 +1,6 @@
-import { MutationResolvers } from "../../generated"
-import config from "config"
-import { google } from "googleapis"
+import { MutationResolvers } from "../../generated";
+import config from "config";
+import { google } from "googleapis";
 
 const authenticationMutationResolvers: MutationResolvers = {
   async authenticateWithGoogle(_parent, { code, redirectURL }, context, o) {
@@ -8,12 +8,14 @@ const authenticationMutationResolvers: MutationResolvers = {
       clientId: config.get("Auth.google.clientID"),
       clientSecret: config.get("Auth.google.clientSecret"),
       redirectUri: redirectURL,
-    })
-    const token = await auth.getToken(code)
-    auth.setCredentials({ access_token: token.tokens.access_token })
-    const userinfo = await google.oauth2({ auth, version: "v2" }).userinfo.get()
+    });
+    const token = await auth.getToken(code);
+    auth.setCredentials({ access_token: token.tokens.access_token });
+    const userinfo = await google
+      .oauth2({ auth, version: "v2" })
+      .userinfo.get();
 
-    let user = await context.userService.findUserByGoogleID(userinfo.data.id!)
+    let user = await context.userService.findUserByGoogleID(userinfo.data.id!);
     if (user) {
       // TODO update
     } else {
@@ -22,21 +24,23 @@ const authenticationMutationResolvers: MutationResolvers = {
         lastName: userinfo.data.family_name!,
         auth: {
           google: {
-            id: userinfo.data.id!
-          }
-        }
-      })
+            id: userinfo.data.id!,
+          },
+        },
+      });
     }
 
-    const jwt = context.authorizationService.createAuthenticationToken(user._id)
+    const jwt = context.authorizationService.createAuthenticationToken(
+      user._id
+    );
 
-    context.setCookie('authentication', jwt)
+    context.setCookie("authentication", jwt);
 
     return {
       token: jwt,
-      user
-    }
-  }
-}
+      user,
+    };
+  },
+};
 
-export default authenticationMutationResolvers
+export default authenticationMutationResolvers;

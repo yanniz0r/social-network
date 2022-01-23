@@ -11,6 +11,6 @@ export default interface User {
 
 interface UserAuth {
   google?: {
-    id: string
-  }
+    id: string;
+  };
 }

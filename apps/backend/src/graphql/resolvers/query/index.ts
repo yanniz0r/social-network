@@ -12,17 +12,20 @@ const queryResolvers: QueryResolvers = {
       clientId: config.get("Auth.google.clientID"),
       clientSecret: config.get("Auth.google.clientSecret"),
       redirectUri: redirectURL,
-    })
+    });
     return oAuth2.generateAuthUrl({
-      scope: ['PROFILE']
-    })
+      scope: ["PROFILE"],
+    });
   },
   async posts(_parent, _result, context) {
-    const authenticatedUser = context.authorizationService.ensureAuthorizedUser()
-    const friends = await context.userService.findFriendsForUser(authenticatedUser._id)
+    const authenticatedUser =
+      context.authorizationService.ensureAuthorizedUser();
+    const friends = await context.userService.findFriendsForUser(
+      authenticatedUser._id
+    );
     console.log({
-      friends
-    })
+      friends,
+    });
     return context.postService.getPostsFrom(friends);
   },
 };

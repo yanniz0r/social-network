@@ -16,12 +16,12 @@ const schema = gql`
     friendshipStatus: FriendshipStatus
     avatarURL: String
   }
-  
+
   enum FriendshipStatus {
-    REQUESTED_BY_ME,
-    REQUESTED_BY_THEM,
-    FRIENDS,
-    NONE,
+    REQUESTED_BY_ME
+    REQUESTED_BY_THEM
+    FRIENDS
+    NONE
   }
 
   type Comment {
@@ -80,7 +80,7 @@ const schema = gql`
   input UpdateMeInput {
     avatar: Upload
   }
-  
+
   type Authentication {
     user: User!
     token: String!

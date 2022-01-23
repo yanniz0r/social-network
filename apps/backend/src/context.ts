@@ -7,7 +7,7 @@ import AuthorizationService from "./services/authorization-service";
 import PostService from "./services/post-service";
 import FileStorageService from "./services/file-storage-service";
 import UserService from "./services/user-service";
-import config from "config"
+import config from "config";
 import { Request, Response } from "express";
 
 const logger = new Logger({ name: "Context" });
@@ -43,7 +43,7 @@ export class Context {
       authorizationService,
       fileStorageService,
       request,
-      response,
+      response
     );
 
     // TODO add this back in once this is cached
@@ -53,9 +53,7 @@ export class Context {
   }
 
   static async initMongodb() {
-    const mongoClient = new MongoClient(
-      config.get<string>("MongoDB.url")
-    );
+    const mongoClient = new MongoClient(config.get<string>("MongoDB.url"));
     await mongoClient.connect();
 
     const db = mongoClient.db(MONGODB_NAME);
@@ -69,15 +67,16 @@ export class Context {
   }
 
   getCookie(name: string) {
-    if (!this.request) throw new Error("A request has to be set to use cookies")
-    return this.request.cookies[name]
+    if (!this.request)
+      throw new Error("A request has to be set to use cookies");
+    return this.request.cookies[name];
   }
 
   setCookie(name: string, value: string) {
-    if (!this.response) throw new Error("A response has to be set to use cookies")
+    if (!this.response)
+      throw new Error("A response has to be set to use cookies");
     this.response.cookie(name, value, {
-      maxAge: 1000 * 60 * 60 * 24 * 30 // 30 days
-    })
+      maxAge: 1000 * 60 * 60 * 24 * 30, // 30 days
+    });
   }
-
 }

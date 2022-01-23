@@ -22,7 +22,7 @@ export default class PostService {
 
   async getPostsFrom(user: Array<UserModel>): Promise<PostModel[]> {
     const posts = await this.postRepository.findAllByUser(
-      user.map(user => user._id)
+      user.map((user) => user._id)
     );
     return posts;
   }

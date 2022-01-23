@@ -2,7 +2,7 @@ import { differenceInMinutes } from "date-fns";
 import config from "config";
 import { FriendshipStatus, Resolvers } from "../../generated";
 
-const userTypeResolver: Resolvers['User'] = {
+const userTypeResolver: Resolvers["User"] = {
   id(parent) {
     return parent._id.toString();
   },
@@ -29,29 +29,37 @@ const userTypeResolver: Resolvers['User'] = {
     return friends;
   },
   async friendshipStatus(parent, _arguments, context) {
-    const authenticatedUser = context.authorizationService.ensureAuthorizedUser()
-    const friendship = await context.userService.findFriendshipBetween(authenticatedUser._id, parent._id)
+    const authenticatedUser =
+      context.authorizationService.ensureAuthorizedUser();
+    const friendship = await context.userService.findFriendshipBetween(
+      authenticatedUser._id,
+      parent._id
+    );
 
     console.log({
-      friendship
-    })
+      friendship,
+    });
 
     if (!friendship) {
       return FriendshipStatus.None;
     }
     if (friendship.acceptedAt) {
-      return FriendshipStatus.Friends
+      return FriendshipStatus.Friends;
     }
-    const authenticatedUserIsRequester = friendship.requester.equals(authenticatedUser._id) 
-    const authenticatedUserIsReceiver = friendship.receiver.equals(authenticatedUser._id) 
+    const authenticatedUserIsRequester = friendship.requester.equals(
+      authenticatedUser._id
+    );
+    const authenticatedUserIsReceiver = friendship.receiver.equals(
+      authenticatedUser._id
+    );
     if (authenticatedUserIsRequester) {
-      return FriendshipStatus.RequestedByMe
+      return FriendshipStatus.RequestedByMe;
     } else if (authenticatedUserIsReceiver) {
-      return FriendshipStatus.RequestedByThem
+      return FriendshipStatus.RequestedByThem;
     } else {
-      return FriendshipStatus.None
+      return FriendshipStatus.None;
     }
-  }
-}
+  },
+};
 
-export default userTypeResolver
+export default userTypeResolver;

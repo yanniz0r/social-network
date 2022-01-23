@@ -4,7 +4,11 @@ import IconButton from "../../components/icon-button";
 import FriendList from "../../components/profile/friend-list";
 import ProfileHeader from "../../components/profile/header";
 import Tooltip from "../../components/tooltip";
-import { FriendshipStatus, useProfileDetailPageQuery, useProfileDetailPageRequestFriendshipMutation } from "../../graphql/generated";
+import {
+  FriendshipStatus,
+  useProfileDetailPageQuery,
+  useProfileDetailPageRequestFriendshipMutation,
+} from "../../graphql/generated";
 
 interface UserDetailPageProps {
   userID: string;
@@ -16,38 +20,44 @@ const UserDetailPage: NextPage<UserDetailPageProps> = ({ userID }) => {
       userID,
     },
   });
-  const [requestFriendshipMutation] = useProfileDetailPageRequestFriendshipMutation()
+  const [requestFriendshipMutation] =
+    useProfileDetailPageRequestFriendshipMutation();
 
   function requestFriendship() {
     requestFriendshipMutation({
       variables: {
         userID,
-      }
-    })
+      },
+    });
   }
 
-  const friendshipStatus = userDetailPageQuery.data?.user?.friendshipStatus
+  const friendshipStatus = userDetailPageQuery.data?.user?.friendshipStatus;
 
-  const headerActions = <>
-    {friendshipStatus === FriendshipStatus.None &&
-      <Tooltip text="Freund:in hinzufügen">
-        <IconButton onClick={requestFriendship}>
-          <FaUserPlus />
-        </IconButton>
-      </Tooltip>
-    }
-  </>
+  const headerActions = (
+    <>
+      {friendshipStatus === FriendshipStatus.None && (
+        <Tooltip text="Freund:in hinzufügen">
+          <IconButton onClick={requestFriendship}>
+            <FaUserPlus />
+          </IconButton>
+        </Tooltip>
+      )}
+    </>
+  );
 
   return (
     <>
       {friendshipStatus === FriendshipStatus.RequestedByMe && (
         <div className="flex flex-row px-10 items-center py-4 bg-green-400">
-          <FaUserPlus className="mr-2" /> Du hast {userDetailPageQuery.data!.user!.name} eine Freundschaftsanfrage geschickt.
+          <FaUserPlus className="mr-2" /> Du hast{" "}
+          {userDetailPageQuery.data!.user!.name} eine Freundschaftsanfrage
+          geschickt.
         </div>
       )}
       {friendshipStatus === FriendshipStatus.RequestedByThem && (
         <div className="flex flex-row px-10 items-center py-4 bg-green-400">
-          <FaUserPlus className="mr-2" /> {userDetailPageQuery.data!.user!.name} möchte mit Dir befreundet sein.
+          <FaUserPlus className="mr-2" /> {userDetailPageQuery.data!.user!.name}{" "}
+          möchte mit Dir befreundet sein.
         </div>
       )}
       <div className="p-10">
@@ -64,7 +74,7 @@ const UserDetailPage: NextPage<UserDetailPageProps> = ({ userID }) => {
         )}
       </div>
     </>
-  )
+  );
 };
 
 UserDetailPage.getInitialProps = (context) => {

@@ -13,7 +13,7 @@ const Button: FC<ButtonProps> = ({
   children,
   variant = "primary",
   className: parentClassName,
-  iconStart
+  iconStart,
 }) => {
   const className = classNames(
     "inline-flex flex-row items-center px-4 py-2 rounded-lg bg-opacity-20 transition-all transform hover:scale-105",
@@ -26,11 +26,7 @@ const Button: FC<ButtonProps> = ({
 
   return (
     <button className={className} onClick={onClick}>
-      {iconStart &&
-        <div className="mr-2">
-          {iconStart}
-        </div>
-      }
+      {iconStart && <div className="mr-2">{iconStart}</div>}
       {children}
     </button>
   );

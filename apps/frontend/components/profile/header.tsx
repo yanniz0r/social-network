@@ -10,7 +10,11 @@ interface ProfileHeaderProps {
   onEditAvatar?(): void;
 }
 
-const ProfileHeader: FC<ProfileHeaderProps> = ({ user, onEditAvatar, actions }) => {
+const ProfileHeader: FC<ProfileHeaderProps> = ({
+  user,
+  onEditAvatar,
+  actions,
+}) => {
   return (
     <div>
       <Card className="p-5 flex items-center">
@@ -48,11 +52,7 @@ const ProfileHeader: FC<ProfileHeaderProps> = ({ user, onEditAvatar, actions }) 
             </div>
           )}
         </div>
-        {actions &&
-          <div>
-            {actions}
-          </div>
-        }
+        {actions && <div>{actions}</div>}
       </Card>
     </div>
   );

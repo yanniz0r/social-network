@@ -15,7 +15,11 @@ export default class UserRepository {
   private userCollection: Collection<User>;
   private friendshipCollection: Collection<Friendship>;
 
-  private findUserDataloader = new DataLoader<ObjectId, UserModel | null, string>(
+  private findUserDataloader = new DataLoader<
+    ObjectId,
+    UserModel | null,
+    string
+  >(
     async (keys) => {
       const users = await this.userCollection
         .find({
@@ -34,8 +38,8 @@ export default class UserRepository {
     },
     {
       cacheKeyFn(key) {
-        return key.toString()
-      }
+        return key.toString();
+      },
     }
   );
 
@@ -45,7 +49,7 @@ export default class UserRepository {
     this.userCollection = db.collection("users");
     this.friendshipCollection = db.collection("friendships");
     this.findFriendshipsDataloader = new FriendshipDataloader(
-      this.friendshipCollection,
+      this.friendshipCollection
     );
   }
 
@@ -80,22 +84,24 @@ export default class UserRepository {
   }
 
   async searchUsers(query: string) {
-    return this.userCollection.find({
-      $or: [
-        {
-          firstName: {
-            $regex: `.*${query}.*`,
-            $options: "i"
+    return this.userCollection
+      .find({
+        $or: [
+          {
+            firstName: {
+              $regex: `.*${query}.*`,
+              $options: "i",
+            },
           },
-        },
-        {
-          lastName: {
-            $regex: `.*${query}.*`,
-            $options: "i"
-          }
-        }
-      ]
-    }).toArray()
+          {
+            lastName: {
+              $regex: `.*${query}.*`,
+              $options: "i",
+            },
+          },
+        ],
+      })
+      .toArray();
   }
 
   async updateFriendship(id: ObjectID, friendship: Partial<Friendship>) {
@@ -112,20 +118,22 @@ export default class UserRepository {
   }
 
   async createUser(user: User): Promise<UserModel> {
-    const { insertedId } = await this.userCollection.insertOne(user)
+    const { insertedId } = await this.userCollection.insertOne(user);
     return {
       _id: insertedId,
-      ...user
-    }
-  } 
+      ...user,
+    };
+  }
 
   async createFriendship(friendship: Friendship): Promise<FriendshipModel> {
-    const { insertedId } = await this.friendshipCollection.insertOne(friendship)
+    const { insertedId } = await this.friendshipCollection.insertOne(
+      friendship
+    );
     return {
       _id: insertedId,
-      ...friendship
-    }
-  } 
+      ...friendship,
+    };
+  }
 
   async updateUser(id: ObjectID, user: Partial<User>) {
     return this.userCollection.updateOne(
@@ -143,7 +151,7 @@ export default class UserRepository {
 
   async findUserWithMatchingAuth(auth: Partial<User["auth"]>) {
     return this.userCollection.findOne({
-      auth
-    })
+      auth,
+    });
   }
 }

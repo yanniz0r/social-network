@@ -56,23 +56,33 @@ export default class UserService {
   async findFriendshipRequestsForUser(
     id: ObjectId | string
   ): Promise<FriendshipModel[]> {
-    const unestablishedFriendships = await this.userRepository.findUnestablishedFriendshipsForUser(
-      initObjectID(id)
+    const unestablishedFriendships =
+      await this.userRepository.findUnestablishedFriendshipsForUser(
+        initObjectID(id)
+      );
+    return unestablishedFriendships.filter((friendship) =>
+      friendship.receiver.equals(id)
     );
-    return unestablishedFriendships.filter(friendship => friendship.receiver.equals(id))
   }
 
   async findFriendship(id: ObjectId | string) {
     return this.userRepository.findFriendship(initObjectID(id));
   }
 
-  async findFriendshipBetween(requester: ObjectId | string, receiver: ObjectId | string): Promise<FriendshipModel | null> {
-    const receiverId = initObjectID(receiver)
-    const requesterFriendships = await this.userRepository.findFriendshipsForUser(initObjectID(requester))
-    const friendship = requesterFriendships.find(friendship => {
-      return friendship.receiver.equals(receiverId) || friendship.requester.equals(receiverId)
-    })
-    return friendship ?? null
+  async findFriendshipBetween(
+    requester: ObjectId | string,
+    receiver: ObjectId | string
+  ): Promise<FriendshipModel | null> {
+    const receiverId = initObjectID(receiver);
+    const requesterFriendships =
+      await this.userRepository.findFriendshipsForUser(initObjectID(requester));
+    const friendship = requesterFriendships.find((friendship) => {
+      return (
+        friendship.receiver.equals(receiverId) ||
+        friendship.requester.equals(receiverId)
+      );
+    });
+    return friendship ?? null;
   }
 
   async acceptFriendshipRequest(id: ObjectId | string) {
@@ -82,24 +92,27 @@ export default class UserService {
   }
 
   async getFriendRecommendations(id: ObjectId | string) {
-    const userId = initObjectID(id)
-    const friends = await this.findFriendsForUser(userId)
-    
-    const friendLayers = [friends]
-    const maxFriendLayers = 3
-    
+    const userId = initObjectID(id);
+    const friends = await this.findFriendsForUser(userId);
+
+    const friendLayers = [friends];
+    const maxFriendLayers = 3;
+
     for (let friendLayer = 1; friendLayer < maxFriendLayers; friendLayer++) {
-      const previousLayer = friendLayers[friendLayer - 1]
+      const previousLayer = friendLayers[friendLayer - 1];
       const friendLists = await Promise.all(
-        previousLayer.map(user => this.findFriendsForUser(user._id))
-      )
-      const friendsOfFriends = friendLists.flat()
-      friendLayers[friendLayer] = Array.from(new Set(friendsOfFriends))
+        previousLayer.map((user) => this.findFriendsForUser(user._id))
+      );
+      const friendsOfFriends = friendLists.flat();
+      friendLayers[friendLayer] = Array.from(new Set(friendsOfFriends));
     }
 
-    return Array.from(new Set(friendLayers.flat())).filter(user => {
-      return user._id !== userId && !friends.some(friend => friend._id === user._id)
-    })
+    return Array.from(new Set(friendLayers.flat())).filter((user) => {
+      return (
+        user._id !== userId &&
+        !friends.some((friend) => friend._id === user._id)
+      );
+    });
   }
 
   async setAvatar(id: ObjectId | string, avatar: FileUpload) {
@@ -115,15 +128,15 @@ export default class UserService {
     });
   }
 
-  createUser(user: Omit<User, 'createdAt'>) {
+  createUser(user: Omit<User, "createdAt">) {
     return this.userRepository.createUser({
       createdAt: new Date(),
-      ...user
-    })
+      ...user,
+    });
   }
 
   searchUsers(query: string): Promise<UserModel[]> {
-    return this.userRepository.searchUsers(query)
+    return this.userRepository.searchUsers(query);
   }
 
   createFriendship(requester: UserModel, receiver: UserModel) {
@@ -131,15 +144,14 @@ export default class UserService {
       requester: requester._id,
       receiver: receiver._id,
       createdAt: new Date(),
-    })
+    });
   }
 
   findUserByGoogleID(id: string) {
     return this.userRepository.findUserWithMatchingAuth({
       google: {
         id,
-      }
-    })
+      },
+    });
   }
-
 }
