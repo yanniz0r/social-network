@@ -13,7 +13,15 @@ const schema = gql`
     status: String
     online: Boolean!
     birthday: Date
+    friendshipStatus: FriendshipStatus
     avatarURL: String
+  }
+  
+  enum FriendshipStatus {
+    REQUESTED_BY_ME,
+    REQUESTED_BY_THEM,
+    FRIENDS,
+    NONE,
   }
 
   type Comment {
@@ -80,6 +88,7 @@ const schema = gql`
   type Query {
     me: User!
     user(id: ID!): User
+    searchUsers(query: String!): [User!]!
     friendshipRequests: [FriendshipRequest!]!
     posts: [Post!]!
     googleOAuthURL(redirectURL: String!): String!
@@ -90,6 +99,7 @@ const schema = gql`
     createTextPost(input: TextPostInput!): TextPost!
     createImagePost(input: ImagePostInput!): ImagePost!
     acceptFriendshipRequest(id: ID!): FriendshipRequest!
+    requestFriendship(id: ID!): FriendshipRequest!
     likePost(id: ID!): Post!
     unlikePost(id: ID!): Post!
     commentPost(id: ID!, text: String!): Post!

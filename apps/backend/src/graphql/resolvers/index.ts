@@ -1,10 +1,10 @@
 import { UserModel } from "../../repositories/user-repository";
 import { Resolvers } from "../generated";
 import Mutation from "./mutation";
-import { differenceInMinutes } from "date-fns";
 import Query from "./query";
 import FriendshipRequest from "./type/friendship-request-type-resolver";
 import Comment from "./type/comment-type-resolver";
+import User from "./type/user-type-resolver";
 import dateScalar from "./scalar/date";
 import { GraphQLUpload } from "graphql-upload";
 import config from "config";
@@ -24,33 +24,7 @@ const resolvers: Resolvers = {
   Upload: GraphQLUpload as any,
   Comment,
   Date: dateScalar,
-  User: {
-    id(parent) {
-      return parent._id.toString();
-    },
-    name(parent) {
-      return [parent.firstName, parent.lastName].join(" ");
-    },
-    avatarURL({ avatar, updatedAt, _id }) {
-      if (!avatar) return null;
-      return `${config.get("Common.baseURL")}/static/images/avatar/${_id}${
-        updatedAt ? `?c=${updatedAt.getTime()}` : ""
-      }`;
-    },
-    online(parent) {
-      if (!parent.lastOnlinePing) {
-        return false;
-      }
-      if (differenceInMinutes(Date.now(), parent.lastOnlinePing) > 5) {
-        return false;
-      }
-      return true;
-    },
-    async friends(parent, _arguments, context) {
-      const friends = await context.userService.findFriendsForUser(parent._id);
-      return friends;
-    },
-  },
+  User,
   TextPost: {
     id(parent) {
       return parent._id.toString();

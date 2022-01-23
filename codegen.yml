@@ -15,7 +15,7 @@ generates:
         User: ../repositories/user-repository#UserModel
         FriendshipRequest: ../repositories/user-repository#FriendshipModel
         Post: ../repositories/post-repository#PostModel
-        Comment: ../types/post#Comment
+        Comment: ../types/post#PostComment
         TextPost: ../repositories/post-repository#PostModel
         ImagePost: ../repositories/post-repository#PostModel
     plugins:

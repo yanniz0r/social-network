@@ -37,6 +37,13 @@ export type FriendshipRequest = {
   id: Scalars['ID'];
 };
 
+export enum FriendshipStatus {
+  Friends = 'FRIENDS',
+  None = 'NONE',
+  RequestedByMe = 'REQUESTED_BY_ME',
+  RequestedByThem = 'REQUESTED_BY_THEM'
+}
+
 export type ImagePost = Post & {
   __typename?: 'ImagePost';
   comments: Array<Comment>;
@@ -62,6 +69,7 @@ export type Mutation = {
   createImagePost: ImagePost;
   createTextPost: TextPost;
   likePost: Post;
+  requestFriendship: FriendshipRequest;
   unlikePost: Post;
   updateMe: User;
 };
@@ -99,6 +107,11 @@ export type MutationLikePostArgs = {
 };
 
 
+export type MutationRequestFriendshipArgs = {
+  id: Scalars['ID'];
+};
+
+
 export type MutationUnlikePostArgs = {
   id: Scalars['ID'];
 };
@@ -124,12 +137,18 @@ export type Query = {
   googleOAuthURL: Scalars['String'];
   me: User;
   posts: Array<Post>;
+  searchUsers: Array<User>;
   user?: Maybe<User>;
 };
 
 
 export type QueryGoogleOAuthUrlArgs = {
   redirectURL: Scalars['String'];
+};
+
+
+export type QuerySearchUsersArgs = {
+  query: Scalars['String'];
 };
 
 
@@ -162,6 +181,7 @@ export type User = {
   birthday?: Maybe<Scalars['Date']>;
   firstName: Scalars['String'];
   friends: Array<User>;
+  friendshipStatus?: Maybe<FriendshipStatus>;
   id: Scalars['ID'];
   lastName: Scalars['String'];
   name: Scalars['String'];
@@ -217,6 +237,13 @@ export type PostCardCommentPostMutationVariables = Exact<{
 
 export type PostCardCommentPostMutation = { __typename?: 'Mutation', commentPost: { __typename?: 'ImagePost', id: string, comments: Array<{ __typename?: 'Comment', createdAt: any, text: string, user: { __typename?: 'User', id: string, name: string, online: boolean } }> } | { __typename?: 'TextPost', id: string, comments: Array<{ __typename?: 'Comment', createdAt: any, text: string, user: { __typename?: 'User', id: string, name: string, online: boolean } }> } };
 
+export type SearchQueryVariables = Exact<{
+  query: Scalars['String'];
+}>;
+
+
+export type SearchQuery = { __typename?: 'Query', searchUsers: Array<{ __typename?: 'User', name: string, avatarURL?: string | null | undefined, id: string, birthday?: any | null | undefined }> };
+
 export type FriendshipsPageQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -246,7 +273,14 @@ export type ProfileDetailPageQueryVariables = Exact<{
 }>;
 
 
-export type ProfileDetailPageQuery = { __typename?: 'Query', user?: { __typename?: 'User', id: string, name: string, status?: string | null | undefined, online: boolean, birthday?: any | null | undefined, friends: Array<{ __typename?: 'User', id: string, name: string, online: boolean }> } | null | undefined };
+export type ProfileDetailPageQuery = { __typename?: 'Query', user?: { __typename?: 'User', id: string, name: string, status?: string | null | undefined, online: boolean, birthday?: any | null | undefined, friendshipStatus?: FriendshipStatus | null | undefined, friends: Array<{ __typename?: 'User', id: string, name: string, online: boolean }> } | null | undefined };
+
+export type ProfileDetailPageRequestFriendshipMutationVariables = Exact<{
+  userID: Scalars['ID'];
+}>;
+
+
+export type ProfileDetailPageRequestFriendshipMutation = { __typename?: 'Mutation', requestFriendship: { __typename?: 'FriendshipRequest', id: string } };
 
 export type ProfileMeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -517,6 +551,44 @@ export function usePostCardCommentPostMutation(baseOptions?: Apollo.MutationHook
 export type PostCardCommentPostMutationHookResult = ReturnType<typeof usePostCardCommentPostMutation>;
 export type PostCardCommentPostMutationResult = Apollo.MutationResult<PostCardCommentPostMutation>;
 export type PostCardCommentPostMutationOptions = Apollo.BaseMutationOptions<PostCardCommentPostMutation, PostCardCommentPostMutationVariables>;
+export const SearchDocument = gql`
+    query Search($query: String!) {
+  searchUsers(query: $query) {
+    name
+    avatarURL
+    id
+    birthday
+  }
+}
+    `;
+
+/**
+ * __useSearchQuery__
+ *
+ * To run a query within a React component, call `useSearchQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchQuery({
+ *   variables: {
+ *      query: // value for 'query'
+ *   },
+ * });
+ */
+export function useSearchQuery(baseOptions: Apollo.QueryHookOptions<SearchQuery, SearchQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SearchQuery, SearchQueryVariables>(SearchDocument, options);
+      }
+export function useSearchLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SearchQuery, SearchQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SearchQuery, SearchQueryVariables>(SearchDocument, options);
+        }
+export type SearchQueryHookResult = ReturnType<typeof useSearchQuery>;
+export type SearchLazyQueryHookResult = ReturnType<typeof useSearchLazyQuery>;
+export type SearchQueryResult = Apollo.QueryResult<SearchQuery, SearchQueryVariables>;
 export const FriendshipsPageDocument = gql`
     query FriendshipsPage {
   me {
@@ -709,6 +781,7 @@ export const ProfileDetailPageDocument = gql`
     status
     online
     birthday
+    friendshipStatus
     friends {
       id
       name
@@ -745,6 +818,39 @@ export function useProfileDetailPageLazyQuery(baseOptions?: Apollo.LazyQueryHook
 export type ProfileDetailPageQueryHookResult = ReturnType<typeof useProfileDetailPageQuery>;
 export type ProfileDetailPageLazyQueryHookResult = ReturnType<typeof useProfileDetailPageLazyQuery>;
 export type ProfileDetailPageQueryResult = Apollo.QueryResult<ProfileDetailPageQuery, ProfileDetailPageQueryVariables>;
+export const ProfileDetailPageRequestFriendshipDocument = gql`
+    mutation ProfileDetailPageRequestFriendship($userID: ID!) {
+  requestFriendship(id: $userID) {
+    id
+  }
+}
+    `;
+export type ProfileDetailPageRequestFriendshipMutationFn = Apollo.MutationFunction<ProfileDetailPageRequestFriendshipMutation, ProfileDetailPageRequestFriendshipMutationVariables>;
+
+/**
+ * __useProfileDetailPageRequestFriendshipMutation__
+ *
+ * To run a mutation, you first call `useProfileDetailPageRequestFriendshipMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useProfileDetailPageRequestFriendshipMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [profileDetailPageRequestFriendshipMutation, { data, loading, error }] = useProfileDetailPageRequestFriendshipMutation({
+ *   variables: {
+ *      userID: // value for 'userID'
+ *   },
+ * });
+ */
+export function useProfileDetailPageRequestFriendshipMutation(baseOptions?: Apollo.MutationHookOptions<ProfileDetailPageRequestFriendshipMutation, ProfileDetailPageRequestFriendshipMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ProfileDetailPageRequestFriendshipMutation, ProfileDetailPageRequestFriendshipMutationVariables>(ProfileDetailPageRequestFriendshipDocument, options);
+      }
+export type ProfileDetailPageRequestFriendshipMutationHookResult = ReturnType<typeof useProfileDetailPageRequestFriendshipMutation>;
+export type ProfileDetailPageRequestFriendshipMutationResult = Apollo.MutationResult<ProfileDetailPageRequestFriendshipMutation>;
+export type ProfileDetailPageRequestFriendshipMutationOptions = Apollo.BaseMutationOptions<ProfileDetailPageRequestFriendshipMutation, ProfileDetailPageRequestFriendshipMutationVariables>;
 export const ProfileMeDocument = gql`
     query ProfileMe {
   me {

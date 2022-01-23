@@ -34,19 +34,13 @@ export default class UserRepository {
     }
   );
 
-  private findEstablishedFriendshipsDataloader: FriendshipDataloader;
-  private findUnestablishedFriendshipsDataloader: FriendshipDataloader;
+  private findFriendshipsDataloader: FriendshipDataloader;
 
   constructor(db: Db) {
     this.userCollection = db.collection("users");
     this.friendshipCollection = db.collection("friendships");
-    this.findEstablishedFriendshipsDataloader = new FriendshipDataloader(
+    this.findFriendshipsDataloader = new FriendshipDataloader(
       this.friendshipCollection,
-      true
-    );
-    this.findUnestablishedFriendshipsDataloader = new FriendshipDataloader(
-      this.friendshipCollection,
-      false
     );
   }
 
@@ -59,11 +53,15 @@ export default class UserRepository {
   }
 
   async findEstablishedFriendshipsForUser(id: ObjectId) {
-    return this.findEstablishedFriendshipsDataloader.load(id);
+    return this.findFriendshipsDataloader.loadEstablished(id);
+  }
+
+  async findFriendshipsForUser(id: ObjectId) {
+    return this.findFriendshipsDataloader.load(id);
   }
 
   async findUnestablishedFriendshipsForUser(id: ObjectId) {
-    return this.findUnestablishedFriendshipsDataloader.load(id);
+    return this.findFriendshipsDataloader.loadUnestablished(id);
   }
 
   async findUsers(objectIDs: Array<ObjectID>) {
@@ -74,6 +72,25 @@ export default class UserRepository {
     return this.friendshipCollection.findOne({
       _id: id,
     });
+  }
+
+  async searchUsers(query: string) {
+    return this.userCollection.find({
+      $or: [
+        {
+          firstName: {
+            $regex: `.*${query}.*`,
+            $options: "i"
+          },
+        },
+        {
+          lastName: {
+            $regex: `.*${query}.*`,
+            $options: "i"
+          }
+        }
+      ]
+    }).toArray()
   }
 
   async updateFriendship(id: ObjectID, friendship: Partial<Friendship>) {
@@ -94,6 +111,14 @@ export default class UserRepository {
     return {
       _id: insertedId,
       ...user
+    }
+  } 
+
+  async createFriendship(friendship: Friendship): Promise<FriendshipModel> {
+    const { insertedId } = await this.friendshipCollection.insertOne(friendship)
+    return {
+      _id: insertedId,
+      ...friendship
     }
   } 
 

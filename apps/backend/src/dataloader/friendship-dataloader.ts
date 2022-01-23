@@ -7,13 +7,10 @@ export default class FriendshipDataloader extends DataLoader<
   ObjectId,
   FriendshipModel[]
 > {
-  constructor(collection: Collection<Friendship>, established: boolean) {
+  constructor(collection: Collection<Friendship>) {
     super(async (keys) => {
       const friendships = await collection
         .find({
-          acceptedAt: {
-            $exists: established,
-          },
           $or: [
             {
               receiver: {
@@ -21,11 +18,9 @@ export default class FriendshipDataloader extends DataLoader<
               },
             },
             {
-              requester: established
-                ? {
-                    $in: keys,
-                  }
-                : {},
+              requester: {
+                $in: keys,
+              }
             },
           ],
         })
@@ -42,4 +37,15 @@ export default class FriendshipDataloader extends DataLoader<
       });
     });
   }
+
+  async loadEstablished(id: ObjectId) {
+    const loaded = await this.load(id)
+    return loaded.filter(friendship => Boolean(friendship.acceptedAt))
+  }
+
+  async loadUnestablished(id: ObjectId) {
+    const loaded = await this.load(id)
+    return loaded.filter(friendship => !friendship.acceptedAt)
+  }
+
 }

@@ -56,13 +56,23 @@ export default class UserService {
   async findFriendshipRequestsForUser(
     id: ObjectId | string
   ): Promise<FriendshipModel[]> {
-    return this.userRepository.findUnestablishedFriendshipsForUser(
+    const unestablishedFriendships = await this.userRepository.findUnestablishedFriendshipsForUser(
       initObjectID(id)
     );
+    return unestablishedFriendships.filter(friendship => friendship.receiver.equals(id))
   }
 
-  async findFriendshipRequest(id: ObjectId | string) {
+  async findFriendship(id: ObjectId | string) {
     return this.userRepository.findFriendship(initObjectID(id));
+  }
+
+  async findFriendshipBetween(requester: ObjectId | string, receiver: ObjectId | string): Promise<FriendshipModel | null> {
+    const receiverId = initObjectID(receiver)
+    const requesterFriendships = await this.userRepository.findFriendshipsForUser(initObjectID(requester))
+    const friendship = requesterFriendships.find(friendship => {
+      return friendship.receiver.equals(receiverId) || friendship.requester.equals(receiverId)
+    })
+    return friendship ?? null
   }
 
   async acceptFriendshipRequest(id: ObjectId | string) {
@@ -88,6 +98,18 @@ export default class UserService {
     return this.userRepository.createUser({
       createdAt: new Date(),
       ...user
+    })
+  }
+
+  searchUsers(query: string): Promise<UserModel[]> {
+    return this.userRepository.searchUsers(query)
+  }
+
+  createFriendship(requester: UserModel, receiver: UserModel) {
+    return this.userRepository.createFriendship({
+      requester: requester._id,
+      receiver: receiver._id,
+      createdAt: new Date(),
     })
   }
 

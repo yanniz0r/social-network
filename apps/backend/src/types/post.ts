@@ -10,10 +10,10 @@ type BasePost<T, D> = D & {
   text?: string;
   userID: ObjectID;
   likedBy: ObjectID[];
-  comments: Comment[];
+  comments: PostComment[];
 };
 
-export interface Comment {
+export interface PostComment {
   userID: ObjectID;
   text: string;
   createdAt: Date;

@@ -1,9 +1,7 @@
 import { Collection, Db, ObjectId, WithId } from "mongodb";
 import { Logger } from "tslog";
-import Post, { Comment } from "../types/post";
+import Post, { PostComment } from "../types/post";
 import { DistributiveOmit } from "../utils/distributive-omit";
-import { UserModel } from "./user-repository";
-
 const logger = new Logger({ name: "PostRepository" });
 
 export type PostModel = WithId<Post>;
@@ -13,7 +11,7 @@ export type PostInput = DistributiveOmit<
   "createdAt" | "likedBy" | "userID" | "comments"
 >;
 
-type CommentInput = Omit<Comment, "createdAt">;
+type CommentInput = Omit<PostComment, "createdAt">;
 
 export default class PostRepository {
   private collection: Collection<Post>;

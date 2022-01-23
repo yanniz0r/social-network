@@ -5,10 +5,17 @@ query ProfileDetailPage($userID: ID!) {
     status
     online
     birthday
+    friendshipStatus
     friends {
       id
       name
       online
     }
+  }
+}
+
+mutation ProfileDetailPageRequestFriendship($userID: ID!) {
+  requestFriendship(id: $userID) {
+    id
   }
 }

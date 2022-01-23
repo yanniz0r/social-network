@@ -1,15 +1,16 @@
 import { differenceInYears, format } from "date-fns";
-import { FC } from "react";
+import { FC, ReactNode } from "react";
 import { FaBirthdayCake, FaCog } from "react-icons/fa";
 import { User } from "../../graphql/generated";
 import Card from "../card";
 
 interface ProfileHeaderProps {
   user: Pick<User, "name" | "birthday" | "avatarURL">;
+  actions?: ReactNode;
   onEditAvatar?(): void;
 }
 
-const ProfileHeader: FC<ProfileHeaderProps> = ({ user, onEditAvatar }) => {
+const ProfileHeader: FC<ProfileHeaderProps> = ({ user, onEditAvatar, actions }) => {
   return (
     <div>
       <Card className="p-5 flex items-center">
@@ -34,7 +35,7 @@ const ProfileHeader: FC<ProfileHeaderProps> = ({ user, onEditAvatar }) => {
             </button>
           )}
         </div>
-        <div className="ml-5">
+        <div className="ml-5 flex-grow">
           <h1 className="text-xl text-gray-100 mb-2">{user.name}</h1>
           {user.birthday && (
             <div className="flex items-center text-sm dark:text-gray-400">
@@ -47,6 +48,11 @@ const ProfileHeader: FC<ProfileHeaderProps> = ({ user, onEditAvatar }) => {
             </div>
           )}
         </div>
+        {actions &&
+          <div>
+            {actions}
+          </div>
+        }
       </Card>
     </div>
   );

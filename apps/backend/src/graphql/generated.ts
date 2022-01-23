@@ -1,7 +1,7 @@
 import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
 import { UserModel, FriendshipModel } from '../repositories/user-repository';
 import { PostModel } from '../repositories/post-repository';
-import { Comment } from '../types/post';
+import { PostComment } from '../types/post';
 import { Context } from '../context';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
@@ -41,6 +41,13 @@ export type FriendshipRequest = {
   id: Scalars['ID'];
 };
 
+export enum FriendshipStatus {
+  Friends = 'FRIENDS',
+  None = 'NONE',
+  RequestedByMe = 'REQUESTED_BY_ME',
+  RequestedByThem = 'REQUESTED_BY_THEM'
+}
+
 export type ImagePost = Post & {
   __typename?: 'ImagePost';
   comments: Array<Comment>;
@@ -66,6 +73,7 @@ export type Mutation = {
   createImagePost: ImagePost;
   createTextPost: TextPost;
   likePost: Post;
+  requestFriendship: FriendshipRequest;
   unlikePost: Post;
   updateMe: User;
 };
@@ -103,6 +111,11 @@ export type MutationLikePostArgs = {
 };
 
 
+export type MutationRequestFriendshipArgs = {
+  id: Scalars['ID'];
+};
+
+
 export type MutationUnlikePostArgs = {
   id: Scalars['ID'];
 };
@@ -128,12 +141,18 @@ export type Query = {
   googleOAuthURL: Scalars['String'];
   me: User;
   posts: Array<Post>;
+  searchUsers: Array<User>;
   user?: Maybe<User>;
 };
 
 
 export type QueryGoogleOAuthUrlArgs = {
   redirectURL: Scalars['String'];
+};
+
+
+export type QuerySearchUsersArgs = {
+  query: Scalars['String'];
 };
 
 
@@ -166,6 +185,7 @@ export type User = {
   birthday?: Maybe<Scalars['Date']>;
   firstName: Scalars['String'];
   friends: Array<User>;
+  friendshipStatus?: Maybe<FriendshipStatus>;
   id: Scalars['ID'];
   lastName: Scalars['String'];
   name: Scalars['String'];
@@ -244,9 +264,10 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversTypes = {
   Authentication: ResolverTypeWrapper<Omit<Authentication, 'user'> & { user: ResolversTypes['User'] }>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
-  Comment: ResolverTypeWrapper<Comment>;
+  Comment: ResolverTypeWrapper<PostComment>;
   Date: ResolverTypeWrapper<Scalars['Date']>;
   FriendshipRequest: ResolverTypeWrapper<FriendshipModel>;
+  FriendshipStatus: FriendshipStatus;
   ID: ResolverTypeWrapper<Scalars['ID']>;
   ImagePost: ResolverTypeWrapper<PostModel>;
   ImagePostInput: ImagePostInput;
@@ -265,7 +286,7 @@ export type ResolversTypes = {
 export type ResolversParentTypes = {
   Authentication: Omit<Authentication, 'user'> & { user: ResolversParentTypes['User'] };
   Boolean: Scalars['Boolean'];
-  Comment: Comment;
+  Comment: PostComment;
   Date: Scalars['Date'];
   FriendshipRequest: FriendshipModel;
   ID: Scalars['ID'];
@@ -325,6 +346,7 @@ export type MutationResolvers<ContextType = Context, ParentType extends Resolver
   createImagePost?: Resolver<ResolversTypes['ImagePost'], ParentType, ContextType, RequireFields<MutationCreateImagePostArgs, 'input'>>;
   createTextPost?: Resolver<ResolversTypes['TextPost'], ParentType, ContextType, RequireFields<MutationCreateTextPostArgs, 'input'>>;
   likePost?: Resolver<ResolversTypes['Post'], ParentType, ContextType, RequireFields<MutationLikePostArgs, 'id'>>;
+  requestFriendship?: Resolver<ResolversTypes['FriendshipRequest'], ParentType, ContextType, RequireFields<MutationRequestFriendshipArgs, 'id'>>;
   unlikePost?: Resolver<ResolversTypes['Post'], ParentType, ContextType, RequireFields<MutationUnlikePostArgs, 'id'>>;
   updateMe?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationUpdateMeArgs, 'input'>>;
 };
@@ -345,6 +367,7 @@ export type QueryResolvers<ContextType = Context, ParentType extends ResolversPa
   googleOAuthURL?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<QueryGoogleOAuthUrlArgs, 'redirectURL'>>;
   me?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   posts?: Resolver<Array<ResolversTypes['Post']>, ParentType, ContextType>;
+  searchUsers?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QuerySearchUsersArgs, 'query'>>;
   user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>;
 };
 
@@ -368,6 +391,7 @@ export type UserResolvers<ContextType = Context, ParentType extends ResolversPar
   birthday?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
   firstName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   friends?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>;
+  friendshipStatus?: Resolver<Maybe<ResolversTypes['FriendshipStatus']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   lastName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
