@@ -65,6 +65,7 @@ const schema = gql`
     id: ID!
     date: Date!
     from: User!
+    to: User!
   }
 
   input TextPostInput {

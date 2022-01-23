@@ -39,6 +39,7 @@ export type FriendshipRequest = {
   date: Scalars['Date'];
   from: User;
   id: Scalars['ID'];
+  to: User;
 };
 
 export enum FriendshipStatus {
@@ -324,6 +325,7 @@ export type FriendshipRequestResolvers<ContextType = Context, ParentType extends
   date?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
   from?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  to?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 

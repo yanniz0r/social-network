@@ -22,28 +22,32 @@ const UserDetailPage: NextPage<UserDetailPageProps> = ({ userID }) => {
     requestFriendshipMutation({
       variables: {
         userID,
-      },
+      }
     })
   }
 
+  const friendshipStatus = userDetailPageQuery.data?.user?.friendshipStatus
+
   const headerActions = <>
-    <Tooltip text="Freund:in hinzufügen">
-      <IconButton onClick={requestFriendship}>
-        <FaUserPlus />
-      </IconButton>
-    </Tooltip>
+    {friendshipStatus === FriendshipStatus.None &&
+      <Tooltip text="Freund:in hinzufügen">
+        <IconButton onClick={requestFriendship}>
+          <FaUserPlus />
+        </IconButton>
+      </Tooltip>
+    }
   </>
 
   return (
     <>
-      {userDetailPageQuery.data?.user?.friendshipStatus === FriendshipStatus.RequestedByMe && (
+      {friendshipStatus === FriendshipStatus.RequestedByMe && (
         <div className="flex flex-row px-10 items-center py-4 bg-green-400">
-          <FaUserPlus className="mr-2" /> Du hast {userDetailPageQuery.data.user.name} eine Freundschaftsanfrage geschickt.
+          <FaUserPlus className="mr-2" /> Du hast {userDetailPageQuery.data!.user!.name} eine Freundschaftsanfrage geschickt.
         </div>
       )}
-      {userDetailPageQuery.data?.user?.friendshipStatus === FriendshipStatus.RequestedByThem && (
+      {friendshipStatus === FriendshipStatus.RequestedByThem && (
         <div className="flex flex-row px-10 items-center py-4 bg-green-400">
-          <FaUserPlus className="mr-2" /> {userDetailPageQuery.data.user.name} möchte mit Dir befreundet sein.
+          <FaUserPlus className="mr-2" /> {userDetailPageQuery.data!.user!.name} möchte mit Dir befreundet sein.
         </div>
       )}
       <div className="p-10">

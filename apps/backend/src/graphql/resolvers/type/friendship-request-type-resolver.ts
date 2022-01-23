@@ -11,6 +11,10 @@ const friendshipRequestTypeResolver: Resolvers["FriendshipRequest"] = {
     const from = await context.userService.findUser(parent.requester);
     return from!;
   },
+  async to(parent, _arguments, context) {
+    const to = await context.userService.findUser(parent.receiver);
+    return to!;
+  },
 };
 
 export default friendshipRequestTypeResolver;

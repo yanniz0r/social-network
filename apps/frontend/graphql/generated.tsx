@@ -35,6 +35,7 @@ export type FriendshipRequest = {
   date: Scalars['Date'];
   from: User;
   id: Scalars['ID'];
+  to: User;
 };
 
 export enum FriendshipStatus {
@@ -280,7 +281,7 @@ export type ProfileDetailPageRequestFriendshipMutationVariables = Exact<{
 }>;
 
 
-export type ProfileDetailPageRequestFriendshipMutation = { __typename?: 'Mutation', requestFriendship: { __typename?: 'FriendshipRequest', id: string } };
+export type ProfileDetailPageRequestFriendshipMutation = { __typename?: 'Mutation', requestFriendship: { __typename?: 'FriendshipRequest', id: string, to: { __typename?: 'User', id: string, friendshipStatus?: FriendshipStatus | null | undefined } } };
 
 export type ProfileMeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -822,6 +823,10 @@ export const ProfileDetailPageRequestFriendshipDocument = gql`
     mutation ProfileDetailPageRequestFriendship($userID: ID!) {
   requestFriendship(id: $userID) {
     id
+    to {
+      id
+      friendshipStatus
+    }
   }
 }
     `;

@@ -17,5 +17,9 @@ query ProfileDetailPage($userID: ID!) {
 mutation ProfileDetailPageRequestFriendship($userID: ID!) {
   requestFriendship(id: $userID) {
     id
+    to {
+      id
+      friendshipStatus
+    }
   }
 }
