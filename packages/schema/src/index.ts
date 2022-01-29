@@ -60,6 +60,16 @@ const schema = gql`
     likedBy: [User!]!
     comments: [Comment!]!
   }
+  
+  interface Notification {
+    id: ID!
+  }
+  
+  type FriendshipRequestNotification implements Notification {
+    id: ID!
+    from: User!
+    date: String!
+  }
 
   type FriendshipRequest {
     id: ID!
@@ -88,6 +98,7 @@ const schema = gql`
 
   type Query {
     me: User!
+    notifications: [Notification!]!
     user(id: ID!): User
     searchUsers(query: String!): [User!]!
     friendshipRequests: [FriendshipRequest!]!

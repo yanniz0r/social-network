@@ -5,12 +5,16 @@ import Query from "./query";
 import FriendshipRequest from "./type/friendship-request-type-resolver";
 import Comment from "./type/comment-type-resolver";
 import User from "./type/user-type-resolver";
+import Notification from "./type/notification-type-resolver";
+import FriendshipRequestNotification from "./type/friendship-request-notification-type-resolver";
 import dateScalar from "./scalar/date";
 import { GraphQLUpload } from "graphql-upload";
 import config from "config";
 
 const resolvers: Resolvers = {
   FriendshipRequest,
+  FriendshipRequestNotification,
+  Notification,
   Post: {
     __resolveType(post) {
       switch (post.type) {

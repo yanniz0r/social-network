@@ -7,8 +7,10 @@ import AuthorizationService from "./services/authorization-service";
 import PostService from "./services/post-service";
 import FileStorageService from "./services/file-storage-service";
 import UserService from "./services/user-service";
+import NotificationService from "./services/notification-service";
 import config from "config";
 import { Request, Response } from "express";
+import NotificationRepository from "./repositories/notification-repository";
 
 const logger = new Logger({ name: "Context" });
 
@@ -20,6 +22,7 @@ export class Context {
     public postService: PostService,
     public authorizationService: AuthorizationService,
     public fileStorageService: FileStorageService,
+    public notificationService: NotificationService,
     private request?: Request,
     private response?: Response
   ) {}
@@ -37,11 +40,15 @@ export class Context {
     const postRepository = new PostRepository(db);
     const postService = new PostService(postRepository, fileStorageService);
 
+    const notificationRepository = new NotificationRepository(db)
+    const notificationService = new NotificationService(notificationRepository)
+
     const context = new Context(
       userService,
       postService,
       authorizationService,
       fileStorageService,
+      notificationService,
       request,
       response
     );

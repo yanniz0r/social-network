@@ -2,6 +2,7 @@ import { FC } from "react";
 import { FaUser } from "react-icons/fa";
 import { useNavigationQuery } from "../graphql/generated";
 import IconButton from "./icon-button";
+import NotificationButton from "./notification-button";
 import Search from "./search";
 
 const Navigation: FC = () => {
@@ -20,6 +21,9 @@ const Navigation: FC = () => {
             >
               <FaUser />
             </IconButton>
+            <div className="mx-1">
+              <NotificationButton />
+            </div>
           </div>
         </div>
       </div>

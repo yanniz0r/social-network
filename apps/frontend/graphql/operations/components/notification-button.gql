@@ -1,0 +1,12 @@
+query NotificationButton {
+  notifications {
+    id
+    ...on FriendshipRequestNotification {
+      from {
+        id
+        name
+        avatarURL
+      }
+    } 
+  }
+}

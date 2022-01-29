@@ -17,6 +17,8 @@ generates:
         Post: ../repositories/post-repository#PostModel
         Comment: ../types/post#PostComment
         TextPost: ../repositories/post-repository#PostModel
+        Notification: ../repositories/notification-repository#NotificationModel
+        FriendshipRequestNotification: ../repositories/notification-repository#NotificationModel
         ImagePost: ../repositories/post-repository#PostModel
     plugins:
       - "typescript"
