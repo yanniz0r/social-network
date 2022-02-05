@@ -11,17 +11,17 @@ interface NotificationRowProps {
 
 const NotificationRow: FC<NotificationRowProps> = (props) => {
   return <Link href={props.linkURL}>
-    <a className="flex items-center hover:bg-gray-300 p-1 rounded-lg bg-opacity-50" onClick={props.onClick}>
+    <a className="flex items-center hover:bg-gray-700 bg-opacity-50 p-1 rounded-lg" onClick={props.onClick}>
       <div>
         <div className="w-14 h-14 bg-gray-400 rounded-full bg-center bg-contain" style={{ backgroundImage: props.imageURL ? `url(${props.imageURL})` : undefined }} />
       </div>
       <div className="ml-2">
-        <div>
+        <div className="text-gray-200">
           {props.children}
         </div>
         {props.date &&
           <div>
-            <small className="text-blue-700">{formatRelative(props.date, new Date())}</small>
+            <small className="text-teal-300">{formatRelative(props.date, new Date())}</small>
           </div>
         }
       </div>

@@ -1,4 +1,4 @@
-query NotificationButton {
+query Notifications {
   notifications {
     id
     ...on FriendshipRequestNotification {
@@ -23,7 +23,7 @@ query NotificationButton {
   }
 }
 
-subscription NotificationButtonNewNotification {
+subscription NotificationsNewNotification {
   newNotification{
     id
   }

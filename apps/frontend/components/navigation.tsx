@@ -1,17 +1,28 @@
 import Link from "next/link";
-import { FC, ReactNode } from "react";
+import { FC, ReactNode, useState } from "react";
 import { FaBell, FaGhost, FaUser } from "react-icons/fa";
 import { useNavigationQuery } from "../graphql/generated";
+import Notifications from "./notifications";
 
-interface NavItem {
+interface NavigationItemBase {
   text: string
   icon: ReactNode
   badge?: string | number
+}
+
+interface LinkNotificationItem extends NavigationItemBase {
   href: string
 }
 
+interface ClickNotificationItem extends NavigationItemBase {
+  onClick(): void
+}
+
+type NavItem = LinkNotificationItem | ClickNotificationItem
+
 const Navigation: FC = () => {
   const navigationQuery = useNavigationQuery();
+  const [notificationsOpen, setNotificationsOpen] = useState(false)
 
   const navitems: NavItem[] = [
     {
@@ -22,19 +33,22 @@ const Navigation: FC = () => {
     {
       text: 'Neuigkeiten',
       icon: <FaBell />,
-      badge: navigationQuery.data?.notifications.length,
-      href: '#notifications'
+      badge: navigationQuery.data?.notifications.length || undefined,
+      onClick() {
+        setNotificationsOpen(true)
+      }
     },
     {
       text: 'Freunde',
       icon: <FaUser />,
-      badge: navigationQuery.data?.friendshipRequests.length,
+      badge: navigationQuery.data?.friendshipRequests.length || undefined,
       href: '/friendships'
     }
   ]
 
   return (
     <div className="bg-gray-800 lg:w-2/12 flex-none h-screen sticky top-0">
+      <Notifications open={notificationsOpen} close={() => setNotificationsOpen(false)} />
       {navigationQuery.data?.me &&
         <Link passHref href="/profile/me">
           <a className="flex flex-row gap-3 items-center px-5 py-5 hover:bg-gray-700">
@@ -53,25 +67,28 @@ const Navigation: FC = () => {
         </Link>
       }
       <ul className="flex flex-col px-2 mt-5">
-        {navitems.map((item, key) => (
-          <li key={key}>
-            <Link passHref href={item.href}>
-              <a className="flex items-center gap-2 text-lg px-4 py-3 transition-all text-gray-300 hover:text-white hover:bg-gray-700 rounded-lg">
-                <div className="text-gray-500">
-                  {item.icon}
+        {navitems.map((item, key) => {
+          const navigationItem = <a onClick={'onClick' in item ? item.onClick : undefined}  className="flex cursor-pointer items-center gap-2 text-lg px-4 py-3 transition-all text-gray-300 hover:text-white hover:bg-gray-700 rounded-lg">
+              <div className="text-gray-500">
+                {item.icon}
+              </div>
+              <div className="flex-grow">
+                {item.text}
+              </div>
+              {item.badge &&
+                <div className="w-6 h-6 text-sm flex items-center justify-center rounded-full text-white bg-teal-500">
+                  {item.badge}
                 </div>
-                <div className="flex-grow">
-                  {item.text}
-                </div>
-                {item.badge &&
-                  <div className="w-6 h-6 text-sm flex items-center justify-center rounded-full text-white bg-teal-500">
-                    {item.badge}
-                  </div>
-                }
-              </a>
+              }
+            </a>
+          if ('href' in item) {
+            return <Link href={item.href}>
+              {navigationItem}
             </Link>
-          </li>
-        ))}
+          }
+          return navigationItem
+        })
+        }
       </ul>
     </div>
   );

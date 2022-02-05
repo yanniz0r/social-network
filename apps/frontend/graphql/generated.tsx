@@ -262,15 +262,15 @@ export type NavigationQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type NavigationQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, firstName: string, avatarURL?: string | null | undefined }, notifications: Array<{ __typename?: 'FriendshipRequestNotification', id: string } | { __typename?: 'PostLikedNotification', id: string }>, friendshipRequests: Array<{ __typename?: 'FriendshipRequest', date: any, from: { __typename?: 'User', id: string, name: string } }> };
 
-export type NotificationButtonQueryVariables = Exact<{ [key: string]: never; }>;
+export type NotificationsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type NotificationButtonQuery = { __typename?: 'Query', notifications: Array<{ __typename?: 'FriendshipRequestNotification', date: string, id: string, from: { __typename?: 'User', id: string, firstName: string, avatarURL?: string | null | undefined } } | { __typename?: 'PostLikedNotification', date: string, id: string, liker: { __typename?: 'User', id: string, firstName: string, avatarURL?: string | null | undefined }, post: { __typename?: 'ImagePost', id: string } | { __typename?: 'TextPost', id: string } }> };
+export type NotificationsQuery = { __typename?: 'Query', notifications: Array<{ __typename?: 'FriendshipRequestNotification', date: string, id: string, from: { __typename?: 'User', id: string, firstName: string, avatarURL?: string | null | undefined } } | { __typename?: 'PostLikedNotification', date: string, id: string, liker: { __typename?: 'User', id: string, firstName: string, avatarURL?: string | null | undefined }, post: { __typename?: 'ImagePost', id: string } | { __typename?: 'TextPost', id: string } }> };
 
-export type NotificationButtonNewNotificationSubscriptionVariables = Exact<{ [key: string]: never; }>;
+export type NotificationsNewNotificationSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type NotificationButtonNewNotificationSubscription = { __typename?: 'Subscription', newNotification: { __typename?: 'FriendshipRequestNotification', id: string } | { __typename?: 'PostLikedNotification', id: string } };
+export type NotificationsNewNotificationSubscription = { __typename?: 'Subscription', newNotification: { __typename?: 'FriendshipRequestNotification', id: string } | { __typename?: 'PostLikedNotification', id: string } };
 
 export type PostCardCommentPostMutationVariables = Exact<{
   postID: Scalars['ID'];
@@ -559,8 +559,8 @@ export function useNavigationLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type NavigationQueryHookResult = ReturnType<typeof useNavigationQuery>;
 export type NavigationLazyQueryHookResult = ReturnType<typeof useNavigationLazyQuery>;
 export type NavigationQueryResult = Apollo.QueryResult<NavigationQuery, NavigationQueryVariables>;
-export const NotificationButtonDocument = gql`
-    query NotificationButton {
+export const NotificationsDocument = gql`
+    query Notifications {
   notifications {
     id
     ... on FriendshipRequestNotification {
@@ -587,33 +587,33 @@ export const NotificationButtonDocument = gql`
     `;
 
 /**
- * __useNotificationButtonQuery__
+ * __useNotificationsQuery__
  *
- * To run a query within a React component, call `useNotificationButtonQuery` and pass it any options that fit your needs.
- * When your component renders, `useNotificationButtonQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useNotificationsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useNotificationsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useNotificationButtonQuery({
+ * const { data, loading, error } = useNotificationsQuery({
  *   variables: {
  *   },
  * });
  */
-export function useNotificationButtonQuery(baseOptions?: Apollo.QueryHookOptions<NotificationButtonQuery, NotificationButtonQueryVariables>) {
+export function useNotificationsQuery(baseOptions?: Apollo.QueryHookOptions<NotificationsQuery, NotificationsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<NotificationButtonQuery, NotificationButtonQueryVariables>(NotificationButtonDocument, options);
+        return Apollo.useQuery<NotificationsQuery, NotificationsQueryVariables>(NotificationsDocument, options);
       }
-export function useNotificationButtonLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<NotificationButtonQuery, NotificationButtonQueryVariables>) {
+export function useNotificationsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<NotificationsQuery, NotificationsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<NotificationButtonQuery, NotificationButtonQueryVariables>(NotificationButtonDocument, options);
+          return Apollo.useLazyQuery<NotificationsQuery, NotificationsQueryVariables>(NotificationsDocument, options);
         }
-export type NotificationButtonQueryHookResult = ReturnType<typeof useNotificationButtonQuery>;
-export type NotificationButtonLazyQueryHookResult = ReturnType<typeof useNotificationButtonLazyQuery>;
-export type NotificationButtonQueryResult = Apollo.QueryResult<NotificationButtonQuery, NotificationButtonQueryVariables>;
-export const NotificationButtonNewNotificationDocument = gql`
-    subscription NotificationButtonNewNotification {
+export type NotificationsQueryHookResult = ReturnType<typeof useNotificationsQuery>;
+export type NotificationsLazyQueryHookResult = ReturnType<typeof useNotificationsLazyQuery>;
+export type NotificationsQueryResult = Apollo.QueryResult<NotificationsQuery, NotificationsQueryVariables>;
+export const NotificationsNewNotificationDocument = gql`
+    subscription NotificationsNewNotification {
   newNotification {
     id
   }
@@ -621,26 +621,26 @@ export const NotificationButtonNewNotificationDocument = gql`
     `;
 
 /**
- * __useNotificationButtonNewNotificationSubscription__
+ * __useNotificationsNewNotificationSubscription__
  *
- * To run a query within a React component, call `useNotificationButtonNewNotificationSubscription` and pass it any options that fit your needs.
- * When your component renders, `useNotificationButtonNewNotificationSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useNotificationsNewNotificationSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useNotificationsNewNotificationSubscription` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useNotificationButtonNewNotificationSubscription({
+ * const { data, loading, error } = useNotificationsNewNotificationSubscription({
  *   variables: {
  *   },
  * });
  */
-export function useNotificationButtonNewNotificationSubscription(baseOptions?: Apollo.SubscriptionHookOptions<NotificationButtonNewNotificationSubscription, NotificationButtonNewNotificationSubscriptionVariables>) {
+export function useNotificationsNewNotificationSubscription(baseOptions?: Apollo.SubscriptionHookOptions<NotificationsNewNotificationSubscription, NotificationsNewNotificationSubscriptionVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useSubscription<NotificationButtonNewNotificationSubscription, NotificationButtonNewNotificationSubscriptionVariables>(NotificationButtonNewNotificationDocument, options);
+        return Apollo.useSubscription<NotificationsNewNotificationSubscription, NotificationsNewNotificationSubscriptionVariables>(NotificationsNewNotificationDocument, options);
       }
-export type NotificationButtonNewNotificationSubscriptionHookResult = ReturnType<typeof useNotificationButtonNewNotificationSubscription>;
-export type NotificationButtonNewNotificationSubscriptionResult = Apollo.SubscriptionResult<NotificationButtonNewNotificationSubscription>;
+export type NotificationsNewNotificationSubscriptionHookResult = ReturnType<typeof useNotificationsNewNotificationSubscription>;
+export type NotificationsNewNotificationSubscriptionResult = Apollo.SubscriptionResult<NotificationsNewNotificationSubscription>;
 export const PostCardCommentPostDocument = gql`
     mutation PostCardCommentPost($postID: ID!, $text: String!) {
   commentPost(id: $postID, text: $text) {
