@@ -41,7 +41,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <ApolloProvider client={apolloClient}>
         <div className="flex">
           <Navigation />
-          <div className="">
+          <div className="flex-grow">
             <Component {...pageProps} />
           </div>
         </div>
