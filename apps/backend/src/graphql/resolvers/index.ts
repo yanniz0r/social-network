@@ -10,6 +10,9 @@ import FriendshipRequestNotification from "./type/friendship-request-notificatio
 import dateScalar from "./scalar/date";
 import { GraphQLUpload } from "graphql-upload";
 import config from "config";
+import { NotificationModel } from "../../repositories/notification-repository";
+import { Context } from "../../context";
+import { ObjectId } from "mongodb";
 
 const resolvers: Resolvers = {
   FriendshipRequest,
@@ -89,6 +92,18 @@ const resolvers: Resolvers = {
   },
   Query,
   Mutation,
+  Subscription: {
+    newNotification: {
+      async resolve(parent: ObjectId, _arguments: {}, context: Context): Promise<NotificationModel> {
+        const notification = await context.notificationService.getNotification(parent)
+        return notification!
+      },
+      subscribe(_parent, _arguments, context) {
+        const authenticateUser = context.authorizationService.ensureAuthorizedUser()
+        return context.notificationService.subscribeToNewNotifications(authenticateUser._id)
+      },
+    }
+  }
 };
 
 export default resolvers;

@@ -1,7 +1,7 @@
 import classNames from "classnames"
 import { FC, useState } from "react"
 import { FaBell } from "react-icons/fa"
-import { useNotificationButtonQuery } from "../graphql/generated"
+import { useNotificationButtonNewNotificationSubscription, useNotificationButtonQuery } from "../graphql/generated"
 import IconButton from "./icon-button"
 import NotificationRow from "./notification-row"
 
@@ -11,6 +11,11 @@ interface NotificationButtonProps {
 const NotificationButton: FC<NotificationButtonProps> = (props) => {
   const [open, setOpen] = useState(false)
   const query = useNotificationButtonQuery()
+  useNotificationButtonNewNotificationSubscription({
+    onSubscriptionData() {
+      query.refetch()
+    }
+  })
 
   const numberOfNotifications = query.data?.notifications.length ?? 0
 
@@ -32,7 +37,7 @@ const NotificationButton: FC<NotificationButtonProps> = (props) => {
         {query.data?.notifications.map(notification => (
           <div key={notification.id} className="p-2">
             {notification.__typename === 'FriendshipRequestNotification' &&
-              <NotificationRow linkURL={`/friendships`} imageURL={notification.from.avatarURL ?? undefined}>
+              <NotificationRow date={new Date(notification.date)} linkURL={`/friendships`} imageURL={notification.from.avatarURL ?? undefined}>
                 {notification.from.name} möchte mit dir befreundet sein!
               </NotificationRow>
             }

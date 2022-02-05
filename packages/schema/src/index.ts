@@ -118,6 +118,10 @@ const schema = gql`
     commentPost(id: ID!, text: String!): Post!
     authenticateWithGoogle(code: String!, redirectURL: String!): Authentication!
   }
+  
+  type Subscription {
+    newNotification: Notification!
+  } 
 `;
 
 export default schema;

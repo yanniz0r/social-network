@@ -1,4 +1,4 @@
-import { Collection, Db, Filter, WithId } from "mongodb";
+import { Collection, Db, Filter, ObjectId, WithId } from "mongodb";
 import { Logger } from "tslog";
 import Notification from "../types/notification";
 
@@ -20,6 +20,12 @@ export default class NotificationRepository {
 
   public createNotification(notification: Notification) {
     return this.notificationsCollection.insertOne(notification)
+  }
+
+  public findNotificationByID(id: ObjectId) {
+    return this.notificationsCollection.findOne({
+      _id: id,
+    })
   }
 
 }

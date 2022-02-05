@@ -175,6 +175,11 @@ export type QueryUserArgs = {
   id: Scalars['ID'];
 };
 
+export type Subscription = {
+  __typename?: 'Subscription';
+  newNotification: Notification;
+};
+
 export type TextPost = Post & {
   __typename?: 'TextPost';
   comments: Array<Comment>;
@@ -292,6 +297,7 @@ export type ResolversTypes = {
   Post: ResolverTypeWrapper<PostModel>;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']>;
+  Subscription: ResolverTypeWrapper<{}>;
   TextPost: ResolverTypeWrapper<PostModel>;
   TextPostInput: TextPostInput;
   UpdateMeInput: UpdateMeInput;
@@ -315,6 +321,7 @@ export type ResolversParentTypes = {
   Post: PostModel;
   Query: {};
   String: Scalars['String'];
+  Subscription: {};
   TextPost: PostModel;
   TextPostInput: TextPostInput;
   UpdateMeInput: UpdateMeInput;
@@ -405,6 +412,10 @@ export type QueryResolvers<ContextType = Context, ParentType extends ResolversPa
   user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>;
 };
 
+export type SubscriptionResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = {
+  newNotification?: SubscriptionResolver<ResolversTypes['Notification'], "newNotification", ParentType, ContextType>;
+};
+
 export type TextPostResolvers<ContextType = Context, ParentType extends ResolversParentTypes['TextPost'] = ResolversParentTypes['TextPost']> = {
   comments?: Resolver<Array<ResolversTypes['Comment']>, ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
@@ -445,6 +456,7 @@ export type Resolvers<ContextType = Context> = {
   Notification?: NotificationResolvers<ContextType>;
   Post?: PostResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  Subscription?: SubscriptionResolvers<ContextType>;
   TextPost?: TextPostResolvers<ContextType>;
   Upload?: GraphQLScalarType;
   User?: UserResolvers<ContextType>;

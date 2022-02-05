@@ -5,7 +5,7 @@ export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-const defaultOptions =  {}
+const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -170,6 +170,11 @@ export type QueryUserArgs = {
   id: Scalars['ID'];
 };
 
+export type Subscription = {
+  __typename?: 'Subscription';
+  newNotification: Notification;
+};
+
 export type TextPost = Post & {
   __typename?: 'TextPost';
   comments: Array<Comment>;
@@ -246,7 +251,12 @@ export type NavigationQuery = { __typename?: 'Query', friendshipRequests: Array<
 export type NotificationButtonQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type NotificationButtonQuery = { __typename?: 'Query', notifications: Array<{ __typename?: 'FriendshipRequestNotification', id: string, from: { __typename?: 'User', id: string, name: string, avatarURL?: string | null | undefined } }> };
+export type NotificationButtonQuery = { __typename?: 'Query', notifications: Array<{ __typename?: 'FriendshipRequestNotification', date: string, id: string, from: { __typename?: 'User', id: string, name: string, avatarURL?: string | null | undefined } }> };
+
+export type NotificationButtonNewNotificationSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type NotificationButtonNewNotificationSubscription = { __typename?: 'Subscription', newNotification: { __typename?: 'FriendshipRequestNotification', id: string } };
 
 export type PostCardCommentPostMutationVariables = Exact<{
   postID: Scalars['ID'];
@@ -266,7 +276,7 @@ export type SearchQuery = { __typename?: 'Query', searchUsers: Array<{ __typenam
 export type FriendshipsPageQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FriendshipsPageQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, friends: Array<{ __typename?: 'User', id: string, name: string, online: boolean }> }, friendshipRecommendations: Array<{ __typename?: 'User', id: string, name: string, online: boolean, avatarURL?: string | null | undefined }>, friendshipRequests: Array<{ __typename?: 'FriendshipRequest', id: string, date: any, from: { __typename?: 'User', id: string, name: string, online: boolean } }> };
+export type FriendshipsPageQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, friends: Array<{ __typename?: 'User', id: string, name: string, online: boolean }> }, friendshipRecommendations: Array<{ __typename?: 'User', id: string, name: string, online: boolean, avatarURL?: string | null | undefined }>, friendshipRequests: Array<{ __typename?: 'FriendshipRequest', id: string, date: any, from: { __typename?: 'User', id: string, name: string, online: boolean, avatarURL?: string | null | undefined } }> };
 
 export type FriendsPageAcceptFriendshipRequestMutationVariables = Exact<{
   friendshipID: Scalars['ID'];
@@ -537,6 +547,7 @@ export const NotificationButtonDocument = gql`
         name
         avatarURL
       }
+      date
     }
   }
 }
@@ -568,6 +579,35 @@ export function useNotificationButtonLazyQuery(baseOptions?: Apollo.LazyQueryHoo
 export type NotificationButtonQueryHookResult = ReturnType<typeof useNotificationButtonQuery>;
 export type NotificationButtonLazyQueryHookResult = ReturnType<typeof useNotificationButtonLazyQuery>;
 export type NotificationButtonQueryResult = Apollo.QueryResult<NotificationButtonQuery, NotificationButtonQueryVariables>;
+export const NotificationButtonNewNotificationDocument = gql`
+    subscription NotificationButtonNewNotification {
+  newNotification {
+    id
+  }
+}
+    `;
+
+/**
+ * __useNotificationButtonNewNotificationSubscription__
+ *
+ * To run a query within a React component, call `useNotificationButtonNewNotificationSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useNotificationButtonNewNotificationSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useNotificationButtonNewNotificationSubscription({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useNotificationButtonNewNotificationSubscription(baseOptions?: Apollo.SubscriptionHookOptions<NotificationButtonNewNotificationSubscription, NotificationButtonNewNotificationSubscriptionVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSubscription<NotificationButtonNewNotificationSubscription, NotificationButtonNewNotificationSubscriptionVariables>(NotificationButtonNewNotificationDocument, options);
+      }
+export type NotificationButtonNewNotificationSubscriptionHookResult = ReturnType<typeof useNotificationButtonNewNotificationSubscription>;
+export type NotificationButtonNewNotificationSubscriptionResult = Apollo.SubscriptionResult<NotificationButtonNewNotificationSubscription>;
 export const PostCardCommentPostDocument = gql`
     mutation PostCardCommentPost($postID: ID!, $text: String!) {
   commentPost(id: $postID, text: $text) {
@@ -672,6 +712,7 @@ export const FriendshipsPageDocument = gql`
       id
       name
       online
+      avatarURL
     }
   }
 }

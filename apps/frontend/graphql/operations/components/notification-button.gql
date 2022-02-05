@@ -7,6 +7,13 @@ query NotificationButton {
         name
         avatarURL
       }
+      date
     } 
+  }
+}
+
+subscription NotificationButtonNewNotification {
+  newNotification{
+    id
   }
 }

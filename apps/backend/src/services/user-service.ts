@@ -20,17 +20,14 @@ export default class UserService {
 
   async getUser(): Promise<UserModel> {
     const user = await this.userRepository.findFirst();
-    logger.debug(user);
     return user!;
   }
 
   async findUser(id: ObjectId | string): Promise<UserModel | null> {
-    logger.info("Find user", id);
     return this.userRepository.findUser(initObjectID(id));
   }
 
   async findUsers(ids: Array<ObjectId | string>) {
-    logger.info("Find users", ids);
     return this.userRepository.findUsers(ids.map(initObjectID));
   }
 

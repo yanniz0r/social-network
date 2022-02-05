@@ -52,6 +52,7 @@ const FriendshipsPage: NextPage = () => {
                     <a className="flex py-2">
                       <Avatar
                         size="md"
+                        imageURL={friendshipRequest.from.avatarURL ?? undefined}
                         name={friendshipRequest.from.name}
                         online={friendshipRequest.from.online}
                       />

@@ -25,10 +25,7 @@ const queryResolvers: QueryResolvers = {
     const friends = await context.userService.findFriendsForUser(
       authenticatedUser._id
     );
-    console.log({
-      friends,
-    });
-    return context.postService.getPostsFrom(friends);
+    return context.postService.getPostsFrom([...friends, authenticatedUser]);
   },
 };
 

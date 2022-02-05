@@ -11,6 +11,7 @@ import NotificationService from "./services/notification-service";
 import config from "config";
 import { Request, Response } from "express";
 import NotificationRepository from "./repositories/notification-repository";
+import Redis from "ioredis";
 
 const logger = new Logger({ name: "Context" });
 
@@ -27,7 +28,10 @@ export class Context {
     private response?: Response
   ) {}
 
-  static async init(request: Request, response: Response): Promise<Context> {
+  static async init(request?: Request, response?: Response): Promise<Context> {
+    const redis = new Redis()
+    // await redis.connect()
+
     const db = await Context.initMongodb();
     const minio = Context.initMinio();
 
@@ -41,7 +45,7 @@ export class Context {
     const postService = new PostService(postRepository, fileStorageService);
 
     const notificationRepository = new NotificationRepository(db)
-    const notificationService = new NotificationService(notificationRepository)
+    const notificationService = new NotificationService(notificationRepository, redis)
 
     const context = new Context(
       userService,

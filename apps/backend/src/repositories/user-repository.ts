@@ -29,8 +29,6 @@ export default class UserRepository {
         })
         .toArray();
 
-      logger.debug("Loading users", keys);
-
       return keys.map((key) => {
         const value = users.find((user) => user._id.equals(key));
         return value ?? null;
