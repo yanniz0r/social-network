@@ -1,5 +1,6 @@
 import { NextPage } from "next";
 import { FaGhost, FaUser, FaUserPlus } from "react-icons/fa";
+import AlertBar from "../../components/alert-bar";
 import Button from "../../components/button";
 import Card from "../../components/card";
 import IconButton from "../../components/icon-button";
@@ -56,24 +57,26 @@ const UserDetailPage: NextPage<UserDetailPageProps> = ({ userID }) => {
     </>
   );
 
+  const alerts = <>
+    {friendshipStatus === FriendshipStatus.RequestedByMe && (
+      <AlertBar icon={<FaUserPlus />}>
+        {userDetailPageQuery.data!.user!.name} eine Freundschaftsanfrage
+        geschickt.
+      </AlertBar>
+    )}
+    {friendshipStatus === FriendshipStatus.RequestedByThem && (
+      <AlertBar icon={<FaUserPlus />}>
+        {userDetailPageQuery.data!.user?.name} möchte mit Dir befreundet sein
+      </AlertBar>
+    )}
+  </>
+
   return (
     <>
-      {friendshipStatus === FriendshipStatus.RequestedByMe && (
-        <div className="flex flex-row px-10 items-center py-4 bg-green-400">
-          <FaUserPlus className="mr-2" /> Du hast{" "}
-          {userDetailPageQuery.data!.user!.name} eine Freundschaftsanfrage
-          geschickt.
-        </div>
-      )}
-      {friendshipStatus === FriendshipStatus.RequestedByThem && (
-        <div className="flex flex-row px-10 items-center py-4 bg-green-400">
-          <FaUserPlus className="mr-2" /> {userDetailPageQuery.data!.user!.name}{" "}
-          möchte mit Dir befreundet sein.
-        </div>
-      )}
       {userDetailPageQuery.data?.user && <>
         <div className="h-40 sm:h-60 md:h-80 lg:h-96 bg-center bg-cover" style={{ backgroundImage: 'url(/hero.jpg)' }} />
         <ProfileHeader user={userDetailPageQuery.data.user} actions={headerActions} />
+        {alerts}
         <div className="p-10 flex flex-row gap-5">
           <div className="sm:w-5/12 md:w-4/12 lg:w-3/12">
             <div className="sticky self-start top-36">

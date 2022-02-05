@@ -47,7 +47,7 @@ const Navigation: FC = () => {
   ]
 
   return (
-    <div className="bg-gray-800 lg:w-2/12 flex-none h-screen sticky top-0">
+    <div className="bg-gray-800 lg:w-2/12 flex-none h-screen sticky top-0 shadow-md">
       <Notifications open={notificationsOpen} close={() => setNotificationsOpen(false)} />
       {navigationQuery.data?.me &&
         <Link passHref href="/profile/me">
