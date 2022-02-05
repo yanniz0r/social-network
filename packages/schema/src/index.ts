@@ -70,6 +70,13 @@ const schema = gql`
     from: User!
     date: String!
   }
+  
+  type PostLikedNotification implements Notification {
+    id: ID!
+    liker: User!
+    post: Post!
+    date: String!
+  }
 
   type FriendshipRequest {
     id: ID!

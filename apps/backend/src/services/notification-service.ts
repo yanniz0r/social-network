@@ -5,6 +5,7 @@ import { FriendshipModel } from "../repositories/user-repository";
 import initObjectID from "../utils/init-object-id";
 import { Redis } from "ioredis";
 import { RedisPubSub } from "graphql-redis-subscriptions";
+import { PostModel } from "../repositories/post-repository";
 
 const logger = new Logger({ name: "NotificationService" });
 
@@ -53,6 +54,20 @@ export default class NotificationService {
     })
 
     await this.pubsub.publish(NEW_NOTIFICATION_FOR_TOPIC(friendship.receiver), notification.insertedId)
+
+    return notification
+  }
+
+  async createPostLikedNotification(post: PostModel, likerID: ObjectId) {
+    const notification = await this.notificationRepository.createNotification({
+      userID: post.userID,
+      type: 'post-liked',
+      date: new Date(),
+      postID: post._id,
+      likerID,
+    })
+
+    await this.pubsub.publish(NEW_NOTIFICATION_FOR_TOPIC(post.userID), notification.insertedId)
 
     return notification
   }

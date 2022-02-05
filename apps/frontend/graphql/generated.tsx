@@ -143,6 +143,14 @@ export type Post = {
   user: User;
 };
 
+export type PostLikedNotification = Notification & {
+  __typename?: 'PostLikedNotification';
+  date: Scalars['String'];
+  id: Scalars['ID'];
+  liker: User;
+  post: Post;
+};
+
 export type Query = {
   __typename?: 'Query';
   friendshipRecommendations: Array<User>;
@@ -251,12 +259,12 @@ export type NavigationQuery = { __typename?: 'Query', friendshipRequests: Array<
 export type NotificationButtonQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type NotificationButtonQuery = { __typename?: 'Query', notifications: Array<{ __typename?: 'FriendshipRequestNotification', date: string, id: string, from: { __typename?: 'User', id: string, name: string, avatarURL?: string | null | undefined } }> };
+export type NotificationButtonQuery = { __typename?: 'Query', notifications: Array<{ __typename?: 'FriendshipRequestNotification', date: string, id: string, from: { __typename?: 'User', id: string, firstName: string, avatarURL?: string | null | undefined } } | { __typename?: 'PostLikedNotification', date: string, id: string, liker: { __typename?: 'User', id: string, firstName: string, avatarURL?: string | null | undefined }, post: { __typename?: 'ImagePost', id: string } | { __typename?: 'TextPost', id: string } }> };
 
 export type NotificationButtonNewNotificationSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type NotificationButtonNewNotificationSubscription = { __typename?: 'Subscription', newNotification: { __typename?: 'FriendshipRequestNotification', id: string } };
+export type NotificationButtonNewNotificationSubscription = { __typename?: 'Subscription', newNotification: { __typename?: 'FriendshipRequestNotification', id: string } | { __typename?: 'PostLikedNotification', id: string } };
 
 export type PostCardCommentPostMutationVariables = Exact<{
   postID: Scalars['ID'];
@@ -544,10 +552,21 @@ export const NotificationButtonDocument = gql`
     ... on FriendshipRequestNotification {
       from {
         id
-        name
+        firstName
         avatarURL
       }
       date
+    }
+    ... on PostLikedNotification {
+      liker {
+        id
+        firstName
+        avatarURL
+      }
+      date
+      post {
+        id
+      }
     }
   }
 }

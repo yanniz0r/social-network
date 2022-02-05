@@ -7,6 +7,7 @@ const likeMutationResolvers: Resolvers["Mutation"] = {
     const post = await context.postService.getPostByID(id);
     if (!post) throw new Error("Could not find post to like");
     await context.postService.likePost(signedInUser, post);
+    await context.notificationService.createPostLikedNotification(post, signedInUser._id)
     const updatedPost = await context.postService.getPostByID(id);
     return updatedPost!;
   },

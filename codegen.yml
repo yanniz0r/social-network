@@ -18,7 +18,8 @@ generates:
         Comment: ../types/post#PostComment
         TextPost: ../repositories/post-repository#PostModel
         Notification: ../repositories/notification-repository#NotificationModel
-        FriendshipRequestNotification: ../repositories/notification-repository#NotificationModel
+        FriendshipRequestNotification: ../repositories/notification-repository#FriendshipRequestNotificationModel
+        PostLikedNotification: ../repositories/notification-repository#PostLikedNotificationModel
         ImagePost: ../repositories/post-repository#PostModel
     plugins:
       - "typescript"

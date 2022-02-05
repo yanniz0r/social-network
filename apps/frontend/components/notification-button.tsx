@@ -22,6 +22,10 @@ const NotificationButton: FC<NotificationButtonProps> = (props) => {
   const layerClassName = classNames("absolute block w-64 right-0 transition-all pointer-events-nonde opacity-0", {
     'opacity-100': open,
   })
+
+  function onClickNotification() {
+    setOpen(false)
+  }
   
   return <div className="relative">
     <IconButton bubble={numberOfNotifications} onClick={() => setOpen(!open)}>
@@ -37,8 +41,13 @@ const NotificationButton: FC<NotificationButtonProps> = (props) => {
         {query.data?.notifications.map(notification => (
           <div key={notification.id} className="p-2">
             {notification.__typename === 'FriendshipRequestNotification' &&
-              <NotificationRow date={new Date(notification.date)} linkURL={`/friendships`} imageURL={notification.from.avatarURL ?? undefined}>
-                {notification.from.name} möchte mit dir befreundet sein!
+              <NotificationRow onClick={onClickNotification} date={new Date(notification.date)} linkURL={`/friendships`} imageURL={notification.from.avatarURL ?? undefined}>
+                {notification.from.firstName} möchte mit dir befreundet sein!
+              </NotificationRow>
+            }
+            {notification.__typename == 'PostLikedNotification' &&
+              <NotificationRow onClick={onClickNotification} date={new Date(notification.date)} imageURL={notification.liker.avatarURL ?? undefined} linkURL="/">
+                {notification.liker.firstName} gefällt dein Post!
               </NotificationRow>
             }
           </div>

@@ -5,6 +5,8 @@ const notifiationTypeResolver: Resolvers["Notification"] = {
     switch(notification.type) {
       case 'friendship-request':
         return 'FriendshipRequestNotification'
+      case 'post-liked':
+        return 'PostLikedNotification'
     }
   },
   id(parent) {

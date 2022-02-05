@@ -1,10 +1,12 @@
 import { Collection, Db, Filter, ObjectId, WithId } from "mongodb";
 import { Logger } from "tslog";
-import Notification from "../types/notification";
+import Notification, { FriendshipRequestNotification, PostLikedNotification } from "../types/notification";
 
 const logger = new Logger({ name: "NotificationRepository" });
 
 export type NotificationModel = WithId<Notification>;
+export type FriendshipRequestNotificationModel = WithId<FriendshipRequestNotification>;
+export type PostLikedNotificationModel = WithId<PostLikedNotification>;
 
 export default class NotificationRepository {
  

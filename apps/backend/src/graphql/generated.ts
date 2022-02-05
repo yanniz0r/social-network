@@ -2,7 +2,7 @@ import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from '
 import { UserModel, FriendshipModel } from '../repositories/user-repository';
 import { PostModel } from '../repositories/post-repository';
 import { PostComment } from '../types/post';
-import { NotificationModel } from '../repositories/notification-repository';
+import { NotificationModel, FriendshipRequestNotificationModel, PostLikedNotificationModel } from '../repositories/notification-repository';
 import { Context } from '../context';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
@@ -148,6 +148,14 @@ export type Post = {
   user: User;
 };
 
+export type PostLikedNotification = Notification & {
+  __typename?: 'PostLikedNotification';
+  date: Scalars['String'];
+  id: Scalars['ID'];
+  liker: User;
+  post: Post;
+};
+
 export type Query = {
   __typename?: 'Query';
   friendshipRecommendations: Array<User>;
@@ -287,7 +295,7 @@ export type ResolversTypes = {
   Comment: ResolverTypeWrapper<PostComment>;
   Date: ResolverTypeWrapper<Scalars['Date']>;
   FriendshipRequest: ResolverTypeWrapper<FriendshipModel>;
-  FriendshipRequestNotification: ResolverTypeWrapper<NotificationModel>;
+  FriendshipRequestNotification: ResolverTypeWrapper<FriendshipRequestNotificationModel>;
   FriendshipStatus: FriendshipStatus;
   ID: ResolverTypeWrapper<Scalars['ID']>;
   ImagePost: ResolverTypeWrapper<PostModel>;
@@ -295,6 +303,7 @@ export type ResolversTypes = {
   Mutation: ResolverTypeWrapper<{}>;
   Notification: ResolverTypeWrapper<NotificationModel>;
   Post: ResolverTypeWrapper<PostModel>;
+  PostLikedNotification: ResolverTypeWrapper<PostLikedNotificationModel>;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']>;
   Subscription: ResolverTypeWrapper<{}>;
@@ -312,13 +321,14 @@ export type ResolversParentTypes = {
   Comment: PostComment;
   Date: Scalars['Date'];
   FriendshipRequest: FriendshipModel;
-  FriendshipRequestNotification: NotificationModel;
+  FriendshipRequestNotification: FriendshipRequestNotificationModel;
   ID: Scalars['ID'];
   ImagePost: PostModel;
   ImagePostInput: ImagePostInput;
   Mutation: {};
   Notification: NotificationModel;
   Post: PostModel;
+  PostLikedNotification: PostLikedNotificationModel;
   Query: {};
   String: Scalars['String'];
   Subscription: {};
@@ -386,7 +396,7 @@ export type MutationResolvers<ContextType = Context, ParentType extends Resolver
 };
 
 export type NotificationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Notification'] = ResolversParentTypes['Notification']> = {
-  __resolveType: TypeResolveFn<'FriendshipRequestNotification', ParentType, ContextType>;
+  __resolveType: TypeResolveFn<'FriendshipRequestNotification' | 'PostLikedNotification', ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
 };
 
@@ -399,6 +409,14 @@ export type PostResolvers<ContextType = Context, ParentType extends ResolversPar
   likedBy?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>;
   text?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+};
+
+export type PostLikedNotificationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['PostLikedNotification'] = ResolversParentTypes['PostLikedNotification']> = {
+  date?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  liker?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  post?: Resolver<ResolversTypes['Post'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
@@ -455,6 +473,7 @@ export type Resolvers<ContextType = Context> = {
   Mutation?: MutationResolvers<ContextType>;
   Notification?: NotificationResolvers<ContextType>;
   Post?: PostResolvers<ContextType>;
+  PostLikedNotification?: PostLikedNotificationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Subscription?: SubscriptionResolvers<ContextType>;
   TextPost?: TextPostResolvers<ContextType>;

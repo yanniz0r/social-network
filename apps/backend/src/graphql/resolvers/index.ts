@@ -7,6 +7,7 @@ import Comment from "./type/comment-type-resolver";
 import User from "./type/user-type-resolver";
 import Notification from "./type/notification-type-resolver";
 import FriendshipRequestNotification from "./type/friendship-request-notification-type-resolver";
+import PostLikedNotification from "./type/post-liked-notification-type-resolver";
 import dateScalar from "./scalar/date";
 import { GraphQLUpload } from "graphql-upload";
 import config from "config";
@@ -17,6 +18,7 @@ import { ObjectId } from "mongodb";
 const resolvers: Resolvers = {
   FriendshipRequest,
   FriendshipRequestNotification,
+  PostLikedNotification,
   Notification,
   Post: {
     __resolveType(post) {

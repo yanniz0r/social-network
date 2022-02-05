@@ -4,11 +4,22 @@ query NotificationButton {
     ...on FriendshipRequestNotification {
       from {
         id
-        name
+        firstName
         avatarURL
       }
       date
-    } 
+    }
+    ...on PostLikedNotification {
+      liker {
+        id
+        firstName
+        avatarURL
+      }
+      date
+      post {
+        id
+      }  
+    }
   }
 }
 
