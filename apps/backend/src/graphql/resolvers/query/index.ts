@@ -4,11 +4,13 @@ import { QueryResolvers } from "../../generated";
 import friendshipResolvers from "./friendship-query-resolvers";
 import userResolvers from "./user-query-resolvers";
 import notificationResolvers from "./notification-query-resolvers";
+import postQueryResolvers from "./post-query-resolvers";
 
 const queryResolvers: QueryResolvers = {
   ...friendshipResolvers,
   ...userResolvers,
   ...notificationResolvers,
+  ...postQueryResolvers,
   googleOAuthURL(_parent, { redirectURL }) {
     const oAuth2 = new google.auth.OAuth2({
       clientId: config.get("Auth.google.clientID"),
@@ -18,14 +20,6 @@ const queryResolvers: QueryResolvers = {
     return oAuth2.generateAuthUrl({
       scope: ["PROFILE"],
     });
-  },
-  async posts(_parent, _result, context) {
-    const authenticatedUser =
-      context.authorizationService.ensureAuthorizedUser();
-    const friends = await context.userService.findFriendsForUser(
-      authenticatedUser._id
-    );
-    return context.postService.getPostsFrom([...friends, authenticatedUser]);
   },
 };
 

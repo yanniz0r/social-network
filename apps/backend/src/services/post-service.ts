@@ -20,9 +20,9 @@ export default class PostService {
     private fileStorageService: FileStorageService
   ) {}
 
-  async getPostsFrom(user: Array<UserModel>): Promise<PostModel[]> {
+  async getPostsFrom(userIds: Array<ObjectId | string>): Promise<PostModel[]> {
     const posts = await this.postRepository.findAllByUser(
-      user.map((user) => user._id)
+      userIds.map(initObjectID)
     );
     return posts;
   }

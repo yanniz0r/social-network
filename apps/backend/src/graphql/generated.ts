@@ -164,6 +164,7 @@ export type Query = {
   me: User;
   notifications: Array<Notification>;
   posts: Array<Post>;
+  postsOfUser: Array<Post>;
   searchUsers: Array<User>;
   user?: Maybe<User>;
 };
@@ -171,6 +172,11 @@ export type Query = {
 
 export type QueryGoogleOAuthUrlArgs = {
   redirectURL: Scalars['String'];
+};
+
+
+export type QueryPostsOfUserArgs = {
+  id: Scalars['ID'];
 };
 
 
@@ -426,6 +432,7 @@ export type QueryResolvers<ContextType = Context, ParentType extends ResolversPa
   me?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   notifications?: Resolver<Array<ResolversTypes['Notification']>, ParentType, ContextType>;
   posts?: Resolver<Array<ResolversTypes['Post']>, ParentType, ContextType>;
+  postsOfUser?: Resolver<Array<ResolversTypes['Post']>, ParentType, ContextType, RequireFields<QueryPostsOfUserArgs, 'id'>>;
   searchUsers?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QuerySearchUsersArgs, 'query'>>;
   user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>;
 };

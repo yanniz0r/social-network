@@ -1,6 +1,7 @@
 import { NextPage } from "next";
 import { FaUser, FaUserPlus } from "react-icons/fa";
 import IconButton from "../../components/icon-button";
+import PostCard from "../../components/post-card";
 import FriendList from "../../components/profile/friend-list";
 import ProfileHeader from "../../components/profile/header";
 import Tooltip from "../../components/tooltip";
@@ -69,6 +70,13 @@ const UserDetailPage: NextPage<UserDetailPageProps> = ({ userID }) => {
             />
             <div className="mt-4">
               <FriendList friends={userDetailPageQuery.data.user.friends} />
+            </div>
+            <div>
+              {userDetailPageQuery.data.posts.map(post => (
+                <div key={post.id} className="my-4">
+                  <PostCard me={userDetailPageQuery.data?.me!} post={post} />
+                </div>
+              ))}
             </div>
           </>
         )}

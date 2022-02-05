@@ -12,6 +12,41 @@ query ProfileDetailPage($userID: ID!) {
       online
     }
   }
+  posts: postsOfUser(id: $userID) {
+    __typename
+    id
+    text
+    createdAt
+    liked
+    user {
+      id
+      online
+      avatarURL
+      name
+    }
+    likedBy {
+      id
+      firstName
+    }
+    comments {
+      text
+      createdAt
+      user {
+        avatarURL
+        id
+        name
+        online
+      }
+    }
+    ... on ImagePost {
+      imageURL
+    }
+  }
+  me {
+    id
+    name
+    online
+  }
 }
 
 mutation ProfileDetailPageRequestFriendship($userID: ID!) {
