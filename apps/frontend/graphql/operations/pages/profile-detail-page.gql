@@ -6,6 +6,7 @@ query ProfileDetailPage($userID: ID!) {
     online
     birthday
     friendshipStatus
+    avatarURL
     friends {
       id
       name

@@ -1,9 +1,12 @@
 import { NextPage } from "next";
-import { FaUser, FaUserPlus } from "react-icons/fa";
+import { FaGhost, FaUser, FaUserPlus } from "react-icons/fa";
+import Button from "../../components/button";
+import Card from "../../components/card";
 import IconButton from "../../components/icon-button";
 import PostCard from "../../components/post-card";
 import FriendList from "../../components/profile/friend-list";
 import ProfileHeader from "../../components/profile/header";
+import ProfileUserInfo from "../../components/profile/user-info";
 import Tooltip from "../../components/tooltip";
 import {
   FriendshipStatus,
@@ -43,6 +46,13 @@ const UserDetailPage: NextPage<UserDetailPageProps> = ({ userID }) => {
           </IconButton>
         </Tooltip>
       )}
+      {friendshipStatus === FriendshipStatus.RequestedByThem && (
+        <Tooltip text="Anfrage akzeptieren">
+          <IconButton onClick={requestFriendship}>
+            <FaUserPlus />
+          </IconButton>
+        </Tooltip>
+      )}
     </>
   );
 
@@ -61,26 +71,43 @@ const UserDetailPage: NextPage<UserDetailPageProps> = ({ userID }) => {
           möchte mit Dir befreundet sein.
         </div>
       )}
-      <div className="p-10">
-        {userDetailPageQuery.data?.user && (
-          <>
-            <ProfileHeader
-              user={userDetailPageQuery.data.user}
-              actions={headerActions}
-            />
-            <div className="mt-4">
-              <FriendList friends={userDetailPageQuery.data.user.friends} />
+      {userDetailPageQuery.data?.user && <>
+        <div className="h-40 sm:h-60 md:h-80 lg:h-96 bg-center bg-cover" style={{ backgroundImage: 'url(/hero.jpg)' }} />
+        <ProfileHeader user={userDetailPageQuery.data.user} actions={headerActions} />
+        <div className="p-10 flex flex-row gap-5">
+          <div className="sm:w-5/12 md:w-4/12 lg:w-3/12">
+            <div className="sticky self-start top-36">
+              <div>
+                <ProfileUserInfo />
+              </div>
+              <div className="mt-4">
+                <FriendList friends={userDetailPageQuery.data.user.friends} />
+              </div>
             </div>
-            <div>
-              {userDetailPageQuery.data.posts.map(post => (
-                <div key={post.id} className="my-4">
-                  <PostCard me={userDetailPageQuery.data?.me!} post={post} />
+          </div>
+          <div className="sm:w-7/12 md:w-8/12 lg:w-9/12">
+            {userDetailPageQuery.data.posts.map(post => (
+              <div key={post.id} className="mb-4">
+                <PostCard me={userDetailPageQuery.data?.me!} post={post} />
+              </div>
+            ))}
+            {userDetailPageQuery.data.posts.length === 0 &&
+              <Card className="p-10 flex flex-col gap-5 items-center justify-center">
+                <FaGhost className="text-5xl text-gray-400" />
+                <div>
+                  <h3 className="text-white text-xl text-center">Leer hier...</h3>
+                  <p className="text-gray-400 text-center">
+                    {userDetailPageQuery.data.user.name} hat noch keine Beiträge gepostet.
+                  </p>
                 </div>
-              ))}
-            </div>
-          </>
-        )}
-      </div>
+                <div className="flex justify-center">
+                  <Button>Nachricht senden</Button>
+                </div>
+              </Card>
+            }
+          </div>
+       </div>
+      </>}
     </>
   );
 };

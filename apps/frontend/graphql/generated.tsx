@@ -316,7 +316,7 @@ export type ProfileDetailPageQueryVariables = Exact<{
 }>;
 
 
-export type ProfileDetailPageQuery = { __typename?: 'Query', user?: { __typename?: 'User', id: string, name: string, status?: string | null | undefined, online: boolean, birthday?: any | null | undefined, friendshipStatus?: FriendshipStatus | null | undefined, friends: Array<{ __typename?: 'User', id: string, name: string, online: boolean }> } | null | undefined, posts: Array<{ __typename: 'ImagePost', imageURL: string, id: string, text?: string | null | undefined, createdAt: any, liked: boolean, user: { __typename?: 'User', id: string, online: boolean, avatarURL?: string | null | undefined, name: string }, likedBy: Array<{ __typename?: 'User', id: string, firstName: string }>, comments: Array<{ __typename?: 'Comment', text: string, createdAt: any, user: { __typename?: 'User', avatarURL?: string | null | undefined, id: string, name: string, online: boolean } }> } | { __typename: 'TextPost', id: string, text: string, createdAt: any, liked: boolean, user: { __typename?: 'User', id: string, online: boolean, avatarURL?: string | null | undefined, name: string }, likedBy: Array<{ __typename?: 'User', id: string, firstName: string }>, comments: Array<{ __typename?: 'Comment', text: string, createdAt: any, user: { __typename?: 'User', avatarURL?: string | null | undefined, id: string, name: string, online: boolean } }> }>, me: { __typename?: 'User', id: string, name: string, online: boolean } };
+export type ProfileDetailPageQuery = { __typename?: 'Query', user?: { __typename?: 'User', id: string, name: string, status?: string | null | undefined, online: boolean, birthday?: any | null | undefined, friendshipStatus?: FriendshipStatus | null | undefined, avatarURL?: string | null | undefined, friends: Array<{ __typename?: 'User', id: string, name: string, online: boolean }> } | null | undefined, posts: Array<{ __typename: 'ImagePost', imageURL: string, id: string, text?: string | null | undefined, createdAt: any, liked: boolean, user: { __typename?: 'User', id: string, online: boolean, avatarURL?: string | null | undefined, name: string }, likedBy: Array<{ __typename?: 'User', id: string, firstName: string }>, comments: Array<{ __typename?: 'Comment', text: string, createdAt: any, user: { __typename?: 'User', avatarURL?: string | null | undefined, id: string, name: string, online: boolean } }> } | { __typename: 'TextPost', id: string, text: string, createdAt: any, liked: boolean, user: { __typename?: 'User', id: string, online: boolean, avatarURL?: string | null | undefined, name: string }, likedBy: Array<{ __typename?: 'User', id: string, firstName: string }>, comments: Array<{ __typename?: 'Comment', text: string, createdAt: any, user: { __typename?: 'User', avatarURL?: string | null | undefined, id: string, name: string, online: boolean } }> }>, me: { __typename?: 'User', id: string, name: string, online: boolean } };
 
 export type ProfileDetailPageRequestFriendshipMutationVariables = Exact<{
   userID: Scalars['ID'];
@@ -914,6 +914,7 @@ export const ProfileDetailPageDocument = gql`
     online
     birthday
     friendshipStatus
+    avatarURL
     friends {
       id
       name
