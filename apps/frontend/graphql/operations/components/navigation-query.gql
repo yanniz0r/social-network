@@ -1,4 +1,12 @@
 query Navigation {
+  me{
+    id
+    firstName
+    avatarURL
+  }
+  notifications {
+    id
+  }
   friendshipRequests {
     date
     from {

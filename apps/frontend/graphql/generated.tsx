@@ -260,7 +260,7 @@ export type LikeButtonUnlikeMutation = { __typename?: 'Mutation', unlikePost: { 
 export type NavigationQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type NavigationQuery = { __typename?: 'Query', friendshipRequests: Array<{ __typename?: 'FriendshipRequest', date: any, from: { __typename?: 'User', id: string, name: string } }> };
+export type NavigationQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, firstName: string, avatarURL?: string | null | undefined }, notifications: Array<{ __typename?: 'FriendshipRequestNotification', id: string } | { __typename?: 'PostLikedNotification', id: string }>, friendshipRequests: Array<{ __typename?: 'FriendshipRequest', date: any, from: { __typename?: 'User', id: string, name: string } }> };
 
 export type NotificationButtonQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -515,6 +515,14 @@ export type LikeButtonUnlikeMutationResult = Apollo.MutationResult<LikeButtonUnl
 export type LikeButtonUnlikeMutationOptions = Apollo.BaseMutationOptions<LikeButtonUnlikeMutation, LikeButtonUnlikeMutationVariables>;
 export const NavigationDocument = gql`
     query Navigation {
+  me {
+    id
+    firstName
+    avatarURL
+  }
+  notifications {
+    id
+  }
   friendshipRequests {
     date
     from {

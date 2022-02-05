@@ -39,10 +39,12 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <div className="bg-gray-50 dark:bg-gray-900 min-h-screen">
       <ApolloProvider client={apolloClient}>
-        <>
+        <div className="flex">
           <Navigation />
-          <Component {...pageProps} />
-        </>
+          <div className="">
+            <Component {...pageProps} />
+          </div>
+        </div>
       </ApolloProvider>
     </div>
   );
