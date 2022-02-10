@@ -3,6 +3,7 @@ import { FaGhost, FaUser, FaUserPlus } from "react-icons/fa";
 import AlertBar from "../../components/alert-bar";
 import Button from "../../components/button";
 import Card from "../../components/card";
+import Container from "../../components/container";
 import IconButton from "../../components/icon-button";
 import PostCard from "../../components/post-card";
 import FriendList from "../../components/profile/friend-list";
@@ -86,42 +87,44 @@ const UserDetailPage: NextPage<UserDetailPageProps> = ({ userID }) => {
             actions={headerActions}
           />
           {alerts}
-          <div className="p-10 flex flex-row gap-5">
-            <div className="sm:w-5/12 md:w-4/12 lg:w-3/12">
-              <div className="sticky self-start top-36">
-                <div>
-                  <ProfileUserInfo />
-                </div>
-                <div className="mt-4">
-                  <FriendList friends={userDetailPageQuery.data.user.friends} />
+          <Container>
+            <div className="flex flex-col md:flex-row gap-5">
+              <div className="w-full md:w-4/12 lg:w-3/12">
+                <div className="sticky self-start top-36">
+                  <div>
+                    <ProfileUserInfo />
+                  </div>
+                  <div className="mt-4">
+                    <FriendList friends={userDetailPageQuery.data.user.friends} />
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="sm:w-7/12 md:w-8/12 lg:w-9/12">
-              {userDetailPageQuery.data.posts.map((post) => (
-                <div key={post.id} className="mb-4">
-                  <PostCard me={userDetailPageQuery.data?.me!} post={post} />
-                </div>
-              ))}
-              {userDetailPageQuery.data.posts.length === 0 && (
-                <Card className="p-10 flex flex-col gap-5 items-center justify-center">
-                  <FaGhost className="text-5xl text-slate-400" />
-                  <div>
-                    <h3 className="text-white text-xl text-center">
-                      Leer hier...
-                    </h3>
-                    <p className="text-slate-400 text-center">
-                      {userDetailPageQuery.data.user.name} hat noch keine
-                      Beiträge gepostet.
-                    </p>
+              <div className="w-full md:w-8/12 lg:w-9/12">
+                {userDetailPageQuery.data.posts.map((post) => (
+                  <div key={post.id} className="mb-4">
+                    <PostCard me={userDetailPageQuery.data?.me!} post={post} />
                   </div>
-                  <div className="flex justify-center">
-                    <Button>Nachricht senden</Button>
-                  </div>
-                </Card>
-              )}
+                ))}
+                {userDetailPageQuery.data.posts.length === 0 && (
+                  <Card className="p-10 flex flex-col gap-5 items-center justify-center">
+                    <FaGhost className="text-5xl text-slate-400" />
+                    <div>
+                      <h3 className="text-white text-xl text-center">
+                        Leer hier...
+                      </h3>
+                      <p className="text-slate-400 text-center">
+                        {userDetailPageQuery.data.user.name} hat noch keine
+                        Beiträge gepostet.
+                      </p>
+                    </div>
+                    <div className="flex justify-center">
+                      <Button>Nachricht senden</Button>
+                    </div>
+                  </Card>
+                )}
+              </div>
             </div>
-          </div>
+          </Container>
         </>
       )}
     </>
