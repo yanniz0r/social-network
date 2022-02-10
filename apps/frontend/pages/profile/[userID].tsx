@@ -92,7 +92,7 @@ const UserDetailPage: NextPage<UserDetailPageProps> = ({ userID }) => {
               <div className="w-full md:w-4/12 lg:w-3/12">
                 <div className="sticky self-start top-36">
                   <div>
-                    <ProfileUserInfo />
+                    <ProfileUserInfo user={userDetailPageQuery.data.user} />
                   </div>
                   <div className="mt-4">
                     <FriendList friends={userDetailPageQuery.data.user.friends} />

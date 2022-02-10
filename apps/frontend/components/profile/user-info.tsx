@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import { FC, ReactNode } from "react";
 import {
   FaBaseballBall,
@@ -5,9 +6,12 @@ import {
   FaCity,
   FaSuitcase,
 } from "react-icons/fa";
+import { User } from "../../graphql/generated";
 import Card from "../card";
 
-interface ProfileUserInfoProps {}
+interface ProfileUserInfoProps {
+  user: Pick<User, 'city' | 'birthday' | 'hobbies' | 'job'>
+}
 
 interface UserInfo {
   icon: ReactNode;
@@ -15,24 +19,32 @@ interface UserInfo {
 }
 
 const ProfileUserInfo: FC<ProfileUserInfoProps> = (props) => {
-  const userInfos: UserInfo[] = [
-    {
-      icon: <FaCity />,
-      content: "Wohnt in Hamburg",
-    },
-    {
-      icon: <FaSuitcase />,
-      content: "Arbeitet als Softwareentwickler bei Meta",
-    },
-    {
+  const userInfos: UserInfo[] = [];
+  if (props.user.birthday) {
+    const birthday = format(new Date(props.user.birthday), 'dd.MM.yyyy')
+    userInfos.push({
       icon: <FaBirthdayCake />,
-      content: "Hat am 3.1.2002 Geburtstag (20 Jahre alt)",
-    },
-    {
+      content: `Hat am ${birthday} Geburtstag`,
+    })
+  }
+  if (props.user.city) {
+    userInfos.push({
+      icon: <FaCity />,
+      content: `Wohnt in ${props.user.city}`,
+    },)
+  }
+  if (props.user.hobbies) {
+    userInfos.push({
       icon: <FaBaseballBall />,
-      content: "Gaming, Holzarbeiten und Katzen ❤️",
-    },
-  ];
+      content: props.user.hobbies.join(', '),
+    })
+  }
+  if (props.user.job) {
+    userInfos.push({
+      icon: <FaSuitcase />,
+      content: `Arbeitet als ${props.user.job.position} bei ${props.user.job.company}`,
+    },)
+  }
 
   return (
     <Card>

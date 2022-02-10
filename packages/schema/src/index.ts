@@ -15,6 +15,14 @@ const schema = gql`
     birthday: Date
     friendshipStatus: FriendshipStatus
     avatarURL: String
+    city: String
+    hobbies: [String!]
+    job: UserJob
+  }
+
+  type UserJob {
+    company: String!
+    position: String!
   }
 
   enum FriendshipStatus {

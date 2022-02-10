@@ -7,6 +7,14 @@ export default interface User {
   updatedAt?: Date;
   createdAt: Date;
   auth?: UserAuth;
+  job?: UserJob;
+  hobbies?: string[]
+  city?: string;
+}
+
+interface UserJob {
+  position: string
+  company: string
 }
 
 interface UserAuth {
