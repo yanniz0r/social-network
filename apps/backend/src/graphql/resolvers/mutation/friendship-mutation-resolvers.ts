@@ -11,7 +11,9 @@ const friendshipMutationResolvers: MutationResolvers = {
       authenticatedUser,
       user
     );
-    await context.notificationService.createFriendshipRequestNotification(friendship)
+    await context.notificationService.createFriendshipRequestNotification(
+      friendship
+    );
     return friendship;
   },
   async acceptFriendshipRequest(_parent, { id }, context) {

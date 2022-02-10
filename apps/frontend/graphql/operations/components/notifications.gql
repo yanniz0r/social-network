@@ -1,7 +1,7 @@
 query Notifications {
   notifications {
     id
-    ...on FriendshipRequestNotification {
+    ... on FriendshipRequestNotification {
       from {
         id
         firstName
@@ -9,7 +9,7 @@ query Notifications {
       }
       date
     }
-    ...on PostLikedNotification {
+    ... on PostLikedNotification {
       liker {
         id
         firstName
@@ -18,13 +18,13 @@ query Notifications {
       date
       post {
         id
-      }  
+      }
     }
   }
 }
 
 subscription NotificationsNewNotification {
-  newNotification{
+  newNotification {
     id
   }
 }

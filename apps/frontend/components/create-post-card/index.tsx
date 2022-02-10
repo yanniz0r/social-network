@@ -52,7 +52,7 @@ const CreatePostCard: FC<CreatePostCardProps> = ({ onPost }) => {
   }
 
   return (
-    <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-5">
+    <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-5 border border-gray-700">
       <div className="mb-4">
         <PostTypeSelect value={postType} onChange={setPostType} />
       </div>

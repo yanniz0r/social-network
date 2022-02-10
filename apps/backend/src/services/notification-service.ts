@@ -9,10 +9,10 @@ import { PostModel } from "../repositories/post-repository";
 
 const logger = new Logger({ name: "NotificationService" });
 
-const NEW_NOTIFICATION_FOR_TOPIC = (userID: ObjectId) => `notification::to#${userID.toString()}`
+const NEW_NOTIFICATION_FOR_TOPIC = (userID: ObjectId) =>
+  `notification::to#${userID.toString()}`;
 
 export default class NotificationService {
-
   private pubsub: RedisPubSub;
 
   constructor(
@@ -22,54 +22,64 @@ export default class NotificationService {
     this.pubsub = new RedisPubSub({
       publisher: redis,
       subscriber: redis,
-    })
+    });
   }
 
   getNotification(id: string | ObjectId) {
-    return this.notificationRepository.findNotificationByID(initObjectID(id))
+    return this.notificationRepository.findNotificationByID(initObjectID(id));
   }
 
   getNotificationsForUser(id: string | ObjectId) {
-    return this.notificationRepository.findNotifications({
-      userID: initObjectID(id)
-    }).toArray()
+    return this.notificationRepository
+      .findNotifications({
+        userID: initObjectID(id),
+      })
+      .toArray();
   }
 
   subscribeToNewNotifications(userID: string | ObjectId): AsyncIterable<any> {
-    logger.debug('Subscribed to new notifications for', userID)
+    logger.debug("Subscribed to new notifications for", userID);
     return {
-      [Symbol.asyncIterator]: () => this.pubsub.asyncIterator(NEW_NOTIFICATION_FOR_TOPIC(initObjectID(userID)))
-    }
+      [Symbol.asyncIterator]: () =>
+        this.pubsub.asyncIterator(
+          NEW_NOTIFICATION_FOR_TOPIC(initObjectID(userID))
+        ),
+    };
   }
 
   async createFriendshipRequestNotification(friendship: FriendshipModel) {
     const notification = await this.notificationRepository.createNotification({
       userID: friendship.receiver,
-      type: 'friendship-request',
+      type: "friendship-request",
       friendship: {
         createdAt: friendship.createdAt,
         receiver: friendship.receiver,
         requester: friendship.requester,
-      }
-    })
+      },
+    });
 
-    await this.pubsub.publish(NEW_NOTIFICATION_FOR_TOPIC(friendship.receiver), notification.insertedId)
+    await this.pubsub.publish(
+      NEW_NOTIFICATION_FOR_TOPIC(friendship.receiver),
+      notification.insertedId
+    );
 
-    return notification
+    return notification;
   }
 
   async createPostLikedNotification(post: PostModel, likerID: ObjectId) {
     const notification = await this.notificationRepository.createNotification({
       userID: post.userID,
-      type: 'post-liked',
+      type: "post-liked",
       date: new Date(),
       postID: post._id,
       likerID,
-    })
+    });
 
-    await this.pubsub.publish(NEW_NOTIFICATION_FOR_TOPIC(post.userID), notification.insertedId)
+    await this.pubsub.publish(
+      NEW_NOTIFICATION_FOR_TOPIC(post.userID),
+      notification.insertedId
+    );
 
-    return notification
+    return notification;
   }
-
 }

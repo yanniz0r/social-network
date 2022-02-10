@@ -9,6 +9,7 @@ import {
   usePostCardCommentPostMutation,
 } from "../graphql/generated";
 import Avatar from "./avatar";
+import Card from "./card";
 import IconButton from "./icon-button";
 import LikeButton from "./like-button";
 import RichText from "./rich-text";
@@ -68,7 +69,7 @@ const PostCard: FC<PostCardProps> = ({ post, me }) => {
   }
 
   return (
-    <div className="bg-white shadow-lg rounded-lg dark:bg-gray-800">
+    <Card>
       <div className="p-5">
         <Link passHref href={`/profile/${post.user.id}`}>
           <a className="flex items-center">
@@ -162,7 +163,7 @@ const PostCard: FC<PostCardProps> = ({ post, me }) => {
           </div>
         </div>
       </div>
-    </div>
+    </Card>
   );
 };
 

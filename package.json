@@ -12,7 +12,8 @@
   },
   "scripts": {
     "dev": "yarn turbo run dev",
-    "generate:types": "graphql-codegen --config codegen.yml"
+    "generate:types": "graphql-codegen --config codegen.yml",
+    "prettier": "prettier --write ."
   },
   "devDependencies": {
     "prettier": "^2.5.1",

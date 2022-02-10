@@ -1,23 +1,22 @@
 import { ObjectId } from "mongodb";
 import Friendship from "./friendship";
 
-type Notification = FriendshipRequestNotification | PostLikedNotification
+type Notification = FriendshipRequestNotification | PostLikedNotification;
 
-export default Notification
+export default Notification;
 
 export interface BaseNotification {
-  userID: ObjectId,
+  userID: ObjectId;
 }
 
 export interface FriendshipRequestNotification extends BaseNotification {
-  type: 'friendship-request'
-  friendship: Omit<Friendship, 'acceptedAt'>
+  type: "friendship-request";
+  friendship: Omit<Friendship, "acceptedAt">;
 }
 
 export interface PostLikedNotification extends BaseNotification {
-  type: 'post-liked'
-  postID: ObjectId,
-  likerID: ObjectId
-  date: Date
+  type: "post-liked";
+  postID: ObjectId;
+  likerID: ObjectId;
+  date: Date;
 }
-

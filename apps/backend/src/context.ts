@@ -29,7 +29,7 @@ export class Context {
   ) {}
 
   static async init(request?: Request, response?: Response): Promise<Context> {
-    const redis = new Redis()
+    const redis = new Redis();
     // await redis.connect()
 
     const db = await Context.initMongodb();
@@ -44,8 +44,11 @@ export class Context {
     const postRepository = new PostRepository(db);
     const postService = new PostService(postRepository, fileStorageService);
 
-    const notificationRepository = new NotificationRepository(db)
-    const notificationService = new NotificationService(notificationRepository, redis)
+    const notificationRepository = new NotificationRepository(db);
+    const notificationService = new NotificationService(
+      notificationRepository,
+      redis
+    );
 
     const context = new Context(
       userService,

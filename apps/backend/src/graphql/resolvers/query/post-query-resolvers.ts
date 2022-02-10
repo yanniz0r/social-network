@@ -1,4 +1,4 @@
-import { QueryResolvers } from '../../generated'
+import { QueryResolvers } from "../../generated";
 
 const postQueryResolvers: QueryResolvers = {
   async posts(_parent, _arguments, context) {
@@ -7,13 +7,13 @@ const postQueryResolvers: QueryResolvers = {
     const friends = await context.userService.findFriendsForUser(
       authenticatedUser._id
     );
-    const userIds = [...friends, authenticatedUser].map(user => user._id)
+    const userIds = [...friends, authenticatedUser].map((user) => user._id);
     return context.postService.getPostsFrom(userIds);
   },
   async postsOfUser(_parent, { id }, context) {
-    const posts = await context.postService.getPostsFrom([id])
-    return posts
-  }
-}
+    const posts = await context.postService.getPostsFrom([id]);
+    return posts;
+  },
+};
 
-export default postQueryResolvers
+export default postQueryResolvers;

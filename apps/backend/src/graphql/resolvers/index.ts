@@ -96,16 +96,25 @@ const resolvers: Resolvers = {
   Mutation,
   Subscription: {
     newNotification: {
-      async resolve(parent: ObjectId, _arguments: {}, context: Context): Promise<NotificationModel> {
-        const notification = await context.notificationService.getNotification(parent)
-        return notification!
+      async resolve(
+        parent: ObjectId,
+        _arguments: {},
+        context: Context
+      ): Promise<NotificationModel> {
+        const notification = await context.notificationService.getNotification(
+          parent
+        );
+        return notification!;
       },
       subscribe(_parent, _arguments, context) {
-        const authenticateUser = context.authorizationService.ensureAuthorizedUser()
-        return context.notificationService.subscribeToNewNotifications(authenticateUser._id)
+        const authenticateUser =
+          context.authorizationService.ensureAuthorizedUser();
+        return context.notificationService.subscribeToNewNotifications(
+          authenticateUser._id
+        );
       },
-    }
-  }
+    },
+  },
 };
 
 export default resolvers;

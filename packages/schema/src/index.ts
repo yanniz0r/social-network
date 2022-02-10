@@ -60,17 +60,17 @@ const schema = gql`
     likedBy: [User!]!
     comments: [Comment!]!
   }
-  
+
   interface Notification {
     id: ID!
   }
-  
+
   type FriendshipRequestNotification implements Notification {
     id: ID!
     from: User!
     date: String!
   }
-  
+
   type PostLikedNotification implements Notification {
     id: ID!
     liker: User!
@@ -126,10 +126,10 @@ const schema = gql`
     commentPost(id: ID!, text: String!): Post!
     authenticateWithGoogle(code: String!, redirectURL: String!): Authentication!
   }
-  
+
   type Subscription {
     newNotification: Notification!
-  } 
+  }
 `;
 
 export default schema;

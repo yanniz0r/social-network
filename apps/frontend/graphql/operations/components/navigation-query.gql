@@ -1,5 +1,5 @@
 query Navigation {
-  me{
+  me {
     id
     firstName
     avatarURL
