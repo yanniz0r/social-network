@@ -55,7 +55,7 @@ const Navigation: FC = () => {
             </div>
         })}
       </div>
-      <div className="bg-white dark:bg-slate-800 dark:border-r shadow-md border-slate-300 dark:border-slate-700 sm:w-4/12 lg:w-2/12 flex-none h-screen sm:sticky fixed top-0 z-20 w-full -left-full">
+      <div className="bg-white dark:bg-slate-800 dark:border-r shadow-md border-slate-300 dark:border-slate-700 sm:w-4/12 md:w-4/12 lg:w-3/12 xl:w-2/12 flex-none h-screen sm:sticky fixed top-0 z-20 w-full -left-full">
         <Notifications
           open={notificationsOpen}
           close={() => setNotificationsOpen(false)}
