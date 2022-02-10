@@ -81,12 +81,12 @@ const Navigation: FC = () => {
           const navigationItem = (
             <a
               onClick={"onClick" in item ? item.onClick : undefined}
-              className="flex cursor-pointer items-center gap-2 text-lg px-4 py-3 transition-all dark:text-slate-300 text-slate-700 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg"
+              className="flex group cursor-pointer items-center gap-2 text-lg px-4 py-3 transition-all dark:text-slate-300 text-slate-700 dark:hover:text-white hover:bg-blue-100 dark:hover:bg-slate-700 rounded-lg"
             >
-              <div className="text-slate-500">{item.icon}</div>
+              <div className="dark:text-slate-500 text-slate-300 group-hover:text-blue-500">{item.icon}</div>
               <div className="flex-grow">{item.text}</div>
               {item.badge && (
-                <div className="w-6 h-6 text-sm flex items-center justify-center rounded-full text-white bg-blue-500">
+                <div className="w-6 h-6 text-sm flex items-center justify-center rounded-full text-white bg-blue-500 ">
                   {item.badge}
                 </div>
               )}
