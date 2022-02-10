@@ -47,16 +47,16 @@ const Navigation: FC = () => {
   ];
 
   return (
-    <div className="bg-gray-800 border-r border-gray-700 lg:w-2/12 flex-none h-screen sticky top-0 shadow-md">
+    <div className="bg-white dark:bg-slate-800 dark:border-r shadow-md border-slate-300 dark:border-slate-700 lg:w-2/12 flex-none h-screen sticky top-0 z-20">
       <Notifications
         open={notificationsOpen}
         close={() => setNotificationsOpen(false)}
       />
       {navigationQuery.data?.me && (
         <Link passHref href="/profile/me">
-          <a className="flex flex-row gap-3 items-center px-5 py-5 hover:bg-gray-700">
+          <a className="flex flex-row gap-3 items-center px-5 py-5 hover:bg-slate-200 dark:hover:bg-slate-700">
             <div
-              className="h-14 w-14 bg-teal-500 rounded-full text-black text-opacity-50 flex items-center justify-center"
+              className="h-14 w-14 bg-blue-500 rounded-full text-black text-opacity-50 flex items-center justify-center"
               style={{
                 backgroundImage: navigationQuery.data.me.avatarURL
                   ? `url(${navigationQuery.data.me.avatarURL})`
@@ -66,10 +66,10 @@ const Navigation: FC = () => {
               {!navigationQuery.data.me.avatarURL && <FaUser />}
             </div>
             <div>
-              <div className="text-lg mb-1 text-white">
+              <div className="text-lg mb-1 dark:text-white">
                 {navigationQuery.data.me.firstName}
               </div>
-              <div className="px-1.5 py-0.5 text-sm text-white bg-green-500 rounded-lg inline-block">
+              <div className="px-1.5 py-0.5 text-sm text-white bg-emerald-500 rounded-lg inline-block">
                 Online
               </div>
             </div>
@@ -81,12 +81,12 @@ const Navigation: FC = () => {
           const navigationItem = (
             <a
               onClick={"onClick" in item ? item.onClick : undefined}
-              className="flex cursor-pointer items-center gap-2 text-lg px-4 py-3 transition-all text-gray-300 hover:text-white hover:bg-gray-700 rounded-lg"
+              className="flex cursor-pointer items-center gap-2 text-lg px-4 py-3 transition-all dark:text-slate-300 text-slate-700 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg"
             >
-              <div className="text-gray-500">{item.icon}</div>
+              <div className="text-slate-500">{item.icon}</div>
               <div className="flex-grow">{item.text}</div>
               {item.badge && (
-                <div className="w-6 h-6 text-sm flex items-center justify-center rounded-full text-white bg-teal-500">
+                <div className="w-6 h-6 text-sm flex items-center justify-center rounded-full text-white bg-blue-500">
                   {item.badge}
                 </div>
               )}

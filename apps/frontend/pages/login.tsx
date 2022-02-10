@@ -15,7 +15,7 @@ const LoginPage: NextPage = () => {
   return (
     <div className="p-10">
       <Card className="p-10">
-        <h1 className="mb-4 text-3xl text-gray-100">Anmelden</h1>
+        <h1 className="mb-4 text-3xl text-slate-100">Anmelden</h1>
         <Button
           onClick={() => router.push(loginPageQuery.data?.googleOAuthURL!)}
           iconStart={<FaGoogle />}

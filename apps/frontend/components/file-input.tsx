@@ -36,7 +36,7 @@ const FileInput: FC<FileInputProps> = (props) => {
   return (
     <label
       className={classNames(
-        "h-52 flex flex-col items-center justify-center border-4 rounded-lg border-gray-600 cursor-pointer bg-contain bg-center",
+        "h-52 flex flex-col items-center justify-center border-4 rounded-lg border-slate-600 cursor-pointer bg-contain bg-center",
         {
           "border-green-200": dropzone.isDragActive,
         }
@@ -51,9 +51,9 @@ const FileInput: FC<FileInputProps> = (props) => {
           }}
         />
       ) : (
-        <FaImage className="text-6xl text-gray-600" />
+        <FaImage className="text-6xl text-slate-600" />
       )}
-      <p className="text-lg text-gray-400 text-center px-5">
+      <p className="text-lg text-slate-400 text-center px-5">
         {dropzone.draggedFiles.length > 0 && "Loslassen zum hochladen"}
         {dropzone.acceptedFiles[0] && dropzone.acceptedFiles[0].name}
       </p>

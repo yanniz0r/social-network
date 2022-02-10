@@ -35,9 +35,9 @@ const PostTypeSelect: FC<PostTypeSelectProps> = ({ value, onChange }) => {
         <button
           key={type.value}
           className={classNames(
-            "px-4 py-2 text-green-300 rounded-full mr-2 flex items-center",
+            "px-4 py-2 dark:text-emerald-300 text-emerald-600 rounded-full mr-2 flex items-center",
             {
-              "bg-green-400 bg-opacity-10 text-green-400": value === type.value,
+              "dark:bg-emerald-400 bg-emerald-500 bg-opacity-10 dark:bg-opacity-10 dark:text-emerald-400 text-emerald-400": value === type.value,
             }
           )}
           onClick={() => onChange(type.value)}

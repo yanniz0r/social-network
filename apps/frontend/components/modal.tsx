@@ -33,5 +33,5 @@ export default Modal;
 interface ModalContentProps {}
 
 export const ModalContent: FC<ModalContentProps> = (props) => {
-  return <Card className="max-w-screen-lg bg-gray-800">{props.children}</Card>;
+  return <Card className="max-w-screen-lg bg-slate-800">{props.children}</Card>;
 };

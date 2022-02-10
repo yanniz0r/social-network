@@ -20,7 +20,7 @@ const Notifications: FC<NotificationsProps> = (props) => {
     },
   });
   const containerClassName = classNames(
-    "w-full h-full absolute left-0 top-0 bg-gray-800 transition-all bg-opacity-90 backdrop-blur",
+    "w-full h-full absolute left-0 top-0 bg-slate-50 dark:bg-slate-800 transition-all bg-opacity-90 backdrop-blur",
     {
       "-left-full": !props.open,
     }
@@ -28,7 +28,7 @@ const Notifications: FC<NotificationsProps> = (props) => {
 
   return (
     <div className={containerClassName}>
-      <div className="p-4 text-center text-white border-b-2 border-gray-700 relative">
+      <div className="p-4 text-center dark:text-white border-b-2 dark:border-slate-700 relative">
         Neuigkeiten
         <a
           className="absolute left-0 top-0 h-full flex items-center p-2 cursor-pointer"

@@ -57,17 +57,16 @@ const FriendshipsPage: NextPage = () => {
                         online={friendshipRequest.from.online}
                       />
                       <div className="ml-2 flex items-center flex-grow">
-                        <div className="text-md dark:text-gray-300">
+                        <div className="text-md dark:text-slate-300">
                           {friendshipRequest.from.name}
                         </div>
                       </div>
                       <div className="flex">
-                        <IconButton color="red">
+                        <IconButton color="error">
                           <FaTimes />
                         </IconButton>
                         <div className="w-2" />
                         <IconButton
-                          color="green"
                           onClick={() => acceptFriendship(friendshipRequest.id)}
                         >
                           <FaUserPlus />
@@ -94,14 +93,14 @@ const FriendshipsPage: NextPage = () => {
                 className="inline-block cursor-pointer"
               >
                 <Link passHref href={`/profile/${recommendation.id}`}>
-                  <div className="border-2 border-gray-900 rounded-lg p-5 flex flex-col items-center">
+                  <div className="border-2 border-slate-900 rounded-lg p-5 flex flex-col items-center">
                     <Avatar
                       size="lg"
                       online={recommendation.online}
                       imageURL={recommendation.avatarURL ?? undefined}
                       name={recommendation.name}
                     />
-                    <h4 className="text-gray-200 my-2">
+                    <h4 className="text-slate-200 my-2">
                       {recommendation.name}
                     </h4>
                     <Button>Freund:in hinzufügen</Button>
@@ -122,7 +121,7 @@ const FriendshipsPage: NextPage = () => {
                 <a className="flex py-2">
                   <Avatar size="md" name={friend.name} online={friend.online} />
                   <div className="ml-2 flex items-center flex-grow">
-                    <div className="text-md dark:text-gray-300">
+                    <div className="text-md dark:text-slate-300">
                       {friend.name}
                     </div>
                   </div>

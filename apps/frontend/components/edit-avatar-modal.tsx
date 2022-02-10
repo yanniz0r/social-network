@@ -29,10 +29,10 @@ const EditAvatarModal: FC<EditAvatarModalProps> = ({ open, onClose }) => {
     <Modal open={open} onClose={onClose}>
       <ModalContent>
         <div className="p-5">
-          <h2 className="text-3xl text-gray-200 leading-none">
+          <h2 className="text-3xl text-slate-200 leading-none">
             Avatar bearbeiten
           </h2>
-          <p className="mt-3 text-gray-400">
+          <p className="mt-3 text-slate-400">
             Hier kannst du ein Bild von dir hochladen. Bitte beachte, dass es
             für alle Nutzer sichtbar sein wird :3
           </p>
@@ -41,7 +41,7 @@ const EditAvatarModal: FC<EditAvatarModalProps> = ({ open, onClose }) => {
             <FileInput onChange={setFile} />
           </div>
 
-          <hr className="border-gray-900" />
+          <hr className="border-slate-900" />
           <div className="flex justify-end mt-3">
             <Button onClick={onClose} variant="secondary" className="mr-2">
               Abbrechen

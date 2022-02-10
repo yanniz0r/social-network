@@ -44,7 +44,7 @@ const apolloClient = new ApolloClient({
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <div className="bg-gray-50 dark:bg-gray-900 min-h-screen">
+    <div className="bg-slate-50 dark:bg-slate-900 min-h-screen">
       <ApolloProvider client={apolloClient}>
         <div className="flex">
           <Navigation />

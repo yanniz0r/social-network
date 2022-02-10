@@ -26,7 +26,7 @@ const Search: FC<SearchProps> = (props) => {
   });
 
   const clearButtonClassName = classNames(
-    "absolute h-full px-3 right-0 top-0 transition-all transform scale-0 opacity-0 text-gray-400",
+    "absolute h-full px-3 right-0 top-0 transition-all transform scale-0 opacity-0 text-slate-400",
     {
       "scale-100 opacity-100": showResults,
     }
@@ -38,7 +38,7 @@ const Search: FC<SearchProps> = (props) => {
         <div className="relative">
           <input
             placeholder="Suchen"
-            className="bg-gray-600 px-3 py-2 text-md rounded-lg w-full block text-white"
+            className="bg-slate-600 px-3 py-2 text-md rounded-lg w-full block text-white"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
@@ -51,7 +51,7 @@ const Search: FC<SearchProps> = (props) => {
         <div className="absolute bg-white bg-opacity-70 w-full rounded-b-lg p-1">
           <div>
             {searchQuery.loading && (
-              <div className="flex flex-col items-center justify-center p-5 text-gray-500">
+              <div className="flex flex-col items-center justify-center p-5 text-slate-500">
                 <FaSpinner className="animate-spin" />
                 <p className="mt-2 uppercase font-semibold text-xs">
                   Suche Personen...
@@ -75,10 +75,10 @@ const Search: FC<SearchProps> = (props) => {
                               size="md"
                             />
                             <div className="ml-2">
-                              <span className="font-bold block text-gray-800">
+                              <span className="font-bold block text-slate-800">
                                 {user.name}
                               </span>
-                              <span className="text-gray-600 text-sm block">
+                              <span className="text-slate-600 text-sm block">
                                 {user.birthday}
                               </span>
                             </div>
@@ -88,7 +88,7 @@ const Search: FC<SearchProps> = (props) => {
                     ))}
                   </ul>
                 ) : (
-                  <div className="flex flex-col items-center justify-center p-5 text-gray-500">
+                  <div className="flex flex-col items-center justify-center p-5 text-slate-500">
                     <FaUserSlash />
                     <p className="mt-2 uppercase font-semibold text-xs">
                       Keine passenden Personen gefunden

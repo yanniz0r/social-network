@@ -37,12 +37,12 @@ const ProfileUserInfo: FC<ProfileUserInfoProps> = (props) => {
   return (
     <Card>
       <div className="p-5">
-        <h2 className="dark:text-gray-200 text-lg mb-3">Infos</h2>
+        <h2 className="dark:text-slate-200 text-lg mb-3">Infos</h2>
         <ul className="flex flex-col gap-2">
           {userInfos.map(({ content, icon }, index) => (
             <li className="flex items-center gap-3">
-              <div className="text-gray-500">{icon}</div>
-              <div className="text-gray-300">{content}</div>
+              <div className="text-slate-500">{icon}</div>
+              <div className="text-slate-300">{content}</div>
             </li>
           ))}
         </ul>

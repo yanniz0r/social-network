@@ -8,7 +8,7 @@ interface OnlineIndicatorProps {
 
 const OnlineIndicator: FC<OnlineIndicatorProps> = ({ online, size }) => {
   const className = classNames(
-    "rounded-full absolute right-0 bottom-0 border-gray-800",
+    "rounded-full absolute right-0 bottom-0 border-white dark:border-slate-800",
     {
       "bg-green-400": online,
       "bg-red-400": !online,

@@ -80,11 +80,11 @@ const PostCard: FC<PostCardProps> = ({ post, me }) => {
               imageURL={post.user.avatarURL ?? undefined}
             />
             <div className="ml-4">
-              <h4 className="text-xl dark:text-gray-200">{post.user.name}</h4>
+              <h4 className="text-xl dark:text-slate-200">{post.user.name}</h4>
               <Tooltip
                 text={format(new Date(post.createdAt), "dd.MM.yyyy, HH:mm")}
               >
-                <span className="text-sm text-gray-500 dark:text-gray-400">
+                <span className="text-sm text-slate-500 dark:text-slate-400">
                   {createdAt}
                 </span>
               </Tooltip>
@@ -106,12 +106,12 @@ const PostCard: FC<PostCardProps> = ({ post, me }) => {
       )}
       <div className="px-5 pb-5">
         {post.likedBy.length > 0 && (
-          <div className="mb-2 dark:text-gray-400">
+          <div className="mb-2 dark:text-slate-400">
             Gefällt
             {post.likedBy.map((likedBy, index) => (
               <span key={likedBy.id}>
                 <span> </span>
-                <a href="" className="text-green-400">
+                <a href={`/profile/${likedBy.id}`} className="text-blue-500">
                   {likedBy.firstName}
                 </a>
                 {index !== post.likedBy.length - 1 && <span>, </span>}
@@ -133,13 +133,13 @@ const PostCard: FC<PostCardProps> = ({ post, me }) => {
             <div className="ml-2">
               <h4 className="text-lg dark:text-white">
                 {comment.user.name}{" "}
-                <small className="dark:text-gray-400">
+                <small className="dark:text-slate-400">
                   {formatDistance(new Date(comment.createdAt), new Date(), {
                     addSuffix: true,
                   })}
                 </small>
               </h4>
-              <p className="text-md dark:text-gray-300">
+              <p className="text-md dark:text-slate-300">
                 <RichText text={comment.text} />
               </p>
             </div>
@@ -150,7 +150,7 @@ const PostCard: FC<PostCardProps> = ({ post, me }) => {
         <div className="flex">
           <textarea
             placeholder="Kommentiere diesen Beitrag"
-            className="flex-grow dark:bg-gray-700 rounded-lg p-2 dark:text-gray-100"
+            className="flex-grow dark:bg-slate-700 rounded-lg p-2 dark:text-slate-100"
             rows={1}
             onChange={(e) => setComment(e.target.value)}
             value={comment}

@@ -31,7 +31,7 @@ const ProfileHeader: FC<ProfileHeaderProps> = (props) => {
   }, []);
 
   const avatarClassName = classNames(
-    "absolute bg-teal-500 border-4 border-gray-800 rounded-full transition-all overflow-hidden flex items-center justify-center text-3xl",
+    "absolute bg-teal-500 border-4 border-slate-50 dark:border-slate-800 rounded-full transition-all overflow-hidden flex items-center justify-center text-3xl",
     {
       "w-20 h-20 top-4": overflowing,
       "w-52 h-52 -top-full": !overflowing,
@@ -39,15 +39,15 @@ const ProfileHeader: FC<ProfileHeaderProps> = (props) => {
     }
   );
 
-  const contaienerClassName = classNames(
-    "px-10 flex flex-row gap-5 h-28 bg-gray-800 sticky z-10 top-0 transition-all",
+  const containerClassName = classNames(
+    "px-10 flex flex-row gap-5 h-28 bg-white shadow-sm dark:bg-slate-800 sticky z-10 top-0 transition-all",
     {
       "bg-opacity-75 shadow-xl backdrop-blur-sm": overflowing,
     }
   );
 
   return (
-    <div className={contaienerClassName} ref={containerRef}>
+    <div className={containerClassName} ref={containerRef}>
       <div className="sm:w-5/12 md:w-4/12 lg:w-3/12 flex relative justify-center">
         <div
           className={avatarClassName}
@@ -62,7 +62,7 @@ const ProfileHeader: FC<ProfileHeaderProps> = (props) => {
       </div>
       <div className="sm:w-7/12 md:w-8/12 lg:w-9/12 flex items-center">
         <div className="flex-grow">
-          <h1 className="text-3xl text-white">{props.user.name}</h1>
+          <h1 className="text-3xl dark:text-white">{props.user.name}</h1>
         </div>
         <div>{props.actions}</div>
       </div>

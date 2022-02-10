@@ -29,12 +29,12 @@ const GoogleRegisterPage: NextPage = () => {
 
   return (
     <div className="p-10">
-      <Card className="p-10 text-gray-100 flex flex-col items-center justify-center">
+      <Card className="p-10 text-slate-100 flex flex-col items-center justify-center">
         <FaSpinner className="text-4xl animate-spin" />
-        <h1 className="text-2xl text-gray-300 mt-5">
+        <h1 className="text-2xl text-slate-300 mt-5">
           Anmeldung mit Google läuft...
         </h1>
-        <p className="text-gray-400 mt-2">Du wirst gleich weitergeleitet</p>
+        <p className="text-slate-400 mt-2">Du wirst gleich weitergeleitet</p>
       </Card>
     </div>
   );

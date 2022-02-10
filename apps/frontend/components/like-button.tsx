@@ -4,6 +4,7 @@ import {
   useLikeButtonLikeMutation,
   useLikeButtonUnlikeMutation,
 } from "../graphql/generated";
+import Button from "./button";
 
 interface LikeButtonProps {
   postID: string;
@@ -38,10 +39,9 @@ const LikeButton: FC<LikeButtonProps> = ({ liked, postID }) => {
   }
 
   return (
-    <button className={buttonClasses} onClick={toggleLike}>
-      <FaThumbsUp />
-      <span className="ml-2">Gefällt {liked ? "dir" : "mir"}</span>
-    </button>
+    <Button onClick={toggleLike} iconStart={<FaThumbsUp />}>
+      Gefällt {liked ? "dir" : "mir"}
+    </Button>
   );
 };
 

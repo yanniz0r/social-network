@@ -18,8 +18,8 @@ const Button: FC<ButtonProps> = ({
   const className = classNames(
     "inline-flex flex-row items-center px-4 py-2 rounded-lg bg-opacity-20 transition-all transform hover:scale-105",
     {
-      "bg-blue-500 text-blue-400": variant === "primary",
-      "bg-gray-700 bg-opacity-100 text-gray-300": variant === "secondary",
+      "bg-blue-500 dark:text-blue-400 text-blue-500": variant === "primary",
+      "bg-slate-700 bg-opacity-100 text-slate-300": variant === "secondary",
     },
     parentClassName
   );

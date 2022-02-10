@@ -5,6 +5,7 @@ import {
   useCreatePostCardTextPostMutation as useCreateTextPostMutation,
 } from "../../graphql/generated";
 import Button from "../button";
+import Card from "../card";
 import PostTypeSelect from "../post-type-select";
 
 interface CreatePostCardProps {
@@ -52,13 +53,13 @@ const CreatePostCard: FC<CreatePostCardProps> = ({ onPost }) => {
   }
 
   return (
-    <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-5 border border-gray-700">
+    <Card className="p-5">
       <div className="mb-4">
         <PostTypeSelect value={postType} onChange={setPostType} />
       </div>
       <textarea
         placeholder={placeholder}
-        className="block w-full bg-gray-700 rounded-t-lg text-gray-200 p-3 border-b-2 border-gray-500"
+        className="block w-full dark:bg-slate-700 bg-slate-100 rounded-lg text-slate-200 p-3"
         value={text}
         onChange={(e) => setText(e.target.value)}
       />
@@ -67,7 +68,7 @@ const CreatePostCard: FC<CreatePostCardProps> = ({ onPost }) => {
           <input
             type="file"
             onChange={(e) => e.target.files && setFile(e.target.files[0])}
-            className="bg-gray-700 rounded-full"
+            className="bg-slate-700 rounded-full"
           />
         </div>
       )}
@@ -76,7 +77,7 @@ const CreatePostCard: FC<CreatePostCardProps> = ({ onPost }) => {
           Posten
         </Button>
       </div>
-    </div>
+    </Card>
   );
 };
 

@@ -105,12 +105,12 @@ const UserDetailPage: NextPage<UserDetailPageProps> = ({ userID }) => {
               ))}
               {userDetailPageQuery.data.posts.length === 0 && (
                 <Card className="p-10 flex flex-col gap-5 items-center justify-center">
-                  <FaGhost className="text-5xl text-gray-400" />
+                  <FaGhost className="text-5xl text-slate-400" />
                   <div>
                     <h3 className="text-white text-xl text-center">
                       Leer hier...
                     </h3>
-                    <p className="text-gray-400 text-center">
+                    <p className="text-slate-400 text-center">
                       {userDetailPageQuery.data.user.name} hat noch keine
                       Beiträge gepostet.
                     </p>
