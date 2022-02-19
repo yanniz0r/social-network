@@ -7,6 +7,7 @@ query ProfileDetailPage($userID: ID!) {
     birthday
     friendshipStatus
     avatarURL
+    city
     hobbies
     job {
       company

@@ -46,6 +46,8 @@ const ProfileUserInfo: FC<ProfileUserInfoProps> = (props) => {
     },)
   }
 
+  if (userInfos.length === 0) return null
+
   return (
     <Card>
       <div className="p-5">

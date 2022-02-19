@@ -3,11 +3,12 @@ import Container from "../components/container";
 import CreatePostCard from "../components/create-post-card";
 import PostCard from "../components/post-card";
 import { useHomePagePostsQuery } from "../graphql/generated";
+import SignedInLayout from "../layouts/signed-in-layout";
 
 const HomePage: NextPage = () => {
   const homePagePostsQuery = useHomePagePostsQuery();
   return (
-    <>
+    <SignedInLayout>
       <Container>
         <CreatePostCard onPost={() => homePagePostsQuery.refetch()} />
       </Container>
@@ -18,7 +19,7 @@ const HomePage: NextPage = () => {
           </div>
         ))}
       </Container>
-    </>
+    </SignedInLayout>
   );
 };
 
