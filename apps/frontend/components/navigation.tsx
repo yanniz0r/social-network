@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { FC, ReactNode, useState } from "react";
-import { FaBell, FaGhost, FaUser } from "react-icons/fa";
+import { FaBell, FaEnvelope, FaGhost, FaSearch, FaUser } from "react-icons/fa";
 import { useNavigationQuery } from "../graphql/generated";
+import Avatar from "./avatar";
+import Container from "./container";
 import Notifications from "./notifications";
 
 interface NavigationItemBase {
@@ -47,67 +49,44 @@ const Navigation: FC = () => {
   ];
 
   return (
-    <>
-      <div className="sm:-bottom-full bottom-0 transition-all fixed h-24 bg-white dark:bg-slate-700 backdrop-blur-sm border-t border-slate-200 bg-opacity-80 left-0 w-full z-20 grid grid-cols-3">
-        {navitems.map(navItem => {
-          return <div className="flex w-full h-full items-center justify-center text-xl text-slate-700">
-              {navItem.icon}
-            </div>
-        })}
-      </div>
-      <div className="bg-white dark:bg-slate-800 dark:border-r shadow-md border-slate-300 dark:border-slate-700 sm:w-4/12 md:w-4/12 lg:w-3/12 xl:w-2/12 flex-none h-screen sm:sticky fixed top-0 z-20 w-full -left-full">
-        <Notifications
-          open={notificationsOpen}
-          close={() => setNotificationsOpen(false)}
-        />
-        {navigationQuery.data?.me && (
-          <Link passHref href="/profile/me">
-            <a className="flex flex-row gap-3 items-center px-5 py-5 hover:bg-slate-200 dark:hover:bg-slate-700">
-              <div
-                className="h-14 w-14 bg-blue-500 rounded-full text-black text-opacity-50 flex items-center justify-center"
-                style={{
-                  backgroundImage: navigationQuery.data.me.avatarURL
-                    ? `url(${navigationQuery.data.me.avatarURL})`
-                    : undefined,
-                }}
-              >
-                {!navigationQuery.data.me.avatarURL && <FaUser />}
-              </div>
-              <div>
-                <div className="text-lg mb-1 dark:text-white">
-                  {navigationQuery.data.me.firstName}
-                </div>
-                <div className="px-1.5 py-0.5 text-sm text-white bg-emerald-500 rounded-lg inline-block">
-                  Online
-                </div>
-              </div>
+    <div className="top-0 fixed w-full dark:bg-blue-700 dark:bg-opacity-60 bg-blue-600 bg-opacity-75 backdrop-blur z-30">
+      <Container y={false}>
+        <div className="flex flex-row items-center">
+          <Link href="/">
+            <a className="text-xl font-light text-white tracking-tight bg-white bg-opacity-0 p-2 transition-all rounded-lg hover:bg-opacity-20">
+              🏝 Inselnet
             </a>
           </Link>
-        )}
-        <ul className="flex flex-col px-2 mt-5">
-          {navitems.map((item, key) => {
-            const navigationItem = (
-              <a
-                onClick={"onClick" in item ? item.onClick : undefined}
-                className="flex group cursor-pointer items-center gap-2 text-lg px-4 py-3 transition-all dark:text-slate-300 text-slate-700 dark:hover:text-white hover:bg-blue-100 dark:hover:bg-slate-700 rounded-lg"
-              >
-                <div className="dark:text-slate-500 text-slate-300 group-hover:text-blue-500">{item.icon}</div>
-                <div className="flex-grow">{item.text}</div>
-                {item.badge && (
-                  <div className="w-6 h-6 text-sm flex items-center justify-center rounded-full text-white bg-blue-500 ">
-                    {item.badge}
-                  </div>
-                )}
+          <div className="flex-grow" />
+          <div className="px-5 flex flex-row gap-2">
+            <a className="h-10 w-10 flex items-center justify-center rounded-full bg-white transition-all text-white drop-shadow-lg transform hover:scale-105 bg-opacity-20">
+              <FaSearch />
+            </a>
+            <Link href="/notifications">
+              <a className="h-10 w-10 flex items-center justify-center rounded-full bg-white transition-all text-white drop-shadow-lg transform hover:scale-105 bg-opacity-20">
+                <FaBell />
               </a>
-            );
-            if ("href" in item) {
-              return <Link href={item.href}>{navigationItem}</Link>;
+            </Link>
+            <Link href="/messages">
+              <a className="h-10 w-10 flex items-center justify-center rounded-full bg-white transition-all text-white drop-shadow-lg transform hover:scale-105 bg-opacity-20">
+                <FaEnvelope />
+              </a>
+            </Link>
+          </div>
+          <div className="py-2">
+            {navigationQuery.data?.me &&
+              <Link href="/profile/me">
+                <a className="h-12 w-12 bg-white bg-opacity-75 outline-emerald-500 rounded-full flex items-center justify-center" style={{
+                  backgroundImage: navigationQuery.data.me.avatarURL ? `url(${navigationQuery.data.me.avatarURL})` : undefined
+                }}>
+                  Y
+                </a>
+              </Link>
             }
-            return navigationItem;
-          })}
-        </ul>
-      </div>
-    </>
+          </div>
+        </div>
+      </Container>
+    </div>
   );
 };
 

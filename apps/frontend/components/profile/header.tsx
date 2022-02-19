@@ -20,7 +20,7 @@ const ProfileHeader: FC<ProfileHeaderProps> = (props) => {
       const clientRect = containerRef.current?.getBoundingClientRect();
 
       if (clientRect) {
-        setOverflowing(clientRect.top === 0);
+        setOverflowing(clientRect.top <= 64); // TODO make independant of navigation height
       }
     };
     window.addEventListener("scroll", onScroll);
@@ -40,7 +40,7 @@ const ProfileHeader: FC<ProfileHeaderProps> = (props) => {
   );
 
   const containerClassName = classNames(
-    "px-10 flex flex-col sm:flex-row gap-5 sm:h-28 bg-white shadow-sm dark:bg-slate-800 sticky z-10 top-0 transition-all",
+    "px-10 top-[64px] flex flex-col sm:flex-row gap-5 sm:h-28 bg-white shadow-sm dark:bg-slate-800 sticky z-10 top-0 transition-all",
     {
       "bg-opacity-75 shadow-xl backdrop-blur-sm": overflowing,
     }

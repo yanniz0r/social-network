@@ -5,9 +5,9 @@ interface SignedInLayoutProps {
 }
 
 const SignedInLayout: FC<SignedInLayoutProps> = (props) => {
-  return <div className="flex">
+  return <div>
     <Navigation />
-    <div className="flex-grow">
+    <div>
       {props.children}
     </div>
   </div>
