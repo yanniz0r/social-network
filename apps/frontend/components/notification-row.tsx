@@ -1,6 +1,8 @@
 import { formatRelative } from "date-fns";
 import Link from "next/link";
 import { FC } from "react";
+import Avatar from "./avatar";
+import Card from "./card";
 
 interface NotificationRowProps {
   imageURL?: string;
@@ -12,30 +14,22 @@ interface NotificationRowProps {
 const NotificationRow: FC<NotificationRowProps> = (props) => {
   return (
     <Link href={props.linkURL}>
-      <a
-        className="flex items-center hover:bg-slate-200 dark:hover:bg-slate-700 bg-opacity-50 p-1 rounded-lg"
-        onClick={props.onClick}
-      >
-        <div>
-          <div
-            className="w-14 h-14 bg-slate-400 rounded-full bg-center bg-contain"
-            style={{
-              backgroundImage: props.imageURL
-                ? `url(${props.imageURL})`
-                : undefined,
-            }}
-          />
-        </div>
-        <div className="ml-2">
-          <div className="text-slate-800 dark:text-slate-200">{props.children}</div>
-          {props.date && (
-            <div>
-              <small className="dark:text-blue-300 text-blue-600">
-                {formatRelative(props.date, new Date())}
-              </small>
+      <a>
+        <Card className="p-3 flex flex-row gap-2">
+          <div>
+            <Avatar online name="N" size="md" imageURL={props.imageURL} />
+          </div>
+          <div>
+            <div className="leading-tight">
+              {props.children}
             </div>
-          )}
-        </div>
+            {props.date &&
+              <div className="text-xs text-slate-600">
+                {formatRelative(props.date, new Date())}
+              </div>
+            }
+          </div>
+        </Card>
       </a>
     </Link>
   );
