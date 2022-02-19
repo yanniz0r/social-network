@@ -59,7 +59,7 @@ const CreatePostCard: FC<CreatePostCardProps> = ({ onPost }) => {
       </div>
       <textarea
         placeholder={placeholder}
-        className="block w-full dark:bg-slate-700 bg-slate-100 rounded-lg text-slate-200 p-3"
+        className="block w-full dark:bg-slate-700 bg-slate-100 rounded-lg text-slate-700 dark:text-slate-200 p-3"
         value={text}
         onChange={(e) => setText(e.target.value)}
       />
