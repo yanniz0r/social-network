@@ -1,7 +1,8 @@
-query HomePagePosts {
+query HomePage {
   me {
     id
     name
+    firstName
     online
   }
   posts {

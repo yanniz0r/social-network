@@ -250,7 +250,7 @@ export type EditAvatarMutationVariables = Exact<{
 }>;
 
 
-export type EditAvatarMutation = { __typename?: 'Mutation', updateMe: { __typename?: 'User', id: string, avatarURL?: string | null | undefined } };
+export type EditAvatarMutation = { __typename?: 'Mutation', updateMe: { __typename?: 'User', id: string, avatarURL?: string | null } };
 
 export type LikeButtonLikeMutationVariables = Exact<{
   postID: Scalars['ID'];
@@ -269,12 +269,12 @@ export type LikeButtonUnlikeMutation = { __typename?: 'Mutation', unlikePost: { 
 export type NavigationQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type NavigationQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, firstName: string, avatarURL?: string | null | undefined }, notifications: Array<{ __typename?: 'FriendshipRequestNotification', id: string } | { __typename?: 'PostLikedNotification', id: string }>, friendshipRequests: Array<{ __typename?: 'FriendshipRequest', date: any, from: { __typename?: 'User', id: string, name: string } }> };
+export type NavigationQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, firstName: string, avatarURL?: string | null }, notifications: Array<{ __typename?: 'FriendshipRequestNotification', id: string } | { __typename?: 'PostLikedNotification', id: string }>, friendshipRequests: Array<{ __typename?: 'FriendshipRequest', date: any, from: { __typename?: 'User', id: string, name: string } }> };
 
 export type NotificationsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type NotificationsQuery = { __typename?: 'Query', notifications: Array<{ __typename?: 'FriendshipRequestNotification', date: string, id: string, from: { __typename?: 'User', id: string, firstName: string, avatarURL?: string | null | undefined } } | { __typename?: 'PostLikedNotification', date: string, id: string, liker: { __typename?: 'User', id: string, firstName: string, avatarURL?: string | null | undefined }, post: { __typename?: 'ImagePost', id: string } | { __typename?: 'TextPost', id: string } }> };
+export type NotificationsQuery = { __typename?: 'Query', notifications: Array<{ __typename?: 'FriendshipRequestNotification', date: string, id: string, from: { __typename?: 'User', id: string, firstName: string, avatarURL?: string | null } } | { __typename?: 'PostLikedNotification', date: string, id: string, liker: { __typename?: 'User', id: string, firstName: string, avatarURL?: string | null }, post: { __typename?: 'ImagePost', id: string } | { __typename?: 'TextPost', id: string } }> };
 
 export type NotificationsNewNotificationSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
@@ -294,12 +294,12 @@ export type SearchQueryVariables = Exact<{
 }>;
 
 
-export type SearchQuery = { __typename?: 'Query', searchUsers: Array<{ __typename?: 'User', name: string, avatarURL?: string | null | undefined, id: string, birthday?: any | null | undefined }> };
+export type SearchQuery = { __typename?: 'Query', searchUsers: Array<{ __typename?: 'User', name: string, avatarURL?: string | null, id: string, birthday?: any | null }> };
 
 export type FriendshipsPageQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FriendshipsPageQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, friends: Array<{ __typename?: 'User', id: string, name: string, online: boolean }> }, friendshipRecommendations: Array<{ __typename?: 'User', id: string, name: string, online: boolean, avatarURL?: string | null | undefined }>, friendshipRequests: Array<{ __typename?: 'FriendshipRequest', id: string, date: any, from: { __typename?: 'User', id: string, name: string, online: boolean, avatarURL?: string | null | undefined } }> };
+export type FriendshipsPageQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, friends: Array<{ __typename?: 'User', id: string, name: string, online: boolean }> }, friendshipRecommendations: Array<{ __typename?: 'User', id: string, name: string, online: boolean, avatarURL?: string | null }>, friendshipRequests: Array<{ __typename?: 'FriendshipRequest', id: string, date: any, from: { __typename?: 'User', id: string, name: string, online: boolean, avatarURL?: string | null } }> };
 
 export type FriendsPageAcceptFriendshipRequestMutationVariables = Exact<{
   friendshipID: Scalars['ID'];
@@ -308,10 +308,10 @@ export type FriendsPageAcceptFriendshipRequestMutationVariables = Exact<{
 
 export type FriendsPageAcceptFriendshipRequestMutation = { __typename?: 'Mutation', acceptFriendshipRequest: { __typename?: 'FriendshipRequest', id: string, date: any, from: { __typename?: 'User', id: string } } };
 
-export type HomePagePostsQueryVariables = Exact<{ [key: string]: never; }>;
+export type HomePageQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type HomePagePostsQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, name: string, online: boolean }, posts: Array<{ __typename: 'ImagePost', imageURL: string, id: string, text?: string | null | undefined, createdAt: any, liked: boolean, user: { __typename?: 'User', id: string, online: boolean, avatarURL?: string | null | undefined, name: string }, likedBy: Array<{ __typename?: 'User', id: string, firstName: string }>, comments: Array<{ __typename?: 'Comment', text: string, createdAt: any, user: { __typename?: 'User', avatarURL?: string | null | undefined, id: string, name: string, online: boolean } }> } | { __typename: 'TextPost', id: string, text: string, createdAt: any, liked: boolean, user: { __typename?: 'User', id: string, online: boolean, avatarURL?: string | null | undefined, name: string }, likedBy: Array<{ __typename?: 'User', id: string, firstName: string }>, comments: Array<{ __typename?: 'Comment', text: string, createdAt: any, user: { __typename?: 'User', avatarURL?: string | null | undefined, id: string, name: string, online: boolean } }> }> };
+export type HomePageQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, name: string, firstName: string, online: boolean }, posts: Array<{ __typename: 'ImagePost', imageURL: string, id: string, text?: string | null, createdAt: any, liked: boolean, user: { __typename?: 'User', id: string, online: boolean, avatarURL?: string | null, name: string }, likedBy: Array<{ __typename?: 'User', id: string, firstName: string }>, comments: Array<{ __typename?: 'Comment', text: string, createdAt: any, user: { __typename?: 'User', avatarURL?: string | null, id: string, name: string, online: boolean } }> } | { __typename: 'TextPost', id: string, text: string, createdAt: any, liked: boolean, user: { __typename?: 'User', id: string, online: boolean, avatarURL?: string | null, name: string }, likedBy: Array<{ __typename?: 'User', id: string, firstName: string }>, comments: Array<{ __typename?: 'Comment', text: string, createdAt: any, user: { __typename?: 'User', avatarURL?: string | null, id: string, name: string, online: boolean } }> }> };
 
 export type LoginPageQueryVariables = Exact<{
   googleRedirectURL: Scalars['String'];
@@ -325,19 +325,19 @@ export type ProfileDetailPageQueryVariables = Exact<{
 }>;
 
 
-export type ProfileDetailPageQuery = { __typename?: 'Query', user?: { __typename?: 'User', id: string, name: string, status?: string | null | undefined, online: boolean, birthday?: any | null | undefined, friendshipStatus?: FriendshipStatus | null | undefined, avatarURL?: string | null | undefined, city?: string | null | undefined, hobbies?: Array<string> | null | undefined, job?: { __typename?: 'UserJob', company: string, position: string } | null | undefined, friends: Array<{ __typename?: 'User', id: string, name: string, online: boolean }> } | null | undefined, posts: Array<{ __typename: 'ImagePost', imageURL: string, id: string, text?: string | null | undefined, createdAt: any, liked: boolean, user: { __typename?: 'User', id: string, online: boolean, avatarURL?: string | null | undefined, name: string }, likedBy: Array<{ __typename?: 'User', id: string, firstName: string }>, comments: Array<{ __typename?: 'Comment', text: string, createdAt: any, user: { __typename?: 'User', avatarURL?: string | null | undefined, id: string, name: string, online: boolean } }> } | { __typename: 'TextPost', id: string, text: string, createdAt: any, liked: boolean, user: { __typename?: 'User', id: string, online: boolean, avatarURL?: string | null | undefined, name: string }, likedBy: Array<{ __typename?: 'User', id: string, firstName: string }>, comments: Array<{ __typename?: 'Comment', text: string, createdAt: any, user: { __typename?: 'User', avatarURL?: string | null | undefined, id: string, name: string, online: boolean } }> }>, me: { __typename?: 'User', id: string, name: string, online: boolean } };
+export type ProfileDetailPageQuery = { __typename?: 'Query', user?: { __typename?: 'User', id: string, name: string, status?: string | null, online: boolean, birthday?: any | null, friendshipStatus?: FriendshipStatus | null, avatarURL?: string | null, city?: string | null, hobbies?: Array<string> | null, job?: { __typename?: 'UserJob', company: string, position: string } | null, friends: Array<{ __typename?: 'User', id: string, name: string, online: boolean }> } | null, posts: Array<{ __typename: 'ImagePost', imageURL: string, id: string, text?: string | null, createdAt: any, liked: boolean, user: { __typename?: 'User', id: string, online: boolean, avatarURL?: string | null, name: string }, likedBy: Array<{ __typename?: 'User', id: string, firstName: string }>, comments: Array<{ __typename?: 'Comment', text: string, createdAt: any, user: { __typename?: 'User', avatarURL?: string | null, id: string, name: string, online: boolean } }> } | { __typename: 'TextPost', id: string, text: string, createdAt: any, liked: boolean, user: { __typename?: 'User', id: string, online: boolean, avatarURL?: string | null, name: string }, likedBy: Array<{ __typename?: 'User', id: string, firstName: string }>, comments: Array<{ __typename?: 'Comment', text: string, createdAt: any, user: { __typename?: 'User', avatarURL?: string | null, id: string, name: string, online: boolean } }> }>, me: { __typename?: 'User', id: string, name: string, online: boolean } };
 
 export type ProfileDetailPageRequestFriendshipMutationVariables = Exact<{
   userID: Scalars['ID'];
 }>;
 
 
-export type ProfileDetailPageRequestFriendshipMutation = { __typename?: 'Mutation', requestFriendship: { __typename?: 'FriendshipRequest', id: string, to: { __typename?: 'User', id: string, friendshipStatus?: FriendshipStatus | null | undefined } } };
+export type ProfileDetailPageRequestFriendshipMutation = { __typename?: 'Mutation', requestFriendship: { __typename?: 'FriendshipRequest', id: string, to: { __typename?: 'User', id: string, friendshipStatus?: FriendshipStatus | null } } };
 
 export type ProfileMeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ProfileMeQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, avatarURL?: string | null | undefined, firstName: string, lastName: string, name: string, birthday?: any | null | undefined, online: boolean, friends: Array<{ __typename?: 'User', id: string, online: boolean, name: string }> } };
+export type ProfileMeQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, avatarURL?: string | null, firstName: string, lastName: string, name: string, birthday?: any | null, online: boolean, friends: Array<{ __typename?: 'User', id: string, online: boolean, name: string }> } };
 
 export type RegisterGooglePageRegisterMutationVariables = Exact<{
   code: Scalars['String'];
@@ -823,11 +823,12 @@ export function useFriendsPageAcceptFriendshipRequestMutation(baseOptions?: Apol
 export type FriendsPageAcceptFriendshipRequestMutationHookResult = ReturnType<typeof useFriendsPageAcceptFriendshipRequestMutation>;
 export type FriendsPageAcceptFriendshipRequestMutationResult = Apollo.MutationResult<FriendsPageAcceptFriendshipRequestMutation>;
 export type FriendsPageAcceptFriendshipRequestMutationOptions = Apollo.BaseMutationOptions<FriendsPageAcceptFriendshipRequestMutation, FriendsPageAcceptFriendshipRequestMutationVariables>;
-export const HomePagePostsDocument = gql`
-    query HomePagePosts {
+export const HomePageDocument = gql`
+    query HomePage {
   me {
     id
     name
+    firstName
     online
   }
   posts {
@@ -864,31 +865,31 @@ export const HomePagePostsDocument = gql`
     `;
 
 /**
- * __useHomePagePostsQuery__
+ * __useHomePageQuery__
  *
- * To run a query within a React component, call `useHomePagePostsQuery` and pass it any options that fit your needs.
- * When your component renders, `useHomePagePostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useHomePageQuery` and pass it any options that fit your needs.
+ * When your component renders, `useHomePageQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useHomePagePostsQuery({
+ * const { data, loading, error } = useHomePageQuery({
  *   variables: {
  *   },
  * });
  */
-export function useHomePagePostsQuery(baseOptions?: Apollo.QueryHookOptions<HomePagePostsQuery, HomePagePostsQueryVariables>) {
+export function useHomePageQuery(baseOptions?: Apollo.QueryHookOptions<HomePageQuery, HomePageQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<HomePagePostsQuery, HomePagePostsQueryVariables>(HomePagePostsDocument, options);
+        return Apollo.useQuery<HomePageQuery, HomePageQueryVariables>(HomePageDocument, options);
       }
-export function useHomePagePostsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<HomePagePostsQuery, HomePagePostsQueryVariables>) {
+export function useHomePageLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<HomePageQuery, HomePageQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<HomePagePostsQuery, HomePagePostsQueryVariables>(HomePagePostsDocument, options);
+          return Apollo.useLazyQuery<HomePageQuery, HomePageQueryVariables>(HomePageDocument, options);
         }
-export type HomePagePostsQueryHookResult = ReturnType<typeof useHomePagePostsQuery>;
-export type HomePagePostsLazyQueryHookResult = ReturnType<typeof useHomePagePostsLazyQuery>;
-export type HomePagePostsQueryResult = Apollo.QueryResult<HomePagePostsQuery, HomePagePostsQueryVariables>;
+export type HomePageQueryHookResult = ReturnType<typeof useHomePageQuery>;
+export type HomePageLazyQueryHookResult = ReturnType<typeof useHomePageLazyQuery>;
+export type HomePageQueryResult = Apollo.QueryResult<HomePageQuery, HomePageQueryVariables>;
 export const LoginPageDocument = gql`
     query LoginPage($googleRedirectURL: String!) {
   googleOAuthURL(redirectURL: $googleRedirectURL)

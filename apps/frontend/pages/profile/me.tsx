@@ -19,7 +19,7 @@ const ProfileMePage: NextPage = () => {
         {meQuery.data?.me && (
           <>
             <ProfileHeader
-              onEditAvatar={() => setEditAvatar(true)}
+              // onEditAvatar={() => setEditAvatar(true)}
               user={meQuery.data.me}
             />
             <div className="mt-4">

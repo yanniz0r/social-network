@@ -88,7 +88,7 @@ const UserDetailPage: NextPage<UserDetailPageProps> = ({ userID }) => {
             actions={headerActions}
           />
           {alerts}
-          <Container>
+          <Container className="mt-5">
             <div className="flex flex-col md:flex-row gap-5">
               <div className="w-full md:w-4/12 lg:w-3/12">
                 <div className="sticky self-start top-36 flex flex-col gap-4">

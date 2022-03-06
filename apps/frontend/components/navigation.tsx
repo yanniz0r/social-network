@@ -1,58 +1,19 @@
 import Link from "next/link";
-import { FC, ReactNode, useState } from "react";
-import { FaBell, FaChevronCircleRight, FaEnvelope, FaGhost, FaSearch, FaUser } from "react-icons/fa";
+import { FC, useState } from "react";
+import { FaBell, FaEnvelope, FaSearch } from "react-icons/fa";
 import { useNavigationQuery } from "../graphql/generated";
-import Avatar from "./avatar";
-import Card from "./card";
 import Container from "./container";
 import Notifications from "./notifications";
 
-interface NavigationItemBase {
-  text: string;
-  icon: ReactNode;
-  badge?: string | number;
-}
-
-interface LinkNotificationItem extends NavigationItemBase {
-  href: string;
-}
-
-interface ClickNotificationItem extends NavigationItemBase {
-  onClick(): void;
-}
-
-type NavItem = LinkNotificationItem | ClickNotificationItem;
 
 const Navigation: FC = () => {
   const navigationQuery = useNavigationQuery();
   const [notificationsOpen, setNotificationsOpen] = useState(false);
 
-  const navitems: NavItem[] = [
-    {
-      text: "Posts",
-      icon: <FaGhost />,
-      href: "/",
-    },
-    {
-      text: "Neuigkeiten",
-      icon: <FaBell />,
-      badge: navigationQuery.data?.notifications.length || undefined,
-      onClick() {
-        setNotificationsOpen(true);
-      },
-    },
-    {
-      text: "Freunde",
-      icon: <FaUser />,
-      badge: navigationQuery.data?.friendshipRequests.length || undefined,
-      href: "/friendships",
-    },
-  ];
-
   return (
     <div className="top-0 fixed w-full z-30">
-      <div className="dark:bg-blue-700 dark:bg-opacity-60 bg-blue-600 bg-opacity-75 backdrop-blur relative z-20">
-        <Container y={false}>
+      <div className="dark:bg-blue-700 dark:bg-opacity-60 bg-blue-600 bg-opacity-75 backdrop-blur relative z-20 h-16">
+        <Container>
           <div className="flex flex-row items-center">
             <Link href="/">
               <a className="text-xl font-light text-white tracking-tight bg-white bg-opacity-0 p-2 transition-all rounded-lg hover:bg-opacity-20">
@@ -93,3 +54,5 @@ const Navigation: FC = () => {
 };
 
 export default Navigation;
+
+export const NavigationSpacer: FC = () => <div className="h-16" />

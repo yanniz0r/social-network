@@ -30,11 +30,10 @@ const Notifications: FC<NotificationsProps> = (props) => {
 
   return (
     <div className={containerClassName}>
-      <Container>
+      <Container className="py-5">
         <div className="flex gap-5 relative">
             {notificationsQuery.data?.notifications.map((notification) => {
               if (notification.__typename === "FriendshipRequestNotification") {
-
                 return <NotificationRow
                   date={new Date(notification.date)}
                   linkURL={`/friendships`}

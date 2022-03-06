@@ -5,6 +5,7 @@ import { FaTimes, FaUserPlus } from "react-icons/fa";
 import Avatar from "../components/avatar";
 import Button from "../components/button";
 import Card from "../components/card";
+import Container from "../components/container";
 import IconButton from "../components/icon-button";
 import {
   useFriendshipsPageQuery,
@@ -39,8 +40,8 @@ const FriendshipsPage: NextPage = () => {
   }
 
   return (
-    <SignedInLayout>
-      <div className="p-10">
+    <SignedInLayout navigationSpace contentSpace>
+      <Container>
         {Boolean(friendsPageQuery.data?.friendshipRequests.length) && (
           <Card className="py-3 px-5 mb-5">
             <h2 className="text-xl dark:text-white mb-2">
@@ -133,7 +134,7 @@ const FriendshipsPage: NextPage = () => {
             ))}
           </ul>
         </Card>
-      </div>
+      </Container>
     </SignedInLayout>
   );
 };
