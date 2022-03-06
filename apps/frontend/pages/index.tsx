@@ -10,7 +10,7 @@ const HomePage: NextPage = () => {
   return (
     <SignedInLayout navigationSpace contentSpace>
       <Container>
-        <p className="mt-10 mb-5 text-5xl text-slate-900">Hallo, {homePagePostsQuery.data?.me.firstName}</p>
+        <p className="mt-10 mb-5 text-5xl text-slate-900 dark:text-slate-100">Hallo, {homePagePostsQuery.data?.me.firstName}</p>
         <CreatePostCard onPost={() => homePagePostsQuery.refetch()} />
         {homePagePostsQuery.data?.posts?.map((post) => (
           <div className="mt-5" key={post.id}>
