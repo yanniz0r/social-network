@@ -157,6 +157,7 @@ export type Query = {
   friendshipRequests: Array<FriendshipRequest>;
   googleOAuthURL: Scalars['String'];
   me: User;
+  myPosts: Array<Post>;
   notifications: Array<Notification>;
   posts: Array<Post>;
   postsOfUser: Array<Post>;
@@ -337,7 +338,7 @@ export type ProfileDetailPageRequestFriendshipMutation = { __typename?: 'Mutatio
 export type ProfileMeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ProfileMeQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, avatarURL?: string | null, firstName: string, lastName: string, name: string, birthday?: any | null, online: boolean, friends: Array<{ __typename?: 'User', id: string, online: boolean, name: string }> } };
+export type ProfileMeQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, avatarURL?: string | null, firstName: string, lastName: string, name: string, birthday?: any | null, online: boolean, friends: Array<{ __typename?: 'User', id: string, online: boolean, name: string }> }, posts: Array<{ __typename: 'ImagePost', imageURL: string, id: string, text?: string | null, createdAt: any, liked: boolean, user: { __typename?: 'User', id: string, online: boolean, avatarURL?: string | null, name: string }, likedBy: Array<{ __typename?: 'User', id: string, firstName: string }>, comments: Array<{ __typename?: 'Comment', text: string, createdAt: any, user: { __typename?: 'User', avatarURL?: string | null, id: string, name: string, online: boolean } }> } | { __typename: 'TextPost', id: string, text: string, createdAt: any, liked: boolean, user: { __typename?: 'User', id: string, online: boolean, avatarURL?: string | null, name: string }, likedBy: Array<{ __typename?: 'User', id: string, firstName: string }>, comments: Array<{ __typename?: 'Comment', text: string, createdAt: any, user: { __typename?: 'User', avatarURL?: string | null, id: string, name: string, online: boolean } }> }> };
 
 export type RegisterGooglePageRegisterMutationVariables = Exact<{
   code: Scalars['String'];
@@ -1061,6 +1062,36 @@ export const ProfileMeDocument = gql`
       id
       online
       name
+    }
+  }
+  posts: myPosts {
+    __typename
+    id
+    text
+    createdAt
+    liked
+    user {
+      id
+      online
+      avatarURL
+      name
+    }
+    likedBy {
+      id
+      firstName
+    }
+    comments {
+      text
+      createdAt
+      user {
+        avatarURL
+        id
+        name
+        online
+      }
+    }
+    ... on ImagePost {
+      imageURL
     }
   }
 }

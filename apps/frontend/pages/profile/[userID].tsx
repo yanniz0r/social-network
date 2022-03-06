@@ -3,6 +3,7 @@ import { FaGhost, FaUser, FaUserPlus } from "react-icons/fa";
 import AlertBar from "../../components/alert-bar";
 import Button from "../../components/button";
 import Card from "../../components/card";
+import NoPostsCard from "../../components/card-presets/no-posts-card";
 import Container from "../../components/container";
 import IconButton from "../../components/icon-button";
 import PostCard from "../../components/post-card";
@@ -103,21 +104,7 @@ const UserDetailPage: NextPage<UserDetailPageProps> = ({ userID }) => {
                   </div>
                 ))}
                 {userDetailPageQuery.data.posts.length === 0 && (
-                  <Card className="p-10 flex flex-col gap-5 items-center justify-center">
-                    <FaGhost className="text-5xl text-slate-400" />
-                    <div>
-                      <h3 className="text-white text-xl text-center">
-                        Leer hier...
-                      </h3>
-                      <p className="text-slate-400 text-center">
-                        {userDetailPageQuery.data.user.name} hat noch keine
-                        Beiträge gepostet.
-                      </p>
-                    </div>
-                    <div className="flex justify-center">
-                      <Button>Nachricht senden</Button>
-                    </div>
-                  </Card>
+                  <NoPostsCard name={userDetailPageQuery.data.user.name} />
                 )}
               </div>
             </div>

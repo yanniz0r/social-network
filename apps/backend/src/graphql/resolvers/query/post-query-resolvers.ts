@@ -14,6 +14,11 @@ const postQueryResolvers: QueryResolvers = {
     const posts = await context.postService.getPostsFrom([id]);
     return posts;
   },
+  async myPosts(_parent, _arguments, context) {
+    const currentUser = context.authorizationService.ensureAuthorizedUser()
+    const posts = await context.postService.getPostsFrom([currentUser._id]);
+    return posts;
+  },
 };
 
 export default postQueryResolvers;

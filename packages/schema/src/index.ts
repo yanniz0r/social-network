@@ -119,6 +119,7 @@ const schema = gql`
     friendshipRequests: [FriendshipRequest!]!
     friendshipRecommendations: [User!]!
     posts: [Post!]!
+    myPosts: [Post!]!
     postsOfUser(id: ID!): [Post!]!
     googleOAuthURL(redirectURL: String!): String!
   }
