@@ -4,11 +4,20 @@ import { FaBell, FaEnvelope, FaSearch } from "react-icons/fa";
 import { useNavigationQuery } from "../graphql/generated";
 import Container from "./container";
 import Notifications from "./notifications";
+import Search from "./search";
 
+enum NavigationLayer {
+  NOTIFICATIONS = "notifications",
+  SEARCH = "search"
+}
 
 const Navigation: FC = () => {
   const navigationQuery = useNavigationQuery();
-  const [notificationsOpen, setNotificationsOpen] = useState(false);
+  const [openLayer, setOpenLayer] = useState<NavigationLayer>();
+
+  function closeLayer() {
+    setOpenLayer(undefined)
+  }
 
   return (
     <div className="top-0 fixed w-full z-30">
@@ -22,10 +31,10 @@ const Navigation: FC = () => {
             </Link>
             <div className="flex-grow" />
             <div className="px-5 flex flex-row gap-2">
-              <a className="h-10 w-10 flex items-center justify-center rounded-full bg-white transition-all text-white drop-shadow-lg transform hover:scale-105 bg-opacity-20">
+              <button onClick={() => setOpenLayer(NavigationLayer.SEARCH)}  className="h-10 w-10 flex items-center justify-center rounded-full bg-white transition-all text-white drop-shadow-lg transform hover:scale-105 bg-opacity-20">
                 <FaSearch />
-              </a>
-              <button onClick={() => setNotificationsOpen((prev) => !prev)} className="h-10 w-10 flex items-center justify-center rounded-full bg-white transition-all text-white drop-shadow-lg transform hover:scale-105 bg-opacity-20">
+              </button>
+              <button onClick={() => setOpenLayer(NavigationLayer.NOTIFICATIONS)} className="h-10 w-10 flex items-center justify-center rounded-full bg-white transition-all text-white drop-shadow-lg transform hover:scale-105 bg-opacity-20">
                 <FaBell />
               </button>
               <Link href="/messages">
@@ -48,7 +57,8 @@ const Navigation: FC = () => {
           </div>
         </Container>
       </div>
-      <Notifications open={notificationsOpen} close={() => setNotificationsOpen(false)} />
+      <Search open={openLayer === NavigationLayer.SEARCH} onClose={closeLayer} />
+      <Notifications open={openLayer === NavigationLayer.NOTIFICATIONS} close={closeLayer} />
     </div>
   );
 };
