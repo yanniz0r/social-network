@@ -14,6 +14,7 @@ const Modal: FC<ModalProps> = (props) => {
       className={classNames(
         "transition-all fixed top-0 w-full h-full bg-black bg-opacity-50 backdrop-blur-sm py-14 px-14 z-30",
         {
+          "pointer-events-auto": props.open,
           "opacity-0 pointer-events-none": !props.open,
         }
       )}

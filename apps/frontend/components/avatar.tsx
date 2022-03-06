@@ -1,6 +1,5 @@
 import classNames from "classnames";
 import { FC } from "react";
-import OnlineIndicator from "./online-indicator";
 
 interface AvatarProps {
   name: string;
@@ -22,6 +21,7 @@ const Avatar: FC<AvatarProps> = ({ name, size, online, imageURL }) => {
       "bg-green-500": colorIndex === 0,
       "bg-red-500": colorIndex === 1,
       "bg-blue-500": colorIndex === 2,
+      "outline outline-offset-2 outline-2 outline-emerald-400": online === true,
     }
   );
 
@@ -33,9 +33,6 @@ const Avatar: FC<AvatarProps> = ({ name, size, online, imageURL }) => {
       }}
     >
       {!imageURL && name[0]}
-      {typeof online === "boolean" && (
-        <OnlineIndicator size={size} online={online} />
-      )}
     </div>
   );
 };

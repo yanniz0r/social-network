@@ -20,11 +20,11 @@ const NotificationRow: FC<NotificationRowProps> = (props) => {
             <Avatar online name="N" size="md" imageURL={props.imageURL} />
           </div>
           <div>
-            <div className="leading-tight">
+            <div className="leading-tight dark:text-slate-100">
               {props.children}
             </div>
             {props.date &&
-              <div className="text-xs text-slate-600">
+              <div className="text-xs mt-1 text-slate-600 dark:text-slate-300 dark:text-slate">
                 {formatRelative(props.date, new Date())}
               </div>
             }

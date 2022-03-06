@@ -21,10 +21,10 @@ const Notifications: FC<NotificationsProps> = (props) => {
     },
   });
   const containerClassName = classNames(
-    "bg-slate-100 bg-opacity-50 backdrop-blur shadow-xl transform transition-all z-10 relative",
+    "bg-slate-100 dark:bg-slate-800 bg-opacity-50 dark:bg-opacity-25 backdrop-blur shadow-xl transform transition-all z-10 relative dark:border-b dark:border-slate-700",
     {
-      "translate-y-0 opacity-100": props.open,
-      "pointer-events-none -translate-y-10 opacity-0": !props.open,
+      "translate-y-0 opacity-100 pointer-events-auto": props.open,
+      "-translate-y-10 opacity-0 pointer-events-none": !props.open,
     }
   );
 
@@ -57,7 +57,7 @@ const Notifications: FC<NotificationsProps> = (props) => {
                 {notification}
               </div>
             ))}
-          <div className="absolute -right-10 flex h-full items-center px-3">
+          <div className="absolute -right-10 flex h-full items-center px-3 dark:text-slate-200 text-slate-800">
             <FaChevronCircleRight />
           </div>
         </div>

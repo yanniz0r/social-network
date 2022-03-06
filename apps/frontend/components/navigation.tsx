@@ -20,8 +20,8 @@ const Navigation: FC = () => {
   }
 
   return (
-    <div className="top-0 fixed w-full z-30">
-      <div className="dark:bg-blue-700 dark:bg-opacity-60 bg-blue-600 bg-opacity-75 backdrop-blur relative z-20 h-16">
+    <div className="top-0 fixed w-full z-30 pointer-events-none">
+      <div className="dark:bg-blue-700 dark:bg-opacity-60 bg-blue-600 bg-opacity-75 backdrop-blur relative z-20 h-16 pointer-events-auto">
         <Container>
           <div className="flex flex-row items-center">
             <Link href="/">
