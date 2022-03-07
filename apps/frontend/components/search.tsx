@@ -51,7 +51,7 @@ const Search: FC<SearchProps> = (props) => {
             </div>
             <ul className="divide-y divide-slate-100 dark:divide-slate-700 dark:text-slate-200">
               {searchQuery.data.searchUsers.map(foundUser => (
-                <li>
+                <li key={foundUser.id}>
                   <Link href={`/profile/${foundUser.id}`}>
                     <a className="px-5 py-2.5 flex items-center gap-2.5">
                       <Avatar name={foundUser.name} size="md" />
