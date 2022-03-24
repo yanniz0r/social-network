@@ -7,7 +7,7 @@ interface TooltipProps {
 const Tooltip: FC<TooltipProps> = ({ children, text }) => {
   return (
     <div className="relative group inline-flex items-center justify-center">
-      <div className="transition-all opacity-0 left-auto group-hover:opacity-100 absolute bottom-0 group-hover:bottom-full">
+      <div className="transition-all opacity-0 left-auto group-hover:opacity-100 absolute bottom-12 group-hover:bottom-full">
         <div className="whitespace-nowrap dark:bg-slate-100 bg-slate-700 text-xs dark:text-black text-white py-1.5 px-3 rounded-lg shadow">
           {text}
         </div>
