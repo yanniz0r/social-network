@@ -1,4 +1,5 @@
 import { NextPage } from "next";
+import { useRouter } from "next/router";
 import { FaGhost, FaUser, FaUserPlus } from "react-icons/fa";
 import AlertBar from "../../components/alert-bar";
 import Button from "../../components/button";
@@ -23,10 +24,17 @@ interface UserDetailPageProps {
 }
 
 const UserDetailPage: NextPage<UserDetailPageProps> = ({ userID }) => {
+  const router = useRouter()
   const userDetailPageQuery = useProfileDetailPageQuery({
     variables: {
       userID,
     },
+    onCompleted(data) {
+      const userIsMe = data.me.id === data.user?.id
+      if (userIsMe) {
+        router.replace("/profile/me")
+      }
+    }
   });
   const [requestFriendshipMutation] =
     useProfileDetailPageRequestFriendshipMutation();
