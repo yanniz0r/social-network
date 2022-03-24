@@ -31,14 +31,16 @@ const userTypeResolver: Resolvers["User"] = {
   async friendshipStatus(parent, _arguments, context) {
     const authenticatedUser =
       context.authorizationService.ensureAuthorizedUser();
+
+    // Users are not friends with themselves
+    if (parent._id.equals(authenticatedUser._id)) {
+      return FriendshipStatus.None
+    }
+
     const friendship = await context.userService.findFriendshipBetween(
       authenticatedUser._id,
       parent._id
     );
-
-    console.log({
-      friendship,
-    });
 
     if (!friendship) {
       return FriendshipStatus.None;
