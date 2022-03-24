@@ -104,6 +104,10 @@ const schema = gql`
 
   input UpdateMeInput {
     avatar: Upload
+    jobCompany: String
+    jobPosition: String
+    birthday: Date
+    hobbys: [String!]
   }
 
   type Authentication {

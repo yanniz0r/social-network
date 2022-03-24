@@ -212,6 +212,10 @@ export type TextPostInput = {
 
 export type UpdateMeInput = {
   avatar?: InputMaybe<Scalars['Upload']>;
+  birthday?: InputMaybe<Scalars['Date']>;
+  hobbys?: InputMaybe<Array<Scalars['String']>>;
+  jobCompany?: InputMaybe<Scalars['String']>;
+  jobPosition?: InputMaybe<Scalars['String']>;
 };
 
 export type User = {

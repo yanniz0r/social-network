@@ -207,6 +207,10 @@ export type TextPostInput = {
 
 export type UpdateMeInput = {
   avatar?: InputMaybe<Scalars['Upload']>;
+  birthday?: InputMaybe<Scalars['Date']>;
+  hobbys?: InputMaybe<Array<Scalars['String']>>;
+  jobCompany?: InputMaybe<Scalars['String']>;
+  jobPosition?: InputMaybe<Scalars['String']>;
 };
 
 export type User = {
@@ -289,6 +293,13 @@ export type PostCardCommentPostMutationVariables = Exact<{
 
 
 export type PostCardCommentPostMutation = { __typename?: 'Mutation', commentPost: { __typename?: 'ImagePost', id: string, comments: Array<{ __typename?: 'Comment', createdAt: any, text: string, user: { __typename?: 'User', id: string, name: string, online: boolean } }> } | { __typename?: 'TextPost', id: string, comments: Array<{ __typename?: 'Comment', createdAt: any, text: string, user: { __typename?: 'User', id: string, name: string, online: boolean } }> } };
+
+export type ProfileSettingsUpdateProfileMutationVariables = Exact<{
+  input: UpdateMeInput;
+}>;
+
+
+export type ProfileSettingsUpdateProfileMutation = { __typename?: 'Mutation', updateMe: { __typename?: 'User', id: string } };
 
 export type SearchQueryVariables = Exact<{
   query: Scalars['String'];
@@ -694,6 +705,39 @@ export function usePostCardCommentPostMutation(baseOptions?: Apollo.MutationHook
 export type PostCardCommentPostMutationHookResult = ReturnType<typeof usePostCardCommentPostMutation>;
 export type PostCardCommentPostMutationResult = Apollo.MutationResult<PostCardCommentPostMutation>;
 export type PostCardCommentPostMutationOptions = Apollo.BaseMutationOptions<PostCardCommentPostMutation, PostCardCommentPostMutationVariables>;
+export const ProfileSettingsUpdateProfileDocument = gql`
+    mutation ProfileSettingsUpdateProfile($input: UpdateMeInput!) {
+  updateMe(input: $input) {
+    id
+  }
+}
+    `;
+export type ProfileSettingsUpdateProfileMutationFn = Apollo.MutationFunction<ProfileSettingsUpdateProfileMutation, ProfileSettingsUpdateProfileMutationVariables>;
+
+/**
+ * __useProfileSettingsUpdateProfileMutation__
+ *
+ * To run a mutation, you first call `useProfileSettingsUpdateProfileMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useProfileSettingsUpdateProfileMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [profileSettingsUpdateProfileMutation, { data, loading, error }] = useProfileSettingsUpdateProfileMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useProfileSettingsUpdateProfileMutation(baseOptions?: Apollo.MutationHookOptions<ProfileSettingsUpdateProfileMutation, ProfileSettingsUpdateProfileMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ProfileSettingsUpdateProfileMutation, ProfileSettingsUpdateProfileMutationVariables>(ProfileSettingsUpdateProfileDocument, options);
+      }
+export type ProfileSettingsUpdateProfileMutationHookResult = ReturnType<typeof useProfileSettingsUpdateProfileMutation>;
+export type ProfileSettingsUpdateProfileMutationResult = Apollo.MutationResult<ProfileSettingsUpdateProfileMutation>;
+export type ProfileSettingsUpdateProfileMutationOptions = Apollo.BaseMutationOptions<ProfileSettingsUpdateProfileMutation, ProfileSettingsUpdateProfileMutationVariables>;
 export const SearchDocument = gql`
     query Search($query: String!) {
   searchUsers(query: $query) {

@@ -125,6 +125,12 @@ export default class UserService {
     });
   }
 
+  async updateUser(id: ObjectId | string, userInput: Partial<Omit<User, 'avatar'>>) {
+    await this.userRepository.updateUser(initObjectID(id), {
+      ...userInput
+    });
+  } 
+
   createUser(user: Omit<User, "createdAt">) {
     return this.userRepository.createUser({
       createdAt: new Date(),
