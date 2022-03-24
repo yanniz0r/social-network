@@ -5,8 +5,9 @@ import { FaArrowDown, FaArrowUp, FaMinus } from "react-icons/fa"
 import Button from "../button"
 import TextInput from "../form"
 import IconButton from "../icon-button"
-import { useProfileSettingsUpdateProfileMutation } from "../../graphql/generated"
+import { useProfileSettingsMeQuery, useProfileSettingsUpdateProfileMutation } from "../../graphql/generated"
 import Alert from "../alert"
+import ActivityIndicator from "../activity-indicator"
 
 interface ProfileSettingsForm {
   jobPosition: string
@@ -16,7 +17,8 @@ interface ProfileSettingsForm {
 }
 
 const ProfileSettings: FC = () => {
-  const [updateProfileMutation, updateProfileMutationState] = useProfileSettingsUpdateProfileMutation()
+  const [updateProfileMutation] = useProfileSettingsUpdateProfileMutation()
+  const meQuery = useProfileSettingsMeQuery()
   const [profileUpdatedSuccessfully, setProfileUpdatedSuccessfully] = useState(false)
 
   function addNewHobby() {
@@ -74,11 +76,12 @@ const ProfileSettings: FC = () => {
       jobCompany: yup.string(),
       jobPosition: yup.string(),
     }),
+    enableReinitialize: true,
     initialValues: {
-      birthday: '',
-      hobbys: [],
-      jobCompany: '',
-      jobPosition: '',
+      birthday: meQuery.data?.me.birthday ?? '',
+      hobbys: meQuery.data?.me.hobbies ?? [],
+      jobCompany: meQuery.data?.me.job?.company ?? '',
+      jobPosition: meQuery.data?.me.job?.position ?? '',
     },
     async onSubmit(data) {
       setProfileUpdatedSuccessfully(false)
@@ -95,6 +98,10 @@ const ProfileSettings: FC = () => {
       setProfileUpdatedSuccessfully(true)
     }
   })
+
+  if (meQuery.loading) {
+    return <ActivityIndicator />
+  }
 
   return <form className="space-y-5" onSubmit={form.handleSubmit}>
     {profileUpdatedSuccessfully &&

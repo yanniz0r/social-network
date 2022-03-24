@@ -294,6 +294,11 @@ export type PostCardCommentPostMutationVariables = Exact<{
 
 export type PostCardCommentPostMutation = { __typename?: 'Mutation', commentPost: { __typename?: 'ImagePost', id: string, comments: Array<{ __typename?: 'Comment', createdAt: any, text: string, user: { __typename?: 'User', id: string, name: string, online: boolean } }> } | { __typename?: 'TextPost', id: string, comments: Array<{ __typename?: 'Comment', createdAt: any, text: string, user: { __typename?: 'User', id: string, name: string, online: boolean } }> } };
 
+export type ProfileSettingsMeQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ProfileSettingsMeQuery = { __typename?: 'Query', me: { __typename?: 'User', birthday?: any | null, hobbies?: Array<string> | null, job?: { __typename?: 'UserJob', company: string, position: string } | null } };
+
 export type ProfileSettingsUpdateProfileMutationVariables = Exact<{
   input: UpdateMeInput;
 }>;
@@ -705,6 +710,45 @@ export function usePostCardCommentPostMutation(baseOptions?: Apollo.MutationHook
 export type PostCardCommentPostMutationHookResult = ReturnType<typeof usePostCardCommentPostMutation>;
 export type PostCardCommentPostMutationResult = Apollo.MutationResult<PostCardCommentPostMutation>;
 export type PostCardCommentPostMutationOptions = Apollo.BaseMutationOptions<PostCardCommentPostMutation, PostCardCommentPostMutationVariables>;
+export const ProfileSettingsMeDocument = gql`
+    query ProfileSettingsMe {
+  me {
+    job {
+      company
+      position
+    }
+    birthday
+    hobbies
+  }
+}
+    `;
+
+/**
+ * __useProfileSettingsMeQuery__
+ *
+ * To run a query within a React component, call `useProfileSettingsMeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProfileSettingsMeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProfileSettingsMeQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useProfileSettingsMeQuery(baseOptions?: Apollo.QueryHookOptions<ProfileSettingsMeQuery, ProfileSettingsMeQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ProfileSettingsMeQuery, ProfileSettingsMeQueryVariables>(ProfileSettingsMeDocument, options);
+      }
+export function useProfileSettingsMeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ProfileSettingsMeQuery, ProfileSettingsMeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ProfileSettingsMeQuery, ProfileSettingsMeQueryVariables>(ProfileSettingsMeDocument, options);
+        }
+export type ProfileSettingsMeQueryHookResult = ReturnType<typeof useProfileSettingsMeQuery>;
+export type ProfileSettingsMeLazyQueryHookResult = ReturnType<typeof useProfileSettingsMeLazyQuery>;
+export type ProfileSettingsMeQueryResult = Apollo.QueryResult<ProfileSettingsMeQuery, ProfileSettingsMeQueryVariables>;
 export const ProfileSettingsUpdateProfileDocument = gql`
     mutation ProfileSettingsUpdateProfile($input: UpdateMeInput!) {
   updateMe(input: $input) {

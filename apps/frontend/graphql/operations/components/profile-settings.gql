@@ -1,3 +1,14 @@
+
+query ProfileSettingsMe {
+  me{
+    job {
+      company
+      position
+    }
+    birthday
+    hobbies
+  }
+}
 mutation ProfileSettingsUpdateProfile($input: UpdateMeInput!) {
   updateMe(input: $input) {
     id
