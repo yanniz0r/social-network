@@ -76,6 +76,7 @@ export type Mutation = {
   commentPost: Post;
   createImagePost: ImagePost;
   createTextPost: TextPost;
+  deletePost?: Maybe<Scalars['Boolean']>;
   likePost: Post;
   requestFriendship: FriendshipRequest;
   unlikePost: Post;
@@ -107,6 +108,11 @@ export type MutationCreateImagePostArgs = {
 
 export type MutationCreateTextPostArgs = {
   input: TextPostInput;
+};
+
+
+export type MutationDeletePostArgs = {
+  id: Scalars['ID'];
 };
 
 
@@ -293,6 +299,13 @@ export type PostCardCommentPostMutationVariables = Exact<{
 
 
 export type PostCardCommentPostMutation = { __typename?: 'Mutation', commentPost: { __typename?: 'ImagePost', id: string, comments: Array<{ __typename?: 'Comment', createdAt: any, text: string, user: { __typename?: 'User', id: string, name: string, online: boolean } }> } | { __typename?: 'TextPost', id: string, comments: Array<{ __typename?: 'Comment', createdAt: any, text: string, user: { __typename?: 'User', id: string, name: string, online: boolean } }> } };
+
+export type PostOptionsDeletePostMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type PostOptionsDeletePostMutation = { __typename?: 'Mutation', deletePost?: boolean | null };
 
 export type ProfileSettingsMeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -710,6 +723,37 @@ export function usePostCardCommentPostMutation(baseOptions?: Apollo.MutationHook
 export type PostCardCommentPostMutationHookResult = ReturnType<typeof usePostCardCommentPostMutation>;
 export type PostCardCommentPostMutationResult = Apollo.MutationResult<PostCardCommentPostMutation>;
 export type PostCardCommentPostMutationOptions = Apollo.BaseMutationOptions<PostCardCommentPostMutation, PostCardCommentPostMutationVariables>;
+export const PostOptionsDeletePostDocument = gql`
+    mutation PostOptionsDeletePost($id: ID!) {
+  deletePost(id: $id)
+}
+    `;
+export type PostOptionsDeletePostMutationFn = Apollo.MutationFunction<PostOptionsDeletePostMutation, PostOptionsDeletePostMutationVariables>;
+
+/**
+ * __usePostOptionsDeletePostMutation__
+ *
+ * To run a mutation, you first call `usePostOptionsDeletePostMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePostOptionsDeletePostMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [postOptionsDeletePostMutation, { data, loading, error }] = usePostOptionsDeletePostMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function usePostOptionsDeletePostMutation(baseOptions?: Apollo.MutationHookOptions<PostOptionsDeletePostMutation, PostOptionsDeletePostMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<PostOptionsDeletePostMutation, PostOptionsDeletePostMutationVariables>(PostOptionsDeletePostDocument, options);
+      }
+export type PostOptionsDeletePostMutationHookResult = ReturnType<typeof usePostOptionsDeletePostMutation>;
+export type PostOptionsDeletePostMutationResult = Apollo.MutationResult<PostOptionsDeletePostMutation>;
+export type PostOptionsDeletePostMutationOptions = Apollo.BaseMutationOptions<PostOptionsDeletePostMutation, PostOptionsDeletePostMutationVariables>;
 export const ProfileSettingsMeDocument = gql`
     query ProfileSettingsMe {
   me {

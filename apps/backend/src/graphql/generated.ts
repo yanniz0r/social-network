@@ -81,6 +81,7 @@ export type Mutation = {
   commentPost: Post;
   createImagePost: ImagePost;
   createTextPost: TextPost;
+  deletePost?: Maybe<Scalars['Boolean']>;
   likePost: Post;
   requestFriendship: FriendshipRequest;
   unlikePost: Post;
@@ -112,6 +113,11 @@ export type MutationCreateImagePostArgs = {
 
 export type MutationCreateTextPostArgs = {
   input: TextPostInput;
+};
+
+
+export type MutationDeletePostArgs = {
+  id: Scalars['ID'];
 };
 
 
@@ -411,6 +417,7 @@ export type MutationResolvers<ContextType = Context, ParentType extends Resolver
   commentPost?: Resolver<ResolversTypes['Post'], ParentType, ContextType, RequireFields<MutationCommentPostArgs, 'id' | 'text'>>;
   createImagePost?: Resolver<ResolversTypes['ImagePost'], ParentType, ContextType, RequireFields<MutationCreateImagePostArgs, 'input'>>;
   createTextPost?: Resolver<ResolversTypes['TextPost'], ParentType, ContextType, RequireFields<MutationCreateTextPostArgs, 'input'>>;
+  deletePost?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationDeletePostArgs, 'id'>>;
   likePost?: Resolver<ResolversTypes['Post'], ParentType, ContextType, RequireFields<MutationLikePostArgs, 'id'>>;
   requestFriendship?: Resolver<ResolversTypes['FriendshipRequest'], ParentType, ContextType, RequireFields<MutationRequestFriendshipArgs, 'id'>>;
   unlikePost?: Resolver<ResolversTypes['Post'], ParentType, ContextType, RequireFields<MutationUnlikePostArgs, 'id'>>;

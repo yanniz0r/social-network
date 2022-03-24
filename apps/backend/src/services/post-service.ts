@@ -71,7 +71,11 @@ export default class PostService {
   }
 
   async getPostByID(id: string | ObjectId) {
-    return this.postRepository.findPostById(initObjectID(id));
+    return this.postRepository.findPostByID(initObjectID(id));
+  }
+
+  async deletePostByID(id: string | ObjectId) {
+    return this.postRepository.deletePostByID(initObjectID(id))
   }
 
   async likePost(user: UserModel, post: PostModel) {

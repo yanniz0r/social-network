@@ -31,8 +31,12 @@ export default class PostRepository {
       .toArray();
   }
 
-  async findPostById(id: ObjectId) {
+  async findPostByID(id: ObjectId) {
     return this.collection.findOne({ _id: id });
+  }
+
+  async deletePostByID(id: ObjectId) {
+    return this.collection.deleteOne({ _id: id });
   }
 
   async createPost(post: Post): Promise<ObjectId> {

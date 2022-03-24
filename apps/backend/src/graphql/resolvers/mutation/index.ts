@@ -5,6 +5,7 @@ import likeMutationResolvers from "./like-mutation-resolvers";
 import commentMutationResolvers from "./comment-mutation-resolvers";
 import meMutationResolvers from "./me-mutation-resolvers";
 import authenticationMutationResolvers from "./authentication-mutation-resolvers";
+import deletePostMutationResolvers from "./delete-post-mutation-resolvers";
 
 const mutationResolvers: Resolvers["Mutation"] = {
   ...createTextPost,
@@ -13,6 +14,7 @@ const mutationResolvers: Resolvers["Mutation"] = {
   ...commentMutationResolvers,
   ...meMutationResolvers,
   ...authenticationMutationResolvers,
+  ...deletePostMutationResolvers
 };
 
 export default mutationResolvers;

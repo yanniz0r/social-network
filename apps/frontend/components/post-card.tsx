@@ -13,6 +13,7 @@ import Card from "./card";
 import IconButton from "./icon-button";
 import LikeButton from "./like-button";
 import RichText from "./rich-text";
+import PostOptions from "./settings/post-options";
 import Tooltip from "./tooltip";
 
 interface PostCardProps {
@@ -71,26 +72,29 @@ const PostCard: FC<PostCardProps> = ({ post, me }) => {
   return (
     <Card>
       <div className="p-5">
-        <Link passHref href={`/profile/${post.user.id}`}>
-          <a className="flex items-center">
-            <Avatar
-              size="lg"
-              name={post.user.name}
-              online={post.user.online}
-              imageURL={post.user.avatarURL ?? undefined}
-            />
-            <div className="ml-4">
-              <h4 className="text-xl dark:text-slate-200">{post.user.name}</h4>
-              <Tooltip
-                text={format(new Date(post.createdAt), "dd.MM.yyyy, HH:mm")}
-              >
-                <span className="text-sm text-slate-500 dark:text-slate-400">
-                  {createdAt}
-                </span>
-              </Tooltip>
-            </div>
-          </a>
-        </Link>
+        <div className="flex justify-between">
+          <Link passHref href={`/profile/${post.user.id}`}>
+            <a className="flex items-center gap-4">
+              <Avatar
+                size="lg"
+                name={post.user.name}
+                online={post.user.online}
+                imageURL={post.user.avatarURL ?? undefined}
+              />
+              <div>
+                <h4 className="text-xl flex-grow dark:text-slate-200">{post.user.name}</h4>
+                <Tooltip
+                  text={format(new Date(post.createdAt), "dd.MM.yyyy, HH:mm")}
+                >
+                  <span className="text-sm text-slate-500 dark:text-slate-400">
+                    {createdAt}
+                  </span>
+                </Tooltip>
+              </div>
+            </a>
+          </Link>
+          <PostOptions postID={post.id} />
+        </div>
       </div>
       {post.text && (
         <div className="px-5 pb-5">

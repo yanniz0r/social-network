@@ -129,6 +129,7 @@ const schema = gql`
   }
 
   type Mutation {
+    deletePost(id: ID!): Boolean
     updateMe(input: UpdateMeInput!): User!
     createTextPost(input: TextPostInput!): TextPost!
     createImagePost(input: ImagePostInput!): ImagePost!
