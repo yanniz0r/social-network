@@ -1,0 +1,16 @@
+{
+  "Common": {
+    "jwtSecret": "SuperSecret!",
+    "cors": {
+      "credentials": true,
+      "allowedHeaders": ["authorization", "content-type"],
+      "origin": ["http://localhost:3000", "https://studio.apollographql.com"]
+    }
+  },
+  "Auth": {
+    "google": {
+      "clientID": "1095516303409-ogq98bg3riskn177oamqca83qcmho75l.apps.googleusercontent.com"
+    }
+  },
+  "MongoDB": {}
+}

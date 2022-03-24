@@ -12,6 +12,7 @@
   },
   "scripts": {
     "dev": "yarn turbo run dev",
+    "test": "yarn turbo run test",
     "generate:types": "graphql-codegen --config codegen.yml",
     "prettier": "prettier --write ."
   },
